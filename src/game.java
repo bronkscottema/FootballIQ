@@ -89,7 +89,7 @@ public class game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
         Image img;
-        img = Toolkit.getDefaultToolkit().getImage("images/field.png");
+        img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
         g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
         handler.render(g);
         g.dispose();
