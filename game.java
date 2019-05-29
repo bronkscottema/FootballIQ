@@ -1,10 +1,11 @@
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.applet.*;
 
 public class game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
+    public static final int WIDTH = 720, HEIGHT = WIDTH / 12 * 9;
 
     private Thread thread;
     private boolean running = false;
@@ -12,12 +13,23 @@ public class game extends Canvas implements Runnable {
     private Handler handler;
 
     public game() {
-        new Window(WIDTH, HEIGHT, "FootballIQ", this);
-
         handler = new Handler();
 
-        handler.addObject(new Player(100, 100, ID.widereceiver));
-        handler.addObject(new Player(120, 80, ID.widereceiver));
+        new Window(WIDTH, HEIGHT, "FootballIQ", this);
+
+        handler.addObject(new Player(WIDTH/2, HEIGHT/2, ID.C));
+        handler.addObject(new Player((WIDTH/2)+25, HEIGHT/2, ID.LG));
+        handler.addObject(new Player((WIDTH/2)+50, HEIGHT/2, ID.LT));
+        handler.addObject(new Player((WIDTH/2)-25, HEIGHT/2, ID.RG));
+        handler.addObject(new Player((WIDTH/2)-50, HEIGHT/2, ID.RT));
+        handler.addObject(new Player(WIDTH/2, (HEIGHT/2)+50, ID.QB));
+        handler.addObject(new Player((WIDTH/2)-25, (HEIGHT/2)+55, ID.RB));
+        handler.addObject(new Player((WIDTH/2)+75, HEIGHT/2, ID.TE));
+        handler.addObject(new Player((WIDTH/2)+300, (HEIGHT/2)+15, ID.WR));
+        handler.addObject(new Player((WIDTH/2)-300, (HEIGHT/2), ID.WR));
+        handler.addObject(new Player((WIDTH/2)-175, (HEIGHT/2)+15, ID.WR));
+//        handler.addObject(new Player(375, 80, ID.widereceiver));
+//        handler.addObject(new Player(100, 80, ID.widereceiver));
     }
 
     public synchronized void start() {
@@ -76,7 +88,9 @@ public class game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
-        g.fillRect(0,0, WIDTH, HEIGHT);
+        Image img;
+        img = Toolkit.getDefaultToolkit().getImage("images/field.png");
+        g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
         handler.render(g);
         g.dispose();
         bs.show();

@@ -20,9 +20,11 @@ public enum ID {
     WDT(),
     WISLB(),
     WOSLB(),
-    fullback(),
-    quarterback(),
-    runningback(),
-    tightend(),
-    widereceiver();
+    FB(),
+    TE(),
+    WR(),
+    WRX(),
+    WRY(),
+    WRZ(),
+    WRH();
 }
