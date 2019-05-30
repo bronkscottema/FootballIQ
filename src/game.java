@@ -11,12 +11,15 @@ public class game extends Canvas implements Runnable {
     private boolean running = false;
 
     private Handler handler;
+    private conceptsVsConcepts conceptsVsConcepts;
 
     public game() {
         handler = new Handler();
         this.addKeyListener(new KeyInput(handler));
 
         new Window(WIDTH, HEIGHT, "FootballIQ", this);
+
+        conceptsVsConcepts = new conceptsVsConcepts();
 
         handler.addObject(new Player(WIDTH/2, HEIGHT/2, ID.C));
         handler.addObject(new Player((WIDTH/2)+25, HEIGHT/2, ID.LG));
@@ -49,6 +52,7 @@ public class game extends Canvas implements Runnable {
     }
 
     public void run() {
+        this.requestFocus();
         long lastTime = System.nanoTime();
         double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
@@ -78,6 +82,7 @@ public class game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
+        conceptsVsConcepts.tick();
     }
 
     private void render () {
@@ -93,8 +98,19 @@ public class game extends Canvas implements Runnable {
         img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
         g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
         handler.render(g);
+        conceptsVsConcepts.render(g);
         g.dispose();
         bs.show();
+    }
+
+    public static int clamp (int var, int min, int max) {
+        if (var >= max)
+            return var = max;
+        else if (var <= min)
+            return var = min;
+        else
+            return var;
+
     }
 
     public static void main(String[] args) {
