@@ -14,6 +14,7 @@ public class game extends Canvas implements Runnable {
 
     public game() {
         handler = new Handler();
+        this.addKeyListener(new KeyInput(handler));
 
         new Window(WIDTH, HEIGHT, "FootballIQ", this);
 
@@ -25,9 +26,9 @@ public class game extends Canvas implements Runnable {
         handler.addObject(new Player(WIDTH/2, (HEIGHT/2)+50, ID.QB));
         handler.addObject(new Player((WIDTH/2)-25, (HEIGHT/2)+55, ID.RB));
         handler.addObject(new Player((WIDTH/2)+75, HEIGHT/2, ID.TE));
-        handler.addObject(new Player((WIDTH/2)+300, (HEIGHT/2)+15, ID.WR));
-        handler.addObject(new Player((WIDTH/2)-300, (HEIGHT/2), ID.WR));
-        handler.addObject(new Player((WIDTH/2)-175, (HEIGHT/2)+15, ID.WR));
+        handler.addObject(new Player((WIDTH/2)+300, (HEIGHT/2)+15, ID.WRZ));
+        handler.addObject(new Player((WIDTH/2)-300, (HEIGHT/2), ID.WRX));
+        handler.addObject(new Player((WIDTH/2)-175, (HEIGHT/2)+15, ID.WRH));
 //        handler.addObject(new Player(375, 80, ID.widereceiver));
 //        handler.addObject(new Player(100, 80, ID.widereceiver));
     }

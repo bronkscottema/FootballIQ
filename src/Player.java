@@ -11,6 +11,8 @@ public class Player extends GameObject {
 
     public void tick() {
         //route methods go here
+        x += velX;
+        y += velY;
 
     }
 
