@@ -1,5 +1,4 @@
-import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.*;
 
 
 public class Player extends GameObject {
@@ -14,16 +13,14 @@ public class Player extends GameObject {
         x += velX;
         y += velY;
 
-        //stop stuff from going past the game screen
-        x = game.clamp(x, 0, game.WIDTH - 15);
-        y = game.clamp(y, 0, game.HEIGHT - 37);
+        //stop stuff from going past the Game screen
+        x = Game.clamp(x, 0, Game.WIDTH - 16);
+        y = Game.clamp(y, 0, Game.HEIGHT - 38);
 
     }
 
     public void render(Graphics g) {
         g.setColor(Color.white);
-        g.fillOval(x, y, 15, 15);
+        g.fillRect(x, y, 16, 16);
     }
-
-
 }

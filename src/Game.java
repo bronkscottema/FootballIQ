@@ -1,9 +1,8 @@
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.applet.*;
 
-public class game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable {
 
     public static final int WIDTH = 720, HEIGHT = WIDTH / 12 * 9;
 
@@ -11,29 +10,30 @@ public class game extends Canvas implements Runnable {
     private boolean running = false;
 
     private Handler handler;
+    private Movement movement;
+    private Point point;
     private conceptsVsConcepts conceptsVsConcepts;
+    private menu menu;
 
-    public game() {
+    public enum STATE {
+        menu,
+        help,
+        login,
+        game;
+    }
+
+    public STATE gameSTATE = STATE.menu;
+
+    public Game() {
         handler = new Handler();
-        this.addKeyListener(new KeyInput(handler));
-
+        movement = new Movement(handler, this);
+        menu = new menu(this, handler);
         new Window(WIDTH, HEIGHT, "FootballIQ", this);
-
+        this.addMouseListener(menu);
+        handler.startGame();
         conceptsVsConcepts = new conceptsVsConcepts();
+        this.addMouseMotionListener(movement);
 
-        handler.addObject(new Player(WIDTH/2, HEIGHT/2, ID.C));
-        handler.addObject(new Player((WIDTH/2)+25, HEIGHT/2, ID.LG));
-        handler.addObject(new Player((WIDTH/2)+50, HEIGHT/2, ID.LT));
-        handler.addObject(new Player((WIDTH/2)-25, HEIGHT/2, ID.RG));
-        handler.addObject(new Player((WIDTH/2)-50, HEIGHT/2, ID.RT));
-        handler.addObject(new Player(WIDTH/2, (HEIGHT/2)+50, ID.QB));
-        handler.addObject(new Player((WIDTH/2)-25, (HEIGHT/2)+55, ID.RB));
-        handler.addObject(new Player((WIDTH/2)+75, HEIGHT/2, ID.TE));
-        handler.addObject(new Player((WIDTH/2)+300, (HEIGHT/2)+15, ID.WRZ));
-        handler.addObject(new Player((WIDTH/2)-300, (HEIGHT/2), ID.WRX));
-        handler.addObject(new Player((WIDTH/2)-175, (HEIGHT/2)+15, ID.WRH));
-//        handler.addObject(new Player(375, 80, ID.widereceiver));
-//        handler.addObject(new Player(100, 80, ID.widereceiver));
     }
 
     public synchronized void start() {
@@ -82,7 +82,13 @@ public class game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
-        conceptsVsConcepts.tick();
+        if (gameSTATE == STATE.game) {
+            conceptsVsConcepts.tick();
+            movement.tick();
+        }
+        else if (gameSTATE == STATE.menu) {
+            menu.tick();
+        }
     }
 
     private void render () {
@@ -94,11 +100,15 @@ public class game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
-        Image img;
-        img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
-        g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
-        handler.render(g);
-        conceptsVsConcepts.render(g);
+        if (gameSTATE == STATE.game) {
+            Image img;
+            img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
+            g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
+            handler.render(g);
+            conceptsVsConcepts.render(g);
+        } else if (gameSTATE == STATE.menu) {
+            menu.render(g);
+        }
         g.dispose();
         bs.show();
     }
@@ -114,6 +124,6 @@ public class game extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) {
-        new game();
+        new Game();
     }
 }
