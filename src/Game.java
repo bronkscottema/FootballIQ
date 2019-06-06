@@ -1,4 +1,5 @@
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
@@ -11,7 +12,7 @@ public class Game extends Canvas implements Runnable {
 
     private Handler handler;
     private Movement movement;
-    private Point point;
+    private Route route;
     private conceptsVsConcepts conceptsVsConcepts;
     private menu menu;
 
@@ -28,11 +29,14 @@ public class Game extends Canvas implements Runnable {
         handler = new Handler();
         movement = new Movement(handler, this);
         menu = new menu(this, handler);
+        route = new Route(handler,this);
         new Window(WIDTH, HEIGHT, "FootballIQ", this);
         this.addMouseListener(menu);
         handler.startGame();
         conceptsVsConcepts = new conceptsVsConcepts();
         this.addMouseMotionListener(movement);
+        this.addMouseMotionListener(route);
+        this.addMouseListener(route);
 
     }
 
@@ -85,13 +89,14 @@ public class Game extends Canvas implements Runnable {
         if (gameSTATE == STATE.game) {
             conceptsVsConcepts.tick();
             movement.tick();
+            route.tick();
         }
         else if (gameSTATE == STATE.menu) {
             menu.tick();
         }
     }
 
-    private void render () {
+    private void render() {
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null) {
             this.createBufferStrategy(3);
@@ -104,6 +109,7 @@ public class Game extends Canvas implements Runnable {
             Image img;
             img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
             g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
+            route.render(g);
             handler.render(g);
             conceptsVsConcepts.render(g);
         } else if (gameSTATE == STATE.menu) {
