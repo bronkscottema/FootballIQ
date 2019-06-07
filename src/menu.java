@@ -6,6 +6,8 @@ public class menu extends MouseAdapter {
 
     private Game game;
     private Handler handler;
+    final int WIDTH = 720, HEIGHT = WIDTH / 12 * 9;
+
 
     public menu(Game game, Handler handler) {
         this.game = game;
@@ -43,7 +45,9 @@ public class menu extends MouseAdapter {
         g.setColor(Color.BLACK);
         Font font = new Font("SansSerif", Font.PLAIN, 56);
         FontMetrics metrics = g.getFontMetrics(font);
-
+        Image img;
+        img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
+        g.drawImage(img,0, 0, WIDTH, HEIGHT, game);
         // Determine the X coordinate for the text
         int x = (720 - metrics.stringWidth("FOOTBALL IQ")) / 2;
         // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
@@ -53,6 +57,4 @@ public class menu extends MouseAdapter {
         // Draw the String
         g.drawString("FOOTBALL IQ", x, y);
     }
-
-
 }

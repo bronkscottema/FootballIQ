@@ -1,24 +1,33 @@
+import javax.swing.*;
 import java.awt.*;
-import java.util.Scanner;
 
-public class conceptsVsConcepts {
-
-    //public static String conceptVsConcept
-
-    public void tick() {
-
-    }
-
-
-    public void render(Graphics g) {
-        g.setColor(Color.BLACK);
-        Font font = new Font("SansSerif", Font.PLAIN, 20);
-        // Set the font
-        g.setFont(font);
-        // Draw the String
-        g.drawString("offense", 100, 32);
-        g.drawString("defense", 500, 32);
-        g.drawString("Twins Tight Inside Zone", 100, 50);
-        g.drawString("4-3 Over Cover 3", 500, 50);
+public class conceptsVsConcepts extends Canvas {
+    private Game game;
+    public conceptsVsConcepts (int width, int height, String title, Game game) {
+        JFrame frame = new JFrame (title);
+        frame.setPreferredSize(new Dimension(width, height));
+        frame.setMaximumSize(new Dimension(width, height));
+        frame.setMinimumSize(new Dimension(width, height));
+        JTextArea offense = new JTextArea("offense");
+        offense.setBounds(100, 32, 50, 25);
+        frame.add(offense);
+        //top left offense play
+        JTextArea offensivePlay = new JTextArea("insert play name");
+        offensivePlay.setBounds(50, 62, 200, 25);
+        frame.add(offensivePlay);
+        //top right defense
+        JTextArea defense = new JTextArea("denfense");
+        defense.setBounds(550, 32, 50, 25);
+        frame.add(defense);
+        //top left defensive play
+        JTextArea defensivePlay = new JTextArea("insert play name");
+        defensivePlay.setBounds(500, 62, 200, 25);
+        frame.add(defensivePlay);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.add(game);
+        frame.setVisible(true);
+        game.start();
     }
 }

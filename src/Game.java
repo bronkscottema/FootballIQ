@@ -13,7 +13,6 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
-    private conceptsVsConcepts conceptsVsConcepts;
     private menu menu;
 
     public enum STATE {
@@ -27,13 +26,12 @@ public class Game extends Canvas implements Runnable {
 
     public Game() {
         handler = new Handler();
+        new Window(WIDTH, HEIGHT, "FootballIQ", this);
         movement = new Movement(handler, this);
         menu = new menu(this, handler);
         route = new Route(handler,this);
-        new Window(WIDTH, HEIGHT, "FootballIQ", this);
         this.addMouseListener(menu);
         handler.startGame();
-        conceptsVsConcepts = new conceptsVsConcepts();
         this.addMouseMotionListener(movement);
         this.addMouseMotionListener(route);
         this.addMouseListener(route);
@@ -87,7 +85,6 @@ public class Game extends Canvas implements Runnable {
     private void tick() {
         handler.tick();
         if (gameSTATE == STATE.game) {
-            conceptsVsConcepts.tick();
             movement.tick();
             route.tick();
         }
@@ -111,7 +108,6 @@ public class Game extends Canvas implements Runnable {
             g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
             route.render(g);
             handler.render(g);
-            conceptsVsConcepts.render(g);
         } else if (gameSTATE == STATE.menu) {
             menu.render(g);
         }
