@@ -1,6 +1,8 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
@@ -13,29 +15,28 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
-    private menu menu;
+//    private menu menu;
 
-    public enum STATE {
-        menu,
-        help,
-        login,
-        game;
-    }
+//    public enum STATE {
+//        menu,
+//        help,
+//        login,
+//        game;
+//    }
 
-    public STATE gameSTATE = STATE.menu;
+//    public STATE gameSTATE = STATE.menu;
 
     public Game() {
         handler = new Handler();
         new Window(WIDTH, HEIGHT, "FootballIQ", this);
         movement = new Movement(handler, this);
-        menu = new menu(this, handler);
+//        menu = new menu(this, handler);
         route = new Route(handler,this);
-        this.addMouseListener(menu);
+//        this.addMouseListener(menu);
         handler.startGame();
         this.addMouseMotionListener(movement);
         this.addMouseMotionListener(route);
         this.addMouseListener(route);
-
     }
 
     public synchronized void start() {
@@ -56,7 +57,7 @@ public class Game extends Canvas implements Runnable {
     public void run() {
         this.requestFocus();
         long lastTime = System.nanoTime();
-        double amountOfTicks = 60.0;
+        double amountOfTicks = 10;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer= System.currentTimeMillis();
@@ -73,8 +74,8 @@ public class Game extends Canvas implements Runnable {
                 render();
             frames++;
 
-            if(System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
+            if(System.currentTimeMillis() - timer > 100000) {
+                timer += 100000;
                 System.out.println("FPS: " + frames);
                 frames = 0;
             }
@@ -84,13 +85,13 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
-        if (gameSTATE == STATE.game) {
+//        if (gameSTATE == STATE.game) {
             movement.tick();
             route.tick();
-        }
-        else if (gameSTATE == STATE.menu) {
-            menu.tick();
-        }
+//        }
+//        else if (gameSTATE == STATE.menu) {
+////            menu.tick();
+//        }
     }
 
     private void render() {
@@ -102,15 +103,15 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
-        if (gameSTATE == STATE.game) {
+//        if (gameSTATE == STATE.game) {
             Image img;
             img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
             g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
             route.render(g);
             handler.render(g);
-        } else if (gameSTATE == STATE.menu) {
-            menu.render(g);
-        }
+//        } else if (gameSTATE == STATE.menu) {
+//            menu.render(g);
+//        }
         g.dispose();
         bs.show();
     }

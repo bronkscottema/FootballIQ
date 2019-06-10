@@ -1,3 +1,14 @@
+import javafx.animation.PathTransition;
+import javafx.application.Application;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -15,7 +26,7 @@ public class Route extends MouseAdapter {
     private Handler handler;
     private Player player;
     private Game game;
-    public Game.STATE gameSTATE;
+//    public Game.STATE gameSTATE;
     private Point p1 = new Point();
     private Point p2 = new Point();
     private ArrayList list = new ArrayList();
@@ -35,7 +46,20 @@ public class Route extends MouseAdapter {
     }
 
     public void mousePressed(MouseEvent e){
+        int x = e.getX();
+        int y = e.getY();
 
+        if (clicks == 0) {
+            line = new Line();
+            line.setP1(new Point(x, y));
+
+            clicks++;
+        } else {
+            line.setP2(new Point(x, y));
+            list.add(line);
+            clicks = 0;
+        }
+        game.repaint();
     }
 
 
@@ -55,20 +79,7 @@ public class Route extends MouseAdapter {
     }
 
     public void mouseDragged(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
 
-        if (clicks == 0) {
-            line = new Line();
-            line.setP1(new Point(x, y));
-
-            clicks++;
-        } else {
-            line.setP2(new Point(x, y));
-            list.add(line);
-            clicks = 0;
-        }
-        game.repaint();
     }
 
 
