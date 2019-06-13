@@ -1,9 +1,14 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
+import java.beans.PropertyChangeListener;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 
 public class Game extends Canvas implements Runnable {
 
@@ -11,7 +16,6 @@ public class Game extends Canvas implements Runnable {
 
     private Thread thread;
     private boolean running = false;
-
     private Handler handler;
     private Movement movement;
     private Route route;
@@ -27,8 +31,57 @@ public class Game extends Canvas implements Runnable {
 //    public STATE gameSTATE = STATE.menu;
 
     public Game() {
-        handler = new Handler();
-        new Window(WIDTH, HEIGHT, "FootballIQ", this);
+        handler = new Handler();JFrame frame = new JFrame("FootballIQ");
+        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        frame.setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        JTextArea offense = new JTextArea("offense");
+        offense.setBounds(0, 495-25, 200, 25);
+        frame.add(offense);
+        //top left offense play
+        JTextArea offensivePlay = new JTextArea("insert play name");
+        offensivePlay.setBounds(0, 495, 200, 25);
+        frame.add(offensivePlay);
+        //top right defense
+        JTextArea defense = new JTextArea("defense");
+        defense.setBounds(520, 495-25, 200, 25);
+        frame.add(defense);
+        //top left defensive play
+        JTextArea defensivePlay = new JTextArea("insert play name");
+        defensivePlay.setBounds(520, 495, 200, 25);
+        frame.add(defensivePlay);
+        Button undo = new Button("undo");
+        undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                route.undo();
+            }
+        });
+        undo.setBounds(290,468,50,50);
+        frame.add(undo);
+        Button play = new Button("play");
+        play.setBounds(340,468,50,50);
+//        undo.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                route.undo();
+//            }
+//        });
+        frame.add(play);
+        Button save = new Button("save");
+//        undo.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                route.undo();
+//            }
+//        });
+        save.setBounds(390,468,50,50);
+        frame.add(save);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.add(this);
+        frame.setVisible(true);
         movement = new Movement(handler, this);
 //        menu = new menu(this, handler);
         route = new Route(handler,this);
@@ -37,6 +90,7 @@ public class Game extends Canvas implements Runnable {
         this.addMouseMotionListener(movement);
         this.addMouseMotionListener(route);
         this.addMouseListener(route);
+        this.start();
     }
 
     public synchronized void start() {
@@ -76,7 +130,6 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 100000) {
                 timer += 100000;
-                System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }

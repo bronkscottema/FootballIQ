@@ -1,18 +1,6 @@
-import javafx.animation.PathTransition;
-import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
@@ -32,20 +20,15 @@ public class Route extends MouseAdapter {
     private ArrayList list = new ArrayList();
     private Line line;
     private int clicks = 0;
+    boolean isDragging;
 
     public Route( Handler handler, Game game) {
         this.handler = handler;
         this.game = game;
     }
 
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
-
-    }
-
-    public void mousePressed(MouseEvent e){
         int x = e.getX();
         int y = e.getY();
 
@@ -60,6 +43,10 @@ public class Route extends MouseAdapter {
             clicks = 0;
         }
         game.repaint();
+    }
+
+    public void mousePressed(MouseEvent e){
+
     }
 
 
@@ -79,7 +66,16 @@ public class Route extends MouseAdapter {
     }
 
     public void mouseDragged(MouseEvent e) {
-
+//        isDragging = true;
+//        int x = e.getX();
+//        int y = e.getY();
+//        line = new Line();
+//        line.setP1(new Point(x, y));
+//        line.setP2(new Point(x, y));
+//        list.add(line);
+//        game.repaint();
+//        clicks = 0;
+//        isDragging = false;
     }
 
 
@@ -90,12 +86,23 @@ public class Route extends MouseAdapter {
     }
 
 
+    public void undo() {
+        if (!list.isEmpty()) {
+            int size = list.size() - 1;
+            list.remove(size);
+            game.repaint();
+        }
+    }
+
+
     public void render(Graphics g) {
         g.setColor(Color.red);
+        Graphics2D g2 = (Graphics2D) g;
         Line currLine;
         for (int i = 0; i < list.size(); i++) {
             currLine = (Line) (list.get(i));
-            g.drawLine(currLine.getP1().getX(), currLine.getP1().getY(),currLine.getP2().getX(), currLine.getP2().getY());
+            g2.setStroke(new BasicStroke(2));
+            g2.draw(new Line2D.Float(currLine.getP1().getX(), currLine.getP1().getY(),currLine.getP2().getX(), currLine.getP2().getY()));
         }
     }
 
