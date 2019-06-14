@@ -3,12 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferStrategy;
-import java.beans.PropertyChangeListener;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 
 public class Game extends Canvas implements Runnable {
 
@@ -35,6 +30,8 @@ public class Game extends Canvas implements Runnable {
         frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         frame.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+
+        //offense
         JTextArea offense = new JTextArea("offense");
         offense.setBounds(0, 495-25, 200, 25);
         frame.add(offense);
@@ -50,6 +47,8 @@ public class Game extends Canvas implements Runnable {
         JTextArea defensivePlay = new JTextArea("insert play name");
         defensivePlay.setBounds(520, 495, 200, 25);
         frame.add(defensivePlay);
+
+        //buttons
         Button undo = new Button("undo");
         undo.addActionListener(new ActionListener() {
             @Override
@@ -57,16 +56,16 @@ public class Game extends Canvas implements Runnable {
                 route.undo();
             }
         });
-        undo.setBounds(290,468,50,50);
+        undo.setBounds(260,468,50,50);
         frame.add(undo);
         Button play = new Button("play");
-        play.setBounds(340,468,50,50);
-//        undo.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                route.undo();
-//            }
-//        });
+        play.setBounds(310,468,50,50);
+        play.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                route.play();
+            }
+        });
         frame.add(play);
         Button save = new Button("save");
 //        undo.addActionListener(new ActionListener() {
@@ -75,8 +74,19 @@ public class Game extends Canvas implements Runnable {
 //                route.undo();
 //            }
 //        });
-        save.setBounds(390,468,50,50);
+        save.setBounds(360,468,50,50);
         frame.add(save);
+        Button reset = new Button("reset");
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                route.reset();
+            }
+        });
+        reset.setBounds(410,468,50,50);
+        frame.add(reset);
+
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);

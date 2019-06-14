@@ -14,11 +14,13 @@ public class UndoActionListener implements UndoableEditListener, ActionListener 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        route.reset();
+        route.play();
     }
 
     @Override
     public void undoableEditHappened(UndoableEditEvent e) {
         route.undo();
+
     }
 }

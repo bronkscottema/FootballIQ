@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Route extends MouseAdapter {
@@ -66,16 +67,6 @@ public class Route extends MouseAdapter {
     }
 
     public void mouseDragged(MouseEvent e) {
-//        isDragging = true;
-//        int x = e.getX();
-//        int y = e.getY();
-//        line = new Line();
-//        line.setP1(new Point(x, y));
-//        line.setP2(new Point(x, y));
-//        list.add(line);
-//        game.repaint();
-//        clicks = 0;
-//        isDragging = false;
     }
 
 
@@ -83,6 +74,32 @@ public class Route extends MouseAdapter {
     }
 
     public void tick() {
+    }
+
+    public void reset() {
+        LinkedList<GameObject> players = handler.object;
+        Iterator<GameObject> jag = players.iterator();
+        while (jag.hasNext()) {
+           GameObject player = jag.next();
+           jag.remove();
+           if (!list.isEmpty()) {
+               int size = list.size() - 1;
+               list.remove(size);
+           }
+        }
+        handler.startGame();
+    }
+
+    public void play() {
+        LinkedList<GameObject> jags = handler.object;
+        for (GameObject player : jags) {
+            for (int l = 0; l < list.size(); l++) {
+                if (mouseOver(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY(), player.getX(), player.getY(), 16, 16)) {
+                    player.setX(((Line) list.get(l)).getP2().getX()-8);
+                    player.setY(((Line) list.get(l)).getP2().getY()-8);
+                }
+            }
+        }
     }
 
 
@@ -104,6 +121,15 @@ public class Route extends MouseAdapter {
             g2.setStroke(new BasicStroke(2));
             g2.draw(new Line2D.Float(currLine.getP1().getX(), currLine.getP1().getY(),currLine.getP2().getX(), currLine.getP2().getY()));
         }
+    }
+
+    private boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
+        if (mx > x && mx < x + width) {
+            if (my > y && my < y + height) {
+                return true;
+            } else return false;
+        } else return false;
+
     }
 
 }

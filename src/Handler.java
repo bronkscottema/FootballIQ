@@ -23,7 +23,7 @@ public class Handler {
         this.object.add(object);
     }
 
-    public void removeObject(GameObject object, ID id) {
+    public void removeObject(GameObject object) {
         this.object.remove(object);
     }
 
