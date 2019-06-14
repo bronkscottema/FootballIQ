@@ -14,16 +14,7 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
-//    private menu menu;
 
-//    public enum STATE {
-//        menu,
-//        help,
-//        login,
-//        game;
-//    }
-
-//    public STATE gameSTATE = STATE.menu;
 
     public Game() {
         handler = new Handler();JFrame frame = new JFrame("FootballIQ");
@@ -93,9 +84,7 @@ public class Game extends Canvas implements Runnable {
         frame.add(this);
         frame.setVisible(true);
         movement = new Movement(handler, this);
-//        menu = new menu(this, handler);
         route = new Route(handler,this);
-//        this.addMouseListener(menu);
         handler.startGame();
         this.addMouseMotionListener(movement);
         this.addMouseMotionListener(route);
@@ -148,13 +137,8 @@ public class Game extends Canvas implements Runnable {
 
     private void tick() {
         handler.tick();
-//        if (gameSTATE == STATE.game) {
-            movement.tick();
-            route.tick();
-//        }
-//        else if (gameSTATE == STATE.menu) {
-////            menu.tick();
-//        }
+        movement.tick();
+        route.tick();
     }
 
     private void render() {
@@ -166,15 +150,11 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
-//        if (gameSTATE == STATE.game) {
-            Image img;
-            img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
-            g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
-            route.render(g);
-            handler.render(g);
-//        } else if (gameSTATE == STATE.menu) {
-//            menu.render(g);
-//        }
+        Image img;
+        img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
+        g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
+        route.render(g);
+        handler.render(g);
         g.dispose();
         bs.show();
     }

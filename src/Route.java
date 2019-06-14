@@ -1,6 +1,4 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
@@ -15,7 +13,6 @@ public class Route extends MouseAdapter {
     private Handler handler;
     private Player player;
     private Game game;
-//    public Game.STATE gameSTATE;
     private Point p1 = new Point();
     private Point p2 = new Point();
     private ArrayList list = new ArrayList();

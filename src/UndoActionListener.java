@@ -15,7 +15,6 @@ public class UndoActionListener implements UndoableEditListener, ActionListener 
     @Override
     public void actionPerformed(ActionEvent e) {
         route.reset();
-        route.play();
     }
 
     @Override
