@@ -10,36 +10,25 @@ public class Movement extends MouseAdapter {
     private Player player;
     private Game game;
 
-
     public Movement( Handler handler, Game game) {
         this.handler = handler;
         this.game = game;
     }
 
+    @Override
+    public void mouseClicked(MouseEvent e) {}
+
+    public void mousePressed(MouseEvent e){}
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    public void mousePressed(MouseEvent e){
-
-    }
-
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
+    public void mouseReleased(MouseEvent e) {}
 
 
     @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
+    public void mouseEntered(MouseEvent e) {}
 
     @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent e) {}
 
     public void mouseDragged(MouseEvent e) {
         LinkedList<GameObject> jag = handler.object;
@@ -52,18 +41,13 @@ public class Movement extends MouseAdapter {
         }
     }
 
-
-    public void mouseMoved(MouseEvent e) {
-
-    }
+    public void mouseMoved(MouseEvent e) {}
 
     public void tick() {
 
     }
 
-
-    public void render(Graphics g) {
-    }
+    public void render(Graphics g) {}
 
     private boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
         if (mx > x && mx < x + width) {
@@ -71,6 +55,5 @@ public class Movement extends MouseAdapter {
                 return true;
             } else return false;
         } else return false;
-
     }
 }

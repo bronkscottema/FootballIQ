@@ -9,12 +9,14 @@ import java.util.LinkedList;
 public class Route extends MouseAdapter {
 
     private int x,y;
+    private int velX,velY;
 
     private Handler handler;
     private Player player;
     private Game game;
     private Point p1 = new Point();
     private Point p2 = new Point();
+    private Point p3 = new Point();
     private ArrayList list = new ArrayList();
     private Line line;
     private int clicks = 0;
@@ -33,7 +35,6 @@ public class Route extends MouseAdapter {
         if (clicks == 0) {
             line = new Line();
             line.setP1(new Point(x, y));
-
             clicks++;
         } else {
             line.setP2(new Point(x, y));
@@ -92,13 +93,20 @@ public class Route extends MouseAdapter {
         for (GameObject player : jags) {
             for (int l = 0; l < list.size(); l++) {
                 if (mouseOver(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY(), player.getX(), player.getY(), 16, 16)) {
-                    player.setX(((Line) list.get(l)).getP2().getX()-8);
-                    player.setY(((Line) list.get(l)).getP2().getY()-8);
+                    int p2x = ((Line) list.get(l)).getP2().getX()-8;
+                    int p2y = ((Line) list.get(l)).getP2().getY()-8;
+                    int p1x = ((Line) list.get(l)).getP1().getX()-8;
+                    int p1y = ((Line) list.get(l)).getP1().getY()-8;
+                    player.setVelX(p2x-p1x);
+                    player.setVelY(p2y-p1y);
+                    player.setVelY(0);
+                    player.setVelX(0);
+                    player.setX(p2x);
+                    player.setY(p2y);
                 }
             }
         }
     }
-
 
     public void undo() {
         if (!list.isEmpty()) {
@@ -134,13 +142,15 @@ class Line {
 
     private Point p1;
     private Point p2;
+    private Point p3;
 
     public Line() {
     }
 
-    public Line(Point p1, Point p2) {
+    public Line(Point p1, Point p2, Point p3) {
         this.p1 = p1;
         this.p2 = p2;
+        this.p3 = p3;
     }
 
     public Point getP1() {
@@ -151,12 +161,20 @@ class Line {
         return p2;
     }
 
+    public Point getP3() {
+        return p3;
+    }
+
     public void setP1(Point p1) {
         this.p1 = p1;
     }
 
     public void setP2(Point p2) {
         this.p2 = p2;
+    }
+
+    public void setP3(Point p3) {
+        this.p3 = p3;
     }
 }
 class Point {
