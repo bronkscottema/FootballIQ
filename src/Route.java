@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -97,10 +98,10 @@ public class Route extends MouseAdapter {
                     int p2y = ((Line) list.get(l)).getP2().getY()-8;
                     int p1x = ((Line) list.get(l)).getP1().getX()-8;
                     int p1y = ((Line) list.get(l)).getP1().getY()-8;
-                    player.setVelX(p2x-p1x);
-                    player.setVelY(p2y-p1y);
-                    player.setVelY(0);
-                    player.setVelX(0);
+//                    player.setVelX(p2x-p1x);
+//                    player.setVelY(p2y-p1y);
+//                    player.setVelY(0);
+//                    player.setVelX(0);
                     player.setX(p2x);
                     player.setY(p2y);
                 }

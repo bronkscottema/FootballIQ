@@ -22,9 +22,7 @@ public enum ID {
     WOSLB(),
     FB(),
     TE(),
-    WR(),
     WRX(),
-    WRY(),
     WRZ(),
     WRH();
 }

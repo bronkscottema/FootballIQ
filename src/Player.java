@@ -19,11 +19,9 @@ public class Player extends GameObject {
         offense.add(ID.QB);
         offense.add(ID.RB);
         offense.add(ID.FB);
-        offense.add(ID.WR);
         offense.add(ID.WRH);
         offense.add(ID.WRX);
         offense.add(ID.WRZ);
-        offense.add(ID.WRY);
     }
     ArrayList<ID> defense;
     {
@@ -58,7 +56,31 @@ public class Player extends GameObject {
         if (offense.contains(getID())) {
             g.setColor(Color.white);
             g.fillOval(x, y, 16, 16);
-        } else {
+            if (getID() == ID.WRH) {
+                g.setColor(Color.black);
+                g.drawString("H",x+3,y+13);
+            }
+            if (getID() == ID.WRX) {
+                g.setColor(Color.black);
+                g.drawString("X",x+3,y+13);
+            }
+            if (getID()== ID.WRZ) {
+                g.setColor(Color.black);
+                g.drawString("Z",x+3,y+13);
+            }
+            if (getID()== ID.TE) {
+                g.setColor(Color.black);
+                g.drawString("Y",x+3,y+13);
+            }
+            if (getID()== ID.RB) {
+                g.setColor(Color.black);
+                g.drawString("F",x+3,y+13);
+            }
+            if (getID()== ID.QB) {
+                g.setColor(Color.black);
+                g.drawString("Q", x + 3, y + 13);
+            }
+        } else if (defense.contains(getID())) {
             g.setColor(Color.black);
             g.fillRect(x,y,16,16);
         }

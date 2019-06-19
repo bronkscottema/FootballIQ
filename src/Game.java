@@ -1,9 +1,12 @@
-
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
 
@@ -14,10 +17,12 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
+//    private ResourceManager rM;
 
 
     public Game() {
-        handler = new Handler();JFrame frame = new JFrame("FootballIQ");
+        handler = new Handler();
+        JFrame frame = new JFrame("FootballIQ");
         frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         frame.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
@@ -141,7 +146,7 @@ public class Game extends Canvas implements Runnable {
         route.tick();
     }
 
-    private void render() {
+    public void render() {
         BufferStrategy bs = this.getBufferStrategy();
         if(bs == null) {
             this.createBufferStrategy(3);
