@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class Game extends Canvas implements Runnable {
 
@@ -17,7 +19,6 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
-//    private ResourceManager rM;
 
 
     public Game() {
@@ -64,12 +65,31 @@ public class Game extends Canvas implements Runnable {
         });
         frame.add(play);
         Button save = new Button("save");
-//        undo.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                route.undo();
-//            }
-//        });
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser chooseDirec = new JFileChooser();
+                chooseDirec.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                chooseDirec.showSaveDialog(frame.getContentPane());
+                File file = chooseDirec.getSelectedFile();
+                file = new File(file+".gif");
+                JFrame frame = new JFrame("FootballIQ");
+                BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB_PRE);
+                Graphics2D g2=(Graphics2D)image.getGraphics();
+                Image img;
+                img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
+                g2.drawImage(img,0, 0, WIDTH, HEIGHT-50, null);
+                handler.render(g2);
+                route.render(g2);
+                try
+                {
+                    ImageIO.write(image, "gif", new File("/"+file));
+                }
+                catch (Exception ev) {
+                ev.printStackTrace();
+                }
+
+            }
+        });
         save.setBounds(360,468,50,50);
         frame.add(save);
         Button reset = new Button("reset");
