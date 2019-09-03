@@ -69,7 +69,6 @@ public class Game extends Canvas implements Runnable {
                 chooseDirec.showSaveDialog(frame.getContentPane());
                 File file = chooseDirec.getSelectedFile();
                 file = new File(file+".gif");
-                JFrame frame = new JFrame("FootballIQ");
                 BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB_PRE);
                 Graphics2D g2=(Graphics2D)image.getGraphics();
                 g2.setColor(Color.WHITE);
@@ -166,6 +165,11 @@ public class Game extends Canvas implements Runnable {
                 g2.drawLine((WIDTH/2)+155,500,(WIDTH/2)+145,500);
                 g2.drawLine((WIDTH/2)+155,490,(WIDTH/2)+145,490);
                 g2.drawLine((WIDTH/2)+155,480,(WIDTH/2)+145,480);
+                g2.setFont(new Font("SansSerif", Font.PLAIN, 12));
+                g2.drawString(offense.getText(), 0, 495-25);
+                g2.drawString(offensivePlay.getText(), 0, 495);
+                g2.drawString(defense.getText(), 520, 495-25);
+                g2.drawString(defensivePlay.getText(), 520, 495);
                 handler.render(g2);
                 route.render(g2);
                 try
@@ -175,7 +179,6 @@ public class Game extends Canvas implements Runnable {
                 catch (Exception ev) {
                 ev.printStackTrace();
                 }
-
             }
         });
         save.setBounds(360,468,50,50);

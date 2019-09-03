@@ -79,9 +79,9 @@ public class Route extends MouseAdapter {
                     if (SwingUtilities.isRightMouseButton(e)) {
                         String[] choices = {"A", "B", "F", "T","U", ""};
                         String input = (String) JOptionPane.showInputDialog(null, null,
-                                "Change Position", JOptionPane.QUESTION_MESSAGE, null, // Use
-                                choices, // Array of choices
-                                choices[1]); // Initial choice
+                            "Change Position", JOptionPane.QUESTION_MESSAGE, null, // Use
+                            choices, // Array of choices
+                            choices[1]); // Initial choice
                         System.out.println(input);
                     if (input.equals("A")) {
                         player.setID(ID.A);
