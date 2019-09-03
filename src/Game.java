@@ -170,6 +170,7 @@ public class Game extends Canvas implements Runnable {
                 g2.drawString(offensivePlay.getText(), 0, 495);
                 g2.drawString(defense.getText(), 520, 495-25);
                 g2.drawString(defensivePlay.getText(), 520, 495);
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 handler.render(g2);
                 route.render(g2);
                 try
