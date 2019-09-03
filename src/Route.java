@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -29,23 +30,80 @@ public class Route extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int x = e.getX();
-        int y = e.getY();
+        if (SwingUtilities.isLeftMouseButton(e)) {
+            int x = e.getX();
+            int y = e.getY();
 
-        if (clicks == 0) {
-            line = new Line();
-            line.setP1(new Point(x, y));
-            clicks++;
-        } else {
-            line.setP2(new Point(x, y));
-            list.add(line);
-            clicks = 0;
+            if (clicks == 0) {
+                line = new Line();
+                line.setP1(new Point(x, y));
+                clicks++;
+            } else {
+                line.setP2(new Point(x, y));
+                list.add(line);
+                clicks = 0;
+            }
         }
         game.repaint();
     }
 
     public void mousePressed(MouseEvent e){
+        ArrayList<ID> defense;
 
+        {
+            defense = new ArrayList<ID>();
+            defense.add(ID.SDE);
+            defense.add(ID.SDT);
+            defense.add(ID.WDT);
+            defense.add(ID.WDE);
+            defense.add(ID.SOSLB);
+            defense.add(ID.SISLB);
+            defense.add(ID.WOSLB);
+            defense.add(ID.WISLB);
+            defense.add(ID.FS);
+            defense.add(ID.SS);
+            defense.add(ID.WCB);
+            defense.add(ID.SCB);
+            defense.add(ID.C);
+            defense.add(ID.LG);
+            defense.add(ID.LT);
+            defense.add(ID.RT);
+            defense.add(ID.RG);
+        }
+            LinkedList<GameObject> jags = handler.object;
+            for (GameObject player : jags) {
+                if (mouseOver(e.getX(),e.getY(),player.getX(),player.getY(),16,16)) {
+                    if (defense.contains(player.getID())) {
+                        break;
+                    }
+                    if (SwingUtilities.isRightMouseButton(e)) {
+                        String[] choices = {"A", "B", "F", "T","U", ""};
+                        String input = (String) JOptionPane.showInputDialog(null, null,
+                                "Change Position", JOptionPane.QUESTION_MESSAGE, null, // Use
+                                choices, // Array of choices
+                                choices[1]); // Initial choice
+                        System.out.println(input);
+                    if (input.equals("A")) {
+                        player.setID(ID.A);
+                    }
+                    if (input.equals("B")) {
+                            player.setID(ID.B);
+                    }
+                    if (input.equals("F")) {
+                        player.setID(ID.F);
+                    }
+                    if (input.equals("T")) {
+                        player.setID(ID.T);
+                    }
+                    if (input.equals("U")) {
+                        player.setID(ID.U);
+                    }
+                    if (input.equals("")) {
+                        player.setID(ID.N);
+                    }
+                }
+            }
+        }
     }
 
 

@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.ListIterator;
 
 public class Player extends GameObject {
 
@@ -8,7 +7,9 @@ public class Player extends GameObject {
 
         super(x, y, id);
     }
+
     ArrayList<ID> offense = new ArrayList<ID>();
+
     {
         offense.add(ID.TE);
         offense.add(ID.LT);
@@ -22,8 +23,16 @@ public class Player extends GameObject {
         offense.add(ID.WRH);
         offense.add(ID.WRX);
         offense.add(ID.WRZ);
+        offense.add(ID.A);
+        offense.add(ID.B);
+        offense.add(ID.U);
+        offense.add(ID.F);
+        offense.add(ID.T);
+        offense.add(ID.N);
     }
+
     ArrayList<ID> defense;
+
     {
         defense = new ArrayList<ID>();
         defense.add(ID.SDE);
@@ -53,36 +62,66 @@ public class Player extends GameObject {
     }
 
     public void render(Graphics g) {
+
+        Graphics2D g2 = (Graphics2D) g;
         if (offense.contains(getID())) {
-            g.setColor(Color.white);
-            g.fillOval(x, y, 16, 16);
+            g2.drawOval(x, y, 16, 16);
+            g2.setStroke(new BasicStroke(2));
+            g2.setColor(Color.black);
+            if (getID() == ID.A) {
+                g2.setColor(Color.black);
+                g2.drawString("A", x + 3, y + 13);
+            }
+            if (getID() == ID.B) {
+                g.setColor(Color.black);
+                g.drawString("B", x + 3, y + 13);
+            }
+            if (getID() == ID.F) {
+                g.setColor(Color.black);
+                g.drawString("F", x + 3, y + 13);
+            }
             if (getID() == ID.WRH) {
-                g.setColor(Color.black);
-                g.drawString("H",x+3,y+13);
+                g2.setColor(Color.black);
+                g2.drawString("H", x + 3, y + 13);
             }
-            if (getID() == ID.WRX) {
-                g.setColor(Color.black);
-                g.drawString("X",x+3,y+13);
-            }
-            if (getID()== ID.WRZ) {
-                g.setColor(Color.black);
-                g.drawString("Z",x+3,y+13);
-            }
-            if (getID()== ID.TE) {
-                g.setColor(Color.black);
-                g.drawString("Y",x+3,y+13);
-            }
-            if (getID()== ID.RB) {
-                g.setColor(Color.black);
-                g.drawString("F",x+3,y+13);
-            }
-            if (getID()== ID.QB) {
+            if (getID() == ID.QB) {
                 g.setColor(Color.black);
                 g.drawString("Q", x + 3, y + 13);
             }
+            if (getID() == ID.RB) {
+                g.setColor(Color.black);
+                g.drawString("F", x + 3, y + 13);
+            }
+            if (getID() == ID.T) {
+                g.setColor(Color.black);
+                g.drawString("T", x + 3, y + 13);
+            }
+            if (getID() == ID.TE) {
+                g.setColor(Color.black);
+                g.drawString("Y", x + 3, y + 13);
+            }
+            if (getID() == ID.U) {
+                g.setColor(Color.black);
+                g.drawString("U", x + 3, y + 13);
+            }
+            if (getID() == ID.WRX) {
+                g2.setColor(Color.black);
+                g2.drawString("X", x + 3, y + 13);
+            }
+            if (getID() == ID.TE) {
+                g2.setColor(Color.black);
+                g.drawString("Y", x + 3, y + 13);
+            }
+            if (getID() == ID.WRZ) {
+                g2.setColor(Color.black);
+                g2.drawString("Z", x + 3, y + 13);
+            }
+            if (getID() == ID.N) {
+                g2.setColor(Color.black);
+            }
         } else if (defense.contains(getID())) {
             g.setColor(Color.black);
-            g.fillRect(x,y,16,16);
+            g.fillRect(x, y, 16, 16);
         }
     }
 }

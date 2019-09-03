@@ -24,5 +24,11 @@ public enum ID {
     TE(),
     WRX(),
     WRZ(),
-    WRH();
+    WRH(),
+    A(),
+    B(),
+    F(),
+    T(),
+    U(),
+    N();
 }
