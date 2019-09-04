@@ -37,7 +37,15 @@ public class Route extends MouseAdapter {
             if (clicks == 0) {
                 line = new Line();
                 line.setP1(new Point(x, y));
-                clicks++;
+                LinkedList<GameObject> jags = handler.object;
+                for (GameObject player : jags) {
+                    if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 16, 16)) {
+                        clicks++;
+                        line.setId(player.getID());
+                    } else {
+                        clicks++;
+                    }
+                }
             } else {
                 line.setP2(new Point(x, y));
                 list.add(line);
@@ -133,17 +141,32 @@ public class Route extends MouseAdapter {
     }
 
     public void reset() {
+        reload();
         LinkedList<GameObject> players = handler.object;
         Iterator<GameObject> jag = players.iterator();
         while (jag.hasNext()) {
            GameObject player = jag.next();
-           jag.remove();
            if (!list.isEmpty()) {
                int size = list.size() - 1;
                list.remove(size);
            }
         }
-        handler.startGame();
+    }
+
+    public void reload() {
+        LinkedList<GameObject> jags = handler.object;
+        for (GameObject player : jags) {
+            if (!list.isEmpty()) {
+                for (int l = 0; l < list.size(); l++) {
+                    Line currLine;
+                    currLine = (Line) (list.get(l));
+                    if (currLine.getId() == player.getID()) {
+                        player.setX(currLine.getP1().getX()-8);
+                        player.setY(currLine.getP1().getY()-8);
+                    }
+                }
+            }
+        }
     }
 
     public void play() {
@@ -153,12 +176,6 @@ public class Route extends MouseAdapter {
                 if (mouseOver(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY(), player.getX(), player.getY(), 16, 16)) {
                     int p2x = ((Line) list.get(l)).getP2().getX()-8;
                     int p2y = ((Line) list.get(l)).getP2().getY()-8;
-                    int p1x = ((Line) list.get(l)).getP1().getX()-8;
-                    int p1y = ((Line) list.get(l)).getP1().getY()-8;
-//                    player.setVelX(p2x-p1x);
-//                    player.setVelY(p2y-p1y);
-//                    player.setVelY(0);
-//                    player.setVelX(0);
                     player.setX(p2x);
                     player.setY(p2y);
                 }
@@ -194,21 +211,22 @@ public class Route extends MouseAdapter {
         } else return false;
 
     }
-
 }
 class Line {
 
     private Point p1;
     private Point p2;
     private Point p3;
+    private ID id;
 
     public Line() {
     }
 
-    public Line(Point p1, Point p2, Point p3) {
+    public Line(Point p1, Point p2, Point p3, ID id) {
         this.p1 = p1;
         this.p2 = p2;
         this.p3 = p3;
+        this.id = id;
     }
 
     public Point getP1() {
@@ -223,6 +241,8 @@ class Line {
         return p3;
     }
 
+    public ID getId() { return id; }
+
     public void setP1(Point p1) {
         this.p1 = p1;
     }
@@ -231,8 +251,8 @@ class Line {
         this.p2 = p2;
     }
 
-    public void setP3(Point p3) {
-        this.p3 = p3;
+    public void setId(ID id) {
+        this.id = id;
     }
 }
 class Point {

@@ -70,51 +70,51 @@ public class Player extends GameObject {
             g2.setColor(Color.black);
             if (getID() == ID.A) {
                 g2.setColor(Color.black);
-                g2.drawString("A", x + 3, y + 13);
+                g2.drawString("A", x + 4, y + 13);
             }
             if (getID() == ID.B) {
                 g.setColor(Color.black);
-                g.drawString("B", x + 3, y + 13);
+                g.drawString("B", x + 4, y + 13);
             }
             if (getID() == ID.F) {
                 g.setColor(Color.black);
-                g.drawString("F", x + 3, y + 13);
+                g.drawString("F", x + 4, y + 13);
             }
             if (getID() == ID.WRH) {
                 g2.setColor(Color.black);
-                g2.drawString("H", x + 3, y + 13);
+                g2.drawString("H", x + 4, y + 13);
             }
             if (getID() == ID.QB) {
                 g.setColor(Color.black);
-                g.drawString("Q", x + 3, y + 13);
+                g.drawString("Q", x + 4, y + 13);
             }
             if (getID() == ID.RB) {
                 g.setColor(Color.black);
-                g.drawString("F", x + 3, y + 13);
+                g.drawString("F", x + 4, y + 13);
             }
             if (getID() == ID.T) {
                 g.setColor(Color.black);
-                g.drawString("T", x + 3, y + 13);
+                g.drawString("T", x + 4, y + 13);
             }
             if (getID() == ID.TE) {
                 g.setColor(Color.black);
-                g.drawString("Y", x + 3, y + 13);
+                g.drawString("Y", x + 4, y + 13);
             }
             if (getID() == ID.U) {
                 g.setColor(Color.black);
-                g.drawString("U", x + 3, y + 13);
+                g.drawString("U", x + 4, y + 13);
             }
             if (getID() == ID.WRX) {
                 g2.setColor(Color.black);
-                g2.drawString("X", x + 3, y + 13);
+                g2.drawString("X", x + 4, y + 13);
             }
             if (getID() == ID.TE) {
                 g2.setColor(Color.black);
-                g.drawString("Y", x + 3, y + 13);
+                g.drawString("Y", x + 4, y + 13);
             }
             if (getID() == ID.WRZ) {
                 g2.setColor(Color.black);
-                g2.drawString("Z", x + 3, y + 13);
+                g2.drawString("Z", x + 4, y + 13);
             }
             if (getID() == ID.N) {
                 g2.setColor(Color.black);

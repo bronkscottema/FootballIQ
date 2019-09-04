@@ -50,10 +50,10 @@ public class Game extends Canvas implements Runnable {
                 route.undo();
             }
         });
-        undo.setBounds(260,468,50,50);
+        undo.setBounds(235,468,50,50);
         frame.add(undo);
         Button play = new Button("play");
-        play.setBounds(310,468,50,50);
+        play.setBounds(285,468,50,50);
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -182,7 +182,7 @@ public class Game extends Canvas implements Runnable {
                 }
             }
         });
-        save.setBounds(360,468,50,50);
+        save.setBounds(335,468,50,50);
         frame.add(save);
         Button reset = new Button("reset");
         reset.addActionListener(new ActionListener() {
@@ -191,8 +191,17 @@ public class Game extends Canvas implements Runnable {
                 route.reset();
             }
         });
-        reset.setBounds(410,468,50,50);
+        reset.setBounds(385,468,50,50);
         frame.add(reset);
+        Button reload = new Button("reload");
+        reload.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                route.reload();
+            }
+        });
+        reload.setBounds(435,468,50,50);
+        frame.add(reload);
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
