@@ -15,5 +15,8 @@ Reset Button -> This will remove all the lines but keep the formation.
 
 Save Button -> This will allow you to save your play card for printing. 
 
-Undo Button -> This will undo the last line made every time
+Undo Button -> This will undo the last line made every time.
+
+Known Issues: If you select multiple positions (A,B,F,U or blank) and you hit reload they will all go to one spot on the
+screen. 
 
