@@ -17,7 +17,6 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
-    InputStream is = this.getClass().getResourceAsStream("/resources/images/field.png");
 
 
     public Game() {
@@ -84,101 +83,74 @@ public class Game extends Canvas implements Runnable {
                 g2.fillRect(0,0,WIDTH,HEIGHT);
                 g2.setStroke(new BasicStroke(1));
                 g2.setColor(Color.black);
-                g2.drawLine(0,20,WIDTH,20);
-                g2.drawLine((WIDTH/2)-155,30,(WIDTH/2)-145,30);
-                g2.drawLine((WIDTH/2)-155,40,(WIDTH/2)-145,40);
-                g2.drawLine((WIDTH/2)-155,50,(WIDTH/2)-145,50);
-                g2.drawLine((WIDTH/2)-155,60,(WIDTH/2)-145,60);
-                g2.drawLine((WIDTH/2)+155,60,(WIDTH/2)+145,60);
-                g2.drawLine((WIDTH/2)+155,50,(WIDTH/2)+145,50);
-                g2.drawLine((WIDTH/2)+155,40,(WIDTH/2)+145,40);
-                g2.drawLine((WIDTH/2)+155,30,(WIDTH/2)+145,30);
-                g2.drawLine(0,70,WIDTH,70);
-                g2.drawLine((WIDTH/2)-155,80,(WIDTH/2)-145,80);
-                g2.drawLine((WIDTH/2)-155,90,(WIDTH/2)-145,90);
-                g2.drawLine((WIDTH/2)-155,100,(WIDTH/2)-145,100);
-                g2.drawLine((WIDTH/2)-155,110,(WIDTH/2)-145,110);
-                g2.drawLine((WIDTH/2)+155,110,(WIDTH/2)+145,110);
-                g2.drawLine((WIDTH/2)+155,100,(WIDTH/2)+145,100);
-                g2.drawLine((WIDTH/2)+155,90,(WIDTH/2)+145,90);
-                g2.drawLine((WIDTH/2)+155,80,(WIDTH/2)+145,80);
-                g2.drawLine(0,120,WIDTH,120);
-                g2.drawLine((WIDTH/2)-155,130,(WIDTH/2)-145,130);
-                g2.drawLine((WIDTH/2)-155,140,(WIDTH/2)-145,140);
-                g2.drawLine((WIDTH/2)-155,150,(WIDTH/2)-145,150);
-                g2.drawLine((WIDTH/2)-155,160,(WIDTH/2)-145,160);
-                g2.drawLine((WIDTH/2)+155,160,(WIDTH/2)+145,160);
-                g2.drawLine((WIDTH/2)+155,150,(WIDTH/2)+145,150);
-                g2.drawLine((WIDTH/2)+155,140,(WIDTH/2)+145,140);
-                g2.drawLine((WIDTH/2)+155,130,(WIDTH/2)+145,130);
-                g2.drawLine(0,170,WIDTH,170);
-                g2.drawLine((WIDTH/2)-155,180,(WIDTH/2)-145,180);
-                g2.drawLine((WIDTH/2)-155,190,(WIDTH/2)-145,190);
-                g2.drawLine((WIDTH/2)-155,200,(WIDTH/2)-145,200);
-                g2.drawLine((WIDTH/2)-155,210,(WIDTH/2)-145,210);
-                g2.drawLine((WIDTH/2)+155,210,(WIDTH/2)+145,210);
-                g2.drawLine((WIDTH/2)+155,200,(WIDTH/2)+145,200);
-                g2.drawLine((WIDTH/2)+155,190,(WIDTH/2)+145,190);
-                g2.drawLine((WIDTH/2)+155,180,(WIDTH/2)+145,180);
-                g2.drawLine(0,220,WIDTH,220);
-                g2.drawLine((WIDTH/2)-155,230,(WIDTH/2)-145,230);
-                g2.drawLine((WIDTH/2)-155,240,(WIDTH/2)-145,240);
-                g2.drawLine((WIDTH/2)-155,250,(WIDTH/2)-145,250);
-                g2.drawLine((WIDTH/2)-155,260,(WIDTH/2)-145,260);
-                g2.drawLine((WIDTH/2)+155,260,(WIDTH/2)+145,260);
-                g2.drawLine((WIDTH/2)+155,250,(WIDTH/2)+145,250);
-                g2.drawLine((WIDTH/2)+155,240,(WIDTH/2)+145,240);
-                g2.drawLine((WIDTH/2)+155,230,(WIDTH/2)+145,230);
+                g2.drawLine((WIDTH/2)-210,20,(WIDTH/2)-200,20);
+                g2.drawLine((WIDTH/2)+210,20,(WIDTH/2)+200,20);
+                g2.drawLine((WIDTH/2)-210,40,(WIDTH/2)-200,40);
+                g2.drawLine((WIDTH/2)+210,40,(WIDTH/2)+200,40);
+                g2.drawLine((WIDTH/2)-210,60,(WIDTH/2)-200,60);
+                g2.drawLine((WIDTH/2)+210,60,(WIDTH/2)+200,60);
+                g2.drawLine((WIDTH/2)-210,80,(WIDTH/2)-200,80);
+                g2.drawLine((WIDTH/2)+210,80,(WIDTH/2)+200,80);
+                g2.drawLine(0,100,WIDTH,100);
+                g2.drawLine((WIDTH/2)-210,120,(WIDTH/2)-200,120);
+                g2.drawLine((WIDTH/2)+210,120,(WIDTH/2)+200,120);
+                g2.drawLine((WIDTH/2)-210,140,(WIDTH/2)-200,140);
+                g2.drawLine((WIDTH/2)+210,140,(WIDTH/2)+200,140);
+                g2.drawLine((WIDTH/2)-210,160,(WIDTH/2)-200,160);
+                g2.drawLine((WIDTH/2)+210,160,(WIDTH/2)+200,160);
+                g2.drawLine((WIDTH/2)-210,180,(WIDTH/2)-200,180);
+                g2.drawLine((WIDTH/2)+210,180,(WIDTH/2)+200,180);
+                g2.drawLine(0,200,WIDTH,200);
+                g2.drawLine((WIDTH/2)-210,220,(WIDTH/2)-200,220);
+                g2.drawLine((WIDTH/2)+210,220,(WIDTH/2)+200,220);
+                g2.drawLine((WIDTH/2)-210,240,(WIDTH/2)-200,240);
+                g2.drawLine((WIDTH/2)+210,240,(WIDTH/2)+200,240);
+                g2.drawLine((WIDTH/2)-210,260,(WIDTH/2)-200,260);
+                g2.drawLine((WIDTH/2)+210,260,(WIDTH/2)+200,260);
+                g2.drawLine((WIDTH/2)-210,280,(WIDTH/2)-200,280);
+                g2.drawLine((WIDTH/2)+210,280,(WIDTH/2)+200,280);
+                g2.drawLine(0,300,WIDTH,300);
+                g2.drawLine((WIDTH/2)-210,320,(WIDTH/2)-200,320);
+                g2.drawLine((WIDTH/2)+210,320,(WIDTH/2)+200,320);
+                g2.drawLine((WIDTH/2)-210,340,(WIDTH/2)-200,340);
+                g2.drawLine((WIDTH/2)+210,340,(WIDTH/2)+200,340);
+                g2.drawLine((WIDTH/2)-210,360,(WIDTH/2)-200,360);
+                g2.drawLine((WIDTH/2)+210,360,(WIDTH/2)+200,360);
+                g2.drawLine((WIDTH/2)+210,380,(WIDTH/2)+200,380);
+                g2.drawLine((WIDTH/2)-210,380,(WIDTH/2)-200,380);
                 g2.drawLine(0,HEIGHT/2,WIDTH,HEIGHT/2);
-                g2.drawLine((WIDTH/2)-155,280,(WIDTH/2)-145,280);
-                g2.drawLine((WIDTH/2)-155,290,(WIDTH/2)-145,290);
-                g2.drawLine((WIDTH/2)-155,300,(WIDTH/2)-145,300);
-                g2.drawLine((WIDTH/2)-155,310,(WIDTH/2)-145,310);
-                g2.drawLine((WIDTH/2)+155,310,(WIDTH/2)+145,310);
-                g2.drawLine((WIDTH/2)+155,300,(WIDTH/2)+145,300);
-                g2.drawLine((WIDTH/2)+155,290,(WIDTH/2)+145,290);
-                g2.drawLine((WIDTH/2)+155,280,(WIDTH/2)+145,280);
-                g2.drawLine(0,320,WIDTH,320);
-                g2.drawLine((WIDTH/2)-155,330,(WIDTH/2)-145,330);
-                g2.drawLine((WIDTH/2)-155,340,(WIDTH/2)-145,340);
-                g2.drawLine((WIDTH/2)-155,350,(WIDTH/2)-145,350);
-                g2.drawLine((WIDTH/2)-155,360,(WIDTH/2)-145,360);
-                g2.drawLine((WIDTH/2)+155,360,(WIDTH/2)+145,360);
-                g2.drawLine((WIDTH/2)+155,350,(WIDTH/2)+145,350);
-                g2.drawLine((WIDTH/2)+155,340,(WIDTH/2)+145,340);
-                g2.drawLine((WIDTH/2)+155,330,(WIDTH/2)+145,330);
-                g2.drawLine(0,370,WIDTH,370);
-                g2.drawLine((WIDTH/2)-155,380,(WIDTH/2)-145,380);
-                g2.drawLine((WIDTH/2)-155,390,(WIDTH/2)-145,390);
-                g2.drawLine((WIDTH/2)-155,400,(WIDTH/2)-145,400);
-                g2.drawLine((WIDTH/2)-155,410,(WIDTH/2)-145,410);
-                g2.drawLine((WIDTH/2)+155,410,(WIDTH/2)+145,410);
-                g2.drawLine((WIDTH/2)+155,400,(WIDTH/2)+145,400);
-                g2.drawLine((WIDTH/2)+155,390,(WIDTH/2)+145,390);
-                g2.drawLine((WIDTH/2)+155,380,(WIDTH/2)+145,380);
-                g2.drawLine(0,420,WIDTH,420);
-                g2.drawLine((WIDTH/2)-155,430,(WIDTH/2)-145,430);
-                g2.drawLine((WIDTH/2)-155,440,(WIDTH/2)-145,440);
-                g2.drawLine((WIDTH/2)-155,450,(WIDTH/2)-145,450);
-                g2.drawLine((WIDTH/2)-155,460,(WIDTH/2)-145,460);
-                g2.drawLine((WIDTH/2)+155,460,(WIDTH/2)+145,460);
-                g2.drawLine((WIDTH/2)+155,450,(WIDTH/2)+145,450);
-                g2.drawLine((WIDTH/2)+155,440,(WIDTH/2)+145,440);
-                g2.drawLine((WIDTH/2)+155,430,(WIDTH/2)+145,430);
-                g2.drawLine(0,470,WIDTH,470);
-                g2.drawLine((WIDTH/2)-155,480,(WIDTH/2)-145,480);
-                g2.drawLine((WIDTH/2)-155,490,(WIDTH/2)-145,490);
-                g2.drawLine((WIDTH/2)-155,500,(WIDTH/2)-145,500);
-                g2.drawLine((WIDTH/2)-155,510,(WIDTH/2)-145,510);
-                g2.drawLine((WIDTH/2)+155,510,(WIDTH/2)+145,510);
-                g2.drawLine((WIDTH/2)+155,500,(WIDTH/2)+145,500);
-                g2.drawLine((WIDTH/2)+155,490,(WIDTH/2)+145,490);
-                g2.drawLine((WIDTH/2)+155,480,(WIDTH/2)+145,480);
-                g2.setFont(new Font("SansSerif", Font.PLAIN, 12));
-                g2.drawString(offense.getText(), 0, 495-25);
-                g2.drawString(offensivePlay.getText(), 0, 495);
-                g2.drawString(defense.getText(), 520, 495-25);
-                g2.drawString(defensivePlay.getText(), 520, 495);
+                g2.drawLine((WIDTH/2)-210,420,(WIDTH/2)-200,420);
+                g2.drawLine((WIDTH/2)+210,420,(WIDTH/2)+200,420);
+                g2.drawLine((WIDTH/2)-210,440,(WIDTH/2)-200,440);
+                g2.drawLine((WIDTH/2)+210,440,(WIDTH/2)+200,440);
+                g2.drawLine((WIDTH/2)-210,460,(WIDTH/2)-200,460);
+                g2.drawLine((WIDTH/2)+210,460,(WIDTH/2)+200,460);
+                g2.drawLine((WIDTH/2)-210,480,(WIDTH/2)-200,480);
+                g2.drawLine((WIDTH/2)+210,480,(WIDTH/2)+200,480);
+                g2.drawLine(0,500,WIDTH,500);
+                g2.drawLine((WIDTH/2)-210,520,(WIDTH/2)-200,520);
+                g2.drawLine((WIDTH/2)+210,520,(WIDTH/2)+200,520);
+                g2.drawLine((WIDTH/2)-210,540,(WIDTH/2)-200,540);
+                g2.drawLine((WIDTH/2)+210,540,(WIDTH/2)+200,540);
+                g2.drawLine((WIDTH/2)-210,560,(WIDTH/2)-200,560);
+                g2.drawLine((WIDTH/2)+210,560,(WIDTH/2)+200,560);
+                g2.drawLine((WIDTH/2)-210,580,(WIDTH/2)-200,580);
+                g2.drawLine((WIDTH/2)+210,580,(WIDTH/2)+200,580);
+                g2.drawLine(0,600,WIDTH,600);
+                g2.drawLine((WIDTH/2)-210,620,(WIDTH/2)-200,620);
+                g2.drawLine((WIDTH/2)+210,620,(WIDTH/2)+200,620);
+                g2.drawLine((WIDTH/2)-210,640,(WIDTH/2)-200,640);
+                g2.drawLine((WIDTH/2)+210,640,(WIDTH/2)+200,640);
+                g2.drawLine((WIDTH/2)-210,660,(WIDTH/2)-200,660);
+                g2.drawLine((WIDTH/2)+210,660,(WIDTH/2)+200,660);
+                g2.drawLine((WIDTH/2)-210,680,(WIDTH/2)-200,680);
+                g2.drawLine((WIDTH/2)+210,680,(WIDTH/2)+200,680);
+
+                g2.setFont(font);
+                g2.drawString(offense.getText(), 0, 700);
+                g2.drawString(offensivePlay.getText(), 0, 750);
+                g2.drawString(defense.getText(), 800, 700);
+                g2.drawString(defensivePlay.getText(), 800, 750);
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 handler.render(g2);
                 route.render(g2);
@@ -256,21 +228,25 @@ public class Game extends Canvas implements Runnable {
             long now = System.nanoTime();
             delta += (now - lastTime) / ns;
             lastTime = now;
-            while(delta >= 1) {
+            while (delta >= 1) {
                 tick();
                 delta--;
             }
-            if(running)
+            if (running)
                 render();
             frames++;
 
-            if(System.currentTimeMillis() - timer > 1000000000) {
+            if (System.currentTimeMillis() - timer > 1000000000) {
                 timer += 100000;
                 System.out.println("FPS: " + frames);
                 frames = 0;
             }
+            try {
+                Thread.sleep((now - System.nanoTime() + 1000000000 /60) / 1000000);
+            } catch (Exception ev) {
+                System.out.print("it's fine trust me, just need to put the thread to sleep or computers get hot");
+            }
         }
-        stop();
     }
 
     private void tick() {
@@ -289,7 +265,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
         Image img;
-        img = Toolkit.getDefaultToolkit().getImage("/Users/scottbronkema/Desktop/game/FootballIQ/resources/images/field.png");
+        img = Toolkit.getDefaultToolkit().getImage((getClass().getResource("/images/field.png")));
         g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
         route.render(g);
         handler.render(g);

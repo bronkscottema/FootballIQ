@@ -37,8 +37,8 @@ public class Handler {
         this.addObject(new Player(WIDTH/2, (HEIGHT/2)+75, ID.QB));
         this.addObject(new Player((WIDTH/2)-35, (HEIGHT/2)+85, ID.RB));
         this.addObject(new Player((WIDTH/2)+105, HEIGHT/2, ID.TE));
-        this.addObject(new Player((WIDTH/2)+500, (HEIGHT/2)+25, ID.WRZ));
-        this.addObject(new Player((WIDTH/2)-500, (HEIGHT/2), ID.WRX));
+        this.addObject(new Player((WIDTH/2)+450, (HEIGHT/2)+25, ID.WRZ));
+        this.addObject(new Player((WIDTH/2)-450, (HEIGHT/2), ID.WRX));
         this.addObject(new Player((WIDTH/2)-225, (HEIGHT/2)+15, ID.WRH));
         this.addObject(new Player((WIDTH/2)+115, (HEIGHT/2)-30, ID.SDE));
         this.addObject(new Player((WIDTH/2)-75, HEIGHT/2-30, ID.WDE));
@@ -49,8 +49,8 @@ public class Handler {
         this.addObject(new Player((WIDTH/2)+20, (HEIGHT/2)-75, ID.SISLB));
         this.addObject(new Player(WIDTH/2, (HEIGHT/2)-150, ID.FS));
         this.addObject(new Player((WIDTH/2)-225, (HEIGHT/2)-70, ID.SS));
-        this.addObject(new Player((WIDTH/2)+500, (HEIGHT/2)-105, ID.SCB));
-        this.addObject(new Player((WIDTH/2)-500, (HEIGHT/2)-105, ID.WCB));
+        this.addObject(new Player((WIDTH/2)+450, (HEIGHT/2)-105, ID.SCB));
+        this.addObject(new Player((WIDTH/2)-450, (HEIGHT/2)-105, ID.WCB));
     }
 
 }
