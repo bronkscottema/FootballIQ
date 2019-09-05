@@ -52,7 +52,6 @@ public class Route extends MouseAdapter {
                 clicks = 0;
             }
         }
-        game.repaint();
     }
 
     public void mousePressed(MouseEvent e){
@@ -187,7 +186,6 @@ public class Route extends MouseAdapter {
         if (!list.isEmpty()) {
             int size = list.size() - 1;
             list.remove(size);
-            game.repaint();
         }
     }
 
