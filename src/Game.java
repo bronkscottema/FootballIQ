@@ -6,40 +6,47 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.Buffer;
 
 public class Game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 720, HEIGHT = WIDTH / 12 * 9;
+    public static final int WIDTH = 1100, HEIGHT = WIDTH / 12 * 9;
 
     private Thread thread;
     private boolean running = false;
     private Handler handler;
     private Movement movement;
     private Route route;
+    InputStream is = this.getClass().getResourceAsStream("/resources/images/field.png");
 
 
     public Game() {
+        Font font = new Font("Courrier New", Font.PLAIN, 16);
         handler = new Handler();
         JFrame frame = new JFrame("FootballIQ");
         frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         frame.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-
+        frame.setIconImage(new ImageIcon(getClass().getResource("/images/field.png")).getImage());
         //offense
         JTextArea offense = new JTextArea("offense");
-        offense.setBounds(0, 495-25, 200, 25);
+        offense.setFont(font);
+        offense.setBounds(0, 750-50, 300, 50);
         frame.add(offense);
         //top left offense play
         JTextArea offensivePlay = new JTextArea("insert play name");
-        offensivePlay.setBounds(0, 495, 200, 25);
+        offensivePlay.setFont(font);
+        offensivePlay.setBounds(0, 750, 300, 50);
         frame.add(offensivePlay);
         //top right defense
         JTextArea defense = new JTextArea("defense");
-        defense.setBounds(520, 495-25, 200, 25);
+        defense.setFont(font);
+        defense.setBounds(1100-300, 750-50, 300, 50);
         frame.add(defense);
         //top left defensive play
         JTextArea defensivePlay = new JTextArea("insert play name");
-        defensivePlay.setBounds(520, 495, 200, 25);
+        defensivePlay.setFont(font);
+        defensivePlay.setBounds(1100-300, 750, 300, 50);
         frame.add(defensivePlay);
 
         //buttons
@@ -50,10 +57,12 @@ public class Game extends Canvas implements Runnable {
                 route.undo();
             }
         });
-        undo.setBounds(235,468,50,50);
+        undo.setBounds(350,700,80,100);
+        undo.setFont(font);
         frame.add(undo);
         Button play = new Button("play");
-        play.setBounds(285,468,50,50);
+        play.setBounds(430,700,80,100);
+        play.setFont(font);
         play.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -182,7 +191,8 @@ public class Game extends Canvas implements Runnable {
                 }
             }
         });
-        save.setBounds(335,468,50,50);
+        save.setFont(font);
+        save.setBounds(510,700,80,100);
         frame.add(save);
         Button reset = new Button("reset");
         reset.addActionListener(new ActionListener() {
@@ -191,7 +201,8 @@ public class Game extends Canvas implements Runnable {
                 route.reset();
             }
         });
-        reset.setBounds(385,468,50,50);
+        reset.setBounds(590,700,80,100);
+        reset.setFont(font);
         frame.add(reset);
         Button reload = new Button("reload");
         reload.addActionListener(new ActionListener() {
@@ -200,7 +211,8 @@ public class Game extends Canvas implements Runnable {
                 route.reload();
             }
         });
-        reload.setBounds(435,468,50,50);
+        reload.setFont(font);
+        reload.setBounds(670,700,80,100);
         frame.add(reload);
 
 
@@ -234,9 +246,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void run() {
-        this.requestFocus();
         long lastTime = System.nanoTime();
-        double amountOfTicks = 10;
+        double amountOfTicks = 60.0;
         double ns = 1000000000 / amountOfTicks;
         double delta = 0;
         long timer= System.currentTimeMillis();
@@ -255,6 +266,7 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000000000) {
                 timer += 100000;
+                System.out.println("FPS: " + frames);
                 frames = 0;
             }
         }
@@ -277,7 +289,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
         Image img;
-        img = Toolkit.getDefaultToolkit().getImage("src/images/field.png");
+        img = Toolkit.getDefaultToolkit().getImage("/Users/scottbronkema/Desktop/game/FootballIQ/resources/images/field.png");
         g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
         route.render(g);
         handler.render(g);

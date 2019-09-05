@@ -33,9 +33,9 @@ public class Movement extends MouseAdapter {
     public void mouseDragged(MouseEvent e) {
         LinkedList<GameObject> jag = handler.object;
         for (GameObject player : jag) {
-            if (mouseOver(e.getX(),e.getY(),player.getX(),player.getY(),16,16)) {
-                player.setX(e.getX() - 8);
-                player.setY(e.getY() - 8);
+            if (mouseOver(e.getX(),e.getY(),player.getX(),player.getY(),24,24)) {
+                player.setX(e.getX() - 12);
+                player.setY(e.getY() - 12);
                 break;
             }
         }

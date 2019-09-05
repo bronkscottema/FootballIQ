@@ -39,7 +39,7 @@ public class Route extends MouseAdapter {
                 line.setP1(new Point(x, y));
                 LinkedList<GameObject> jags = handler.object;
                 for (GameObject player : jags) {
-                    if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 16, 16)) {
+                    if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
                         clicks++;
                         line.setId(player.getID());
                     } else {
@@ -80,7 +80,7 @@ public class Route extends MouseAdapter {
         }
             LinkedList<GameObject> jags = handler.object;
             for (GameObject player : jags) {
-                if (mouseOver(e.getX(),e.getY(),player.getX(),player.getY(),16,16)) {
+                if (mouseOver(e.getX(),e.getY(),player.getX(),player.getY(),24,24)) {
                     if (defense.contains(player.getID())) {
                         break;
                     }
@@ -161,8 +161,8 @@ public class Route extends MouseAdapter {
                     Line currLine;
                     currLine = (Line) (list.get(l));
                     if (currLine.getId() == player.getID()) {
-                        player.setX(currLine.getP1().getX()-8);
-                        player.setY(currLine.getP1().getY()-8);
+                        player.setX(currLine.getP1().getX()-12);
+                        player.setY(currLine.getP1().getY()-12);
                     }
                 }
             }
@@ -173,9 +173,9 @@ public class Route extends MouseAdapter {
         LinkedList<GameObject> jags = handler.object;
         for (GameObject player : jags) {
             for (int l = 0; l < list.size(); l++) {
-                if (mouseOver(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY(), player.getX(), player.getY(), 16, 16)) {
-                    int p2x = ((Line) list.get(l)).getP2().getX()-8;
-                    int p2y = ((Line) list.get(l)).getP2().getY()-8;
+                if (mouseOver(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
+                    int p2x = ((Line) list.get(l)).getP2().getX()-12;
+                    int p2y = ((Line) list.get(l)).getP2().getY()-12;
                     player.setX(p2x);
                     player.setY(p2y);
                 }
