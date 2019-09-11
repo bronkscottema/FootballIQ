@@ -54,6 +54,24 @@ public class Player extends GameObject {
         defense.add(ID.WCB);
         defense.add(ID.SCB);
     }
+    ArrayList<ID> kickOff;
+
+    {
+        kickOff = new ArrayList<ID>();
+        kickOff.add(ID.K);
+        kickOff.add(ID.P);
+        kickOff.add(ID.L1);
+        kickOff.add(ID.L2);
+        kickOff.add(ID.L3);
+        kickOff.add(ID.L4);
+        kickOff.add(ID.L5);
+        kickOff.add(ID.R5);
+        kickOff.add(ID.R4);
+        kickOff.add(ID.R3);
+        kickOff.add(ID.R2);
+        kickOff.add(ID.R1);
+
+    }
 
 
     public void tick() {
@@ -70,7 +88,7 @@ public class Player extends GameObject {
     public void render(Graphics g) {
         Font font = new Font("Courrier New", Font.PLAIN, 16);
         Graphics2D g2 = (Graphics2D) g;
-        if (offense.contains(getID())) {
+        if (offense.contains(getID()) || kickOff.contains(getID())) {
             g2.drawOval(x, y, 24, 24);
             g2.setStroke(new BasicStroke(3));
             g2.setColor(Color.black);

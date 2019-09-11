@@ -49,6 +49,26 @@ public class Game extends Canvas implements Runnable {
         frame.add(defensivePlay);
 
         //buttons
+        Button ko = new Button("KO");
+        ko.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.KO();
+            }
+        });
+        ko.setBounds(300,700,50,50);
+        ko.setFont(font);
+        frame.add(ko);
+        Button punt = new Button("Punt");
+        punt.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.punt();
+            }
+        });
+        punt.setBounds(300,750,50,50);
+        punt.setFont(font);
+        frame.add(punt);
         Button undo = new Button("undo");
         undo.addActionListener(new ActionListener() {
             @Override
@@ -186,6 +206,26 @@ public class Game extends Canvas implements Runnable {
         reload.setFont(font);
         reload.setBounds(670,700,80,100);
         frame.add(reload);
+        Button OD = new Button("off/def");
+        OD.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.startGame();
+            }
+        });
+        OD.setFont(font);
+        OD.setBounds(750,700,50,50);
+        frame.add(OD);
+        Button FG = new Button("FG");
+        FG.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.FG();
+            }
+        });
+        FG.setFont(font);
+        FG.setBounds(750,750,50,50);
+        frame.add(FG);
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
