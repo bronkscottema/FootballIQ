@@ -11,7 +11,12 @@ public class Route extends MouseAdapter {
 
     private int x,y;
     private int velX,velY;
-
+    int numTimes = 0;
+    int numA = 0;
+    int numB = 0;
+    int numF = 0;
+    int numT = 0;
+    int numU = 0;
     private Handler handler;
     private Player player;
     private Game game;
@@ -34,7 +39,7 @@ public class Route extends MouseAdapter {
             int x = e.getX();
             int y = e.getY();
 
-            if (clicks == 0) {
+            if (clicks == 0 && SwingUtilities.isLeftMouseButton(e)) {
                 line = new Line();
                 line.setP1(new Point(x, y));
                 LinkedList<GameObject> jags = handler.object;
@@ -90,23 +95,43 @@ public class Route extends MouseAdapter {
                             choices, // Array of choices
                             choices[1]); // Initial choice
                         System.out.println(input);
-                    if (input.equals("A")) {
+                    if (input.equals("A") && numA < 1) {
                         player.setID(ID.A);
+                        numA++;
                     }
-                    if (input.equals("B")) {
-                            player.setID(ID.B);
+                    if (input.equals("B") && numB < 1) {
+                        player.setID(ID.B);
+                        numB++;
                     }
-                    if (input.equals("F")) {
+                    if (input.equals("F") && numF < 1) {
                         player.setID(ID.F);
+                        numF++;
                     }
-                    if (input.equals("T")) {
+                    if (input.equals("T") && numT < 1) {
                         player.setID(ID.T);
+                        numT++;
                     }
-                    if (input.equals("U")) {
+                    if (input.equals("U") && numU < 1) {
                         player.setID(ID.U);
+                        numU++;
                     }
                     if (input.equals("")) {
                         player.setID(ID.N);
+                        if (numTimes == 0) {
+                        } else if (numTimes == 1) {
+                            player.setID(ID.N1);
+                        } else if (numTimes == 2) {
+                            player.setID(ID.N2);
+                        } else if (numTimes == 3) {
+                            player.setID(ID.N3);
+                        } else if (numTimes == 4) {
+                            player.setID(ID.N4);
+                        } else if (numTimes == 5) {
+                            player.setID(ID.N5);
+                        } else if (numTimes == 6) {
+                            player.setID(ID.N6);
+                        }
+                        numTimes++;
                     }
                 }
             }

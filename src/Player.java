@@ -29,6 +29,12 @@ public class Player extends GameObject {
         offense.add(ID.F);
         offense.add(ID.T);
         offense.add(ID.N);
+        offense.add(ID.N1);
+        offense.add(ID.N2);
+        offense.add(ID.N3);
+        offense.add(ID.N4);
+        offense.add(ID.N5);
+        offense.add(ID.N6);
     }
 
     ArrayList<ID> defense;
