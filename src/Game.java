@@ -1,4 +1,6 @@
 import javax.imageio.ImageIO;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.imageio.stream.ImageOutputStream;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,21 +29,12 @@ public class Game extends Canvas implements Runnable {
         frame.setMaximumSize(new Dimension(WIDTH, HEIGHT));
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         frame.setIconImage(new ImageIcon(getClass().getResource("/images/field.png")).getImage());
-        //offense
-        JTextArea offense = new JTextArea("offense");
-        offense.setFont(font);
-        offense.setBounds(0, 750-50, 300, 50);
-        frame.add(offense);
+
         //top left offense play
         JTextArea offensivePlay = new JTextArea("insert play name");
         offensivePlay.setFont(font);
         offensivePlay.setBounds(0, 750, 300, 50);
         frame.add(offensivePlay);
-        //top right defense
-        JTextArea defense = new JTextArea("defense");
-        defense.setFont(font);
-        defense.setBounds(1100-300, 750-50, 300, 50);
-        frame.add(defense);
         //top left defensive play
         JTextArea defensivePlay = new JTextArea("insert play name");
         defensivePlay.setFont(font);
@@ -56,7 +49,7 @@ public class Game extends Canvas implements Runnable {
                 handler.KO();
             }
         });
-        ko.setBounds(300,700,50,50);
+        ko.setBounds(300,750,50,50);
         ko.setFont(font);
         frame.add(ko);
         Button punt = new Button("Punt");
@@ -66,7 +59,7 @@ public class Game extends Canvas implements Runnable {
                 handler.punt();
             }
         });
-        punt.setBounds(300,750,50,50);
+        punt.setBounds(350,750,50,50);
         punt.setFont(font);
         frame.add(punt);
         Button undo = new Button("undo");
@@ -76,11 +69,11 @@ public class Game extends Canvas implements Runnable {
                 route.undo();
             }
         });
-        undo.setBounds(350,700,80,100);
+        undo.setBounds(400,750,50,50);
         undo.setFont(font);
         frame.add(undo);
         Button play = new Button("play");
-        play.setBounds(430,700,80,100);
+        play.setBounds(450,750,50,50);
         play.setFont(font);
         play.addActionListener(new ActionListener() {
             @Override
@@ -167,9 +160,7 @@ public class Game extends Canvas implements Runnable {
                 g2.drawLine((WIDTH/2)+210,680,(WIDTH/2)+200,680);
 
                 g2.setFont(font);
-                g2.drawString(offense.getText(), 0, 700);
                 g2.drawString(offensivePlay.getText(), 0, 750);
-                g2.drawString(defense.getText(), 800, 700);
                 g2.drawString(defensivePlay.getText(), 800, 750);
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 handler.render(g2);
@@ -184,7 +175,7 @@ public class Game extends Canvas implements Runnable {
             }
         });
         save.setFont(font);
-        save.setBounds(510,700,80,100);
+        save.setBounds(500,750,50,50);
         frame.add(save);
         Button reset = new Button("reset");
         reset.addActionListener(new ActionListener() {
@@ -193,10 +184,10 @@ public class Game extends Canvas implements Runnable {
                 route.reset();
             }
         });
-        reset.setBounds(590,700,80,100);
+        reset.setBounds(550,750,50,50);
         reset.setFont(font);
         frame.add(reset);
-        Button reload = new Button("reload");
+        Button reload = new Button("redo");
         reload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -204,9 +195,9 @@ public class Game extends Canvas implements Runnable {
             }
         });
         reload.setFont(font);
-        reload.setBounds(670,700,80,100);
+        reload.setBounds(600,750,50,50);
         frame.add(reload);
-        Button OD = new Button("off/def");
+        Button OD = new Button("O/D");
         OD.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -214,7 +205,7 @@ public class Game extends Canvas implements Runnable {
             }
         });
         OD.setFont(font);
-        OD.setBounds(750,700,50,50);
+        OD.setBounds(650,750,50,50);
         frame.add(OD);
         Button FG = new Button("FG");
         FG.addActionListener(new ActionListener() {
@@ -224,8 +215,18 @@ public class Game extends Canvas implements Runnable {
             }
         });
         FG.setFont(font);
-        FG.setBounds(750,750,50,50);
+        FG.setBounds(700,750,50,50);
         frame.add(FG);
+        Button someButton = new Button("");
+        someButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //todo add some feature here
+            }
+        });
+        someButton.setFont(font);
+        someButton.setBounds(750,750,50,50);
+        frame.add(someButton);
 
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -328,3 +329,4 @@ public class Game extends Canvas implements Runnable {
         new Game();
     }
 }
+
