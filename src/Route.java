@@ -57,6 +57,12 @@ public class Route extends MouseAdapter {
                 clicks = 0;
             }
         }
+        if (SwingUtilities.isRightMouseButton(e)) {
+            p3 = new Point(x,y);
+            if (inLine(p1, p2, p3)) {
+                undo();
+            }
+        }
     }
 
     public void mousePressed(MouseEvent e){
@@ -233,6 +239,15 @@ public class Route extends MouseAdapter {
             } else return false;
         } else return false;
 
+    }
+
+    public static boolean inLine(Point A, Point B, Point C) {
+        // if AC is vertical
+        if (A.getX() == C.getX()) return B.getX() == C.getX();
+        // if AC is horizontal
+        if (A.getY() == C.getY()) return B.getY() == C.getY();
+        // match the gradients
+        return (A.getX() - C.getX())*(A.getY() - C.getY()) == (C.getX() - B.getX())*(C.getY() - B.getY());
     }
 }
 class Line {

@@ -5,6 +5,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -228,6 +230,23 @@ public class Game extends Canvas implements Runnable {
         someButton.setBounds(750,750,50,50);
         frame.add(someButton);
 
+        this.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Z) {
+                    //undo with ctrl + z
+                    route.undo();
+                }
+            }
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
