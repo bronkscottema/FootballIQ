@@ -1,43 +1,30 @@
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Objects;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Route extends MouseAdapter {
 
-    public int x,y;
-    private int velX,velY;
-    int numTimes = 0;
-    int numA = 0;
-    int numB = 0;
-    int numF = 0;
-    int numT = 0;
-    int numU = 0;
-    private Handler handler;
-    private Player player;
+     private Handler handler;
     private Game game;
-    private Point p1 = new Point();
-    private Point p2 = new Point();
-    private Point p3 = new Point();
     private ArrayList list = new ArrayList();
     private Line line;
     private int clicks = 0;
-    boolean isDragging;
     private Long startTime;
     private long playTime = 2000;
-    private ArrayList pOTL = new ArrayList();
+    private ArrayList<Point> pOTL = new ArrayList<Point>();
+    private ArrayList<Point> pOTLs = new ArrayList<Point>();
 
 
-    private Point startPoint, endPoint;
-    private Point pointOnTimeLine;
+    private Point startPoint, midpoint, endPoint;
+    private Point pointOnTimeLine, pointOnTimeLines;
     private double pointInTime;
 
     public Route( Handler handler, Game game) {
@@ -47,6 +34,9 @@ public class Route extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+    }
+
+    public void mousePressed(MouseEvent e){
         if (SwingUtilities.isLeftMouseButton(e)) {
             int x = e.getX();
             int y = e.getY();
@@ -59,99 +49,15 @@ public class Route extends MouseAdapter {
                     if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
                         clicks++;
                         line.setId(player.getID());
-                    } else {
-                        clicks++;
                     }
                 }
+            } else if (clicks == 1) {
+                line.setP2(new Point(x,y));
+                clicks++;
             } else {
-                line.setP2(new Point(x, y));
+                line.setP3(new Point(x, y));
                 list.add(line);
                 clicks = 0;
-            }
-        }
-        if (SwingUtilities.isRightMouseButton(e)) {
-            p3 = new Point(x,y);
-            if (inLine(p1, p2, p3)) {
-                undo();
-            }
-        }
-    }
-
-    public void mousePressed(MouseEvent e){
-        ArrayList<ID> defense;
-
-        {
-            defense = new ArrayList<ID>();
-            defense.add(ID.SDE);
-            defense.add(ID.SDT);
-            defense.add(ID.WDT);
-            defense.add(ID.WDE);
-            defense.add(ID.SOSLB);
-            defense.add(ID.SISLB);
-            defense.add(ID.WOSLB);
-            defense.add(ID.WISLB);
-            defense.add(ID.FS);
-            defense.add(ID.SS);
-            defense.add(ID.WCB);
-            defense.add(ID.SCB);
-            defense.add(ID.C);
-            defense.add(ID.LG);
-            defense.add(ID.LT);
-            defense.add(ID.RT);
-            defense.add(ID.RG);
-        }
-            LinkedList<GameObject> jags = handler.object;
-            for (GameObject player : jags) {
-                if (mouseOver(e.getX(),e.getY(),player.getX(),player.getY(),24,24)) {
-                    if (defense.contains(player.getID())) {
-                        break;
-                    }
-                    if (SwingUtilities.isRightMouseButton(e)) {
-                        String[] choices = {"A", "B", "F", "T","U", ""};
-                        String input = (String) JOptionPane.showInputDialog(null, null,
-                            "Change Position", JOptionPane.QUESTION_MESSAGE, null, // Use
-                            choices, // Array of choices
-                            choices[1]); // Initial choice
-                        System.out.println(input);
-                    if (input.equals("A") && numA < 1) {
-                        player.setID(ID.A);
-                        numA++;
-                    }
-                    if (input.equals("B") && numB < 1) {
-                        player.setID(ID.B);
-                        numB++;
-                    }
-                    if (input.equals("F") && numF < 1) {
-                        player.setID(ID.F);
-                        numF++;
-                    }
-                    if (input.equals("T") && numT < 1) {
-                        player.setID(ID.T);
-                        numT++;
-                    }
-                    if (input.equals("U") && numU < 1) {
-                        player.setID(ID.U);
-                        numU++;
-                    }
-                    if (input.equals("")) {
-                        player.setID(ID.N);
-                        if (numTimes == 0) {
-                        } else if (numTimes == 1) {
-                            player.setID(ID.N1);
-                        } else if (numTimes == 2) {
-                            player.setID(ID.N2);
-                        } else if (numTimes == 3) {
-                            player.setID(ID.N3);
-                        } else if (numTimes == 4) {
-                            player.setID(ID.N4);
-                        } else if (numTimes == 5) {
-                            player.setID(ID.N5);
-                        } else if (numTimes == 6) {
-                            player.setID(ID.N6);
-                        }
-                        numTimes++;
-                    }
-                }
             }
         }
     }
@@ -223,11 +129,13 @@ public class Route extends MouseAdapter {
                 for (GameObject player : jags) {
                     for (int l = 0; l < list.size(); l++) {
                         if (mouseOver(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
-                            int p2x = ((Line) list.get(l)).getP2().getX()-12;
-                            int p2y = ((Line) list.get(l)).getP2().getY()-12;
+                            int p2x = ((Line) list.get(l)).getP3().getX()-12;
+                            int p2y = ((Line) list.get(l)).getP3().getY()-12;
                             startPoint = new Point(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY());
-                            endPoint = new Point(((Line) list.get(l)).getP2().getX(), ((Line) list.get(l)).getP2().getY());
+                            midpoint = new Point(((Line) list.get(l)).getP2().getX(), ((Line) list.get(l)).getP2().getY());
+                            endPoint = new Point(((Line) list.get(l)).getP3().getX(), ((Line) list.get(l)).getP3().getY());
                             pointOnTimeLine = new Point(player.getX(), player.getY());
+                            pointOnTimeLines = new Point(player.getX(), player.getY());
 
                             if (startTime == null) {
                                 startTime = System.currentTimeMillis();
@@ -267,13 +175,15 @@ public class Route extends MouseAdapter {
 
 
     public void render(Graphics g) {
+
         g.setColor(Color.red);
         Graphics2D g2 = (Graphics2D) g;
         Line currLine;
         for (int i = 0; i < list.size(); i++) {
             currLine = (Line) (list.get(i));
-            g2.setStroke(new BasicStroke(2));
-            g2.draw(new Line2D.Float(currLine.getP1().getX(), currLine.getP1().getY(),currLine.getP2().getX(), currLine.getP2().getY()));
+            g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+            g2.drawPolyline(new int[] {currLine.getP1().getX(),currLine.getP2().getX(), currLine.getP3().getX()},
+                            new int[] {currLine.getP1().getY(),currLine.getP2().getY(), currLine.getP3().getY()}, 3);
         }
         if (pointOnTimeLine != null) {
             for (int i = 0; i < pOTL.size(); i++) {
@@ -354,6 +264,10 @@ class Line {
 
     public void setP2(Point p2) {
         this.p2 = p2;
+    }
+
+    public void setP3(Point p3) {
+        this.p3 = p3;
     }
 
     public void setId(ID id) {
