@@ -1,18 +1,16 @@
 import javax.swing.*;
-import javax.swing.Timer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
-import java.util.*;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Route extends MouseAdapter {
 
-     private Handler handler;
+    private Handler handler;
     private Game game;
     private ArrayList list = new ArrayList();
     private Line line;
@@ -21,8 +19,6 @@ public class Route extends MouseAdapter {
     private long playTime = 2000;
     private ArrayList<Point> pOTL = new ArrayList<Point>();
     private ArrayList<Point> pOTLs = new ArrayList<Point>();
-
-
     private Point startPoint, midpoint, endPoint;
     private Point pointOnTimeLine, pointOnTimeLines;
     private double pointInTime;
@@ -129,34 +125,41 @@ public class Route extends MouseAdapter {
                 for (GameObject player : jags) {
                     for (int l = 0; l < list.size(); l++) {
                         if (mouseOver(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
-                            int p2x = ((Line) list.get(l)).getP3().getX()-12;
-                            int p2y = ((Line) list.get(l)).getP3().getY()-12;
-                            startPoint = new Point(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY());
-                            midpoint = new Point(((Line) list.get(l)).getP2().getX(), ((Line) list.get(l)).getP2().getY());
-                            endPoint = new Point(((Line) list.get(l)).getP3().getX(), ((Line) list.get(l)).getP3().getY());
-                            pointOnTimeLine = new Point(player.getX(), player.getY());
-                            pointOnTimeLines = new Point(player.getX(), player.getY());
-
-                            if (startTime == null) {
-                                startTime = System.currentTimeMillis();
-                            }
-                            long now = System.currentTimeMillis();
-                            long diff = now - startTime;
-                            if (diff >= playTime) {
-                                diff = playTime;
-                                ((Timer) e.getSource()).stop();
-                                player.setX(p2x);
-                                player.setY(p2y);
-                            }
-                            double i = (double) diff / (double) playTime;
-                            pointInTime = i;
-
-                            pointOnTimeLine.x = (int) (startPoint.x + ((endPoint.x - startPoint.x) * i));
-                            pointOnTimeLine.y = (int) (startPoint.y + ((endPoint.y - startPoint.y) * i));
-                            Point p3 = new Point( pointOnTimeLine.x, pointOnTimeLine.y);
-                            pOTL.add(p3);
+                            int p2x = ((Line) list.get(l)).getP3().getX() - 12;
+                            int p2y = ((Line) list.get(l)).getP3().getY() - 12;
+                            player.setX(p2x);
+                            player.setY(p2y);
+                            //TODO figure out animation
+//                            startPoint = new Point(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY());
+//                            midpoint = new Point(((Line) list.get(l)).getP2().getX(), ((Line) list.get(l)).getP2().getY());
+//                            endPoint = new Point(((Line) list.get(l)).getP3().getX(), ((Line) list.get(l)).getP3().getY());
+//                            pointOnTimeLine = new Point(player.getX(), player.getY());
+//                            pointOnTimeLines = new Point(player.getX(), player.getY());
+//
+//                            if (startTime == null) {
+//                                startTime = System.currentTimeMillis();
+//                            }
+//                            long now = System.currentTimeMillis();
+//                            long diff = now - startTime;
+//                            if (diff >= playTime) {
+//                                diff = playTime;
+//                                ((Timer) e.getSource()).stop();
+//                                pOTL.clear();
+//                                pOTLs.clear();
+//                            }
+//                            double i = (double) diff / (double) playTime;
+//                            pointInTime = i;
+//
+//                            pointOnTimeLine.x = (int) (startPoint.x + ((midpoint.x - startPoint.x) * i));
+//                            pointOnTimeLine.y = (int) (startPoint.y + ((midpoint.y - startPoint.y) * i));
+//                            Point p3 = new Point(pointOnTimeLine.x, pointOnTimeLine.y);
+//                            pOTL.add(p3);
+//
+//                            pointOnTimeLines.x = (int) (midpoint.x + ((endPoint.x - midpoint.x) * i));
+//                            pointOnTimeLines.y = (int) (midpoint.y + ((endPoint.y - midpoint.y) * i));
+//                            Point p4 = new Point(pointOnTimeLines.x, pointOnTimeLines.y);
+//                            pOTLs.add(p4);
                         }
-
 
                     }
                 }
@@ -173,7 +176,6 @@ public class Route extends MouseAdapter {
         }
     }
 
-
     public void render(Graphics g) {
 
         g.setColor(Color.red);
@@ -185,29 +187,53 @@ public class Route extends MouseAdapter {
             g2.drawPolyline(new int[] {currLine.getP1().getX(),currLine.getP2().getX(), currLine.getP3().getX()},
                             new int[] {currLine.getP1().getY(),currLine.getP2().getY(), currLine.getP3().getY()}, 3);
         }
-        if (pointOnTimeLine != null) {
-            for (int i = 0; i < pOTL.size(); i++) {
-                Point currPolt;
-                currPolt = (Point) pOTL.get(i);
-                g2.setColor(Color.black);
-                Ellipse2D shape = new Ellipse2D.Float(currPolt.x-12, currPolt.y-12, 24, 24);
-                g2.draw(shape);
-                remove();
-            }
-        }
+        //TODO figure out more animation
+//        if (pointOnTimeLine != null) {
+//            for (int i = 0; i < pOTL.size(); i++) {
+//                Point currPolt;
+//                currPolt = (Point) pOTL.get(i);
+//                g2.setColor(Color.black);
+//                Ellipse2D shape = new Ellipse2D.Float(currPolt.x-12, currPolt.y-12, 24, 24);
+//                g2.draw(shape);
+//                remove();
+//            }
+//            for (int s = 0; s < pOTLs.size(); s++) {
+//                Point currPolts;
+//                currPolts = (Point) pOTLs.get(s);
+//                g2.setColor(Color.black);
+//                Ellipse2D shapes = new Ellipse2D.Float(currPolts.x - 12, currPolts.y - 12, 24, 24);
+//                g2.draw(shapes);
+//                remove2nd();
+//            }
+//        }
     }
-    public void remove() {
-        Timer time = new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int n = list.size();
-                if (pOTL.size() > n) {
-                    pOTL.remove(0);
-                }
-            }
-        });
-        time.start();
-    }
+
+    //TODO figure out more animation
+//    public void remove() {
+//        Timer time = new Timer(100, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                int n = list.size();
+//                if (pOTL.size() > n) {
+//                    pOTL.remove(0);
+//                }
+//            }
+//        });
+//        time.start();
+//    }
+//
+//    public void remove2nd() {
+//        Timer time = new Timer(100, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                int n = list.size();
+//                if (pOTLs.size() > n) {
+//                    pOTLs.remove(0);
+//                }
+//            }
+//        });
+//        time.start();
+//    }
 
     private boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
         if (mx > x && mx < x + width) {
@@ -227,6 +253,7 @@ public class Route extends MouseAdapter {
         return (A.getX() - C.getX())*(A.getY() - C.getY()) == (C.getX() - B.getX())*(C.getY() - B.getY());
     }
 }
+
 class Line {
 
     private Point p1;

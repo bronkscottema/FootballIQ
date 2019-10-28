@@ -1,6 +1,4 @@
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageOutputStream;
-import javax.imageio.stream.ImageOutputStream;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,8 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.nio.Buffer;
+import java.io.File;
 
 public class Game extends Canvas implements Runnable {
 
@@ -35,57 +32,30 @@ public class Game extends Canvas implements Runnable {
         //top left offense play
         JTextArea offensivePlay = new JTextArea("insert play name");
         offensivePlay.setFont(font);
-        offensivePlay.setBounds(0, 750, 300, 50);
+        offensivePlay.setBounds(0, 725, 300, 50);
         frame.add(offensivePlay);
         //top left defensive play
         JTextArea defensivePlay = new JTextArea("insert play name");
         defensivePlay.setFont(font);
-        defensivePlay.setBounds(1100-300, 750, 300, 50);
+        defensivePlay.setBounds(1100-300, 725, 300, 50);
         frame.add(defensivePlay);
 
-        //buttons
-        Button ko = new Button("KO");
-        ko.addActionListener(new ActionListener() {
+        JMenuBar jMenuBar = new JMenuBar();
+        JMenu jMenuFile = new JMenu("File");
+        JMenu jMenuEdit = new JMenu("Edit");
+        JMenu jMenuType = new JMenu("Type");
+
+        JMenuItem newMenu = new JMenuItem("New");
+        newMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handler.KO();
+                handler.startGame();
             }
         });
-        ko.setBounds(300,750,50,50);
-        ko.setFont(font);
-        frame.add(ko);
-        Button punt = new Button("Punt");
-        punt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handler.punt();
-            }
-        });
-        punt.setBounds(350,750,50,50);
-        punt.setFont(font);
-        frame.add(punt);
-        Button undo = new Button("undo");
-        undo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                route.undo();
-            }
-        });
-        undo.setBounds(400,750,50,50);
-        undo.setFont(font);
-        frame.add(undo);
-        Button play = new Button("play");
-        play.setBounds(450,750,50,50);
-        play.setFont(font);
-        play.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                route.play();
-            }
-        });
-        frame.add(play);
-        Button save = new Button("save");
-        save.addActionListener(new ActionListener() {
+        newMenu.setFont(font);
+
+        JMenuItem saveMenu = new JMenuItem("Save");
+        saveMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser chooseDirec = new JFileChooser();
                 chooseDirec.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -172,44 +142,36 @@ public class Game extends Canvas implements Runnable {
                     ImageIO.write(image, "gif", new File("/"+file));
                 }
                 catch (Exception ev) {
-                ev.printStackTrace();
+                    ev.printStackTrace();
                 }
             }
         });
-        save.setFont(font);
-        save.setBounds(500,750,50,50);
-        frame.add(save);
-        Button reset = new Button("reset");
-        reset.addActionListener(new ActionListener() {
+        saveMenu.setFont(font);
+
+        JMenuItem playBook = new JMenuItem("Playbook");
+        playBook.setFont(font);
+
+        JMenuItem animate = new JMenuItem("Animate");
+        animate.setFont(font);
+        animate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                route.reset();
+                route.play();
             }
         });
-        reset.setBounds(550,750,50,50);
-        reset.setFont(font);
-        frame.add(reset);
-        Button reload = new Button("redo");
-        reload.addActionListener(new ActionListener() {
+        animate.setFont(font);
+
+        JMenu jMenuSub = new JMenu("Special Teams");
+        jMenuSub.setFont(font);
+        JMenuItem punt = new JMenuItem("Punt/Punt Return");
+        punt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                route.reload();
+                handler.punt();
             }
         });
-        reload.setFont(font);
-        reload.setBounds(600,750,50,50);
-        frame.add(reload);
-        Button OD = new Button("O/D");
-        OD.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handler.startGame();
-            }
-        });
-        OD.setFont(font);
-        OD.setBounds(650,750,50,50);
-        frame.add(OD);
-        Button FG = new Button("FG");
+        punt.setFont(font);
+        JMenuItem FG = new JMenuItem("Field Goal");
         FG.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -217,18 +179,95 @@ public class Game extends Canvas implements Runnable {
             }
         });
         FG.setFont(font);
-        FG.setBounds(700,750,50,50);
-        frame.add(FG);
-        Button someButton = new Button("");
-        someButton.addActionListener(new ActionListener() {
+        JMenuItem KO = new JMenuItem("Kick Off/Kick Off Return");
+        KO.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //todo add some feature here
+                handler.KO();
             }
         });
-        someButton.setFont(font);
-        someButton.setBounds(750,750,50,50);
-        frame.add(someButton);
+        KO.setFont(font);
+        JMenuItem reload = new JMenuItem("reload");
+        reload.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                route.reload();
+            }
+        });
+        reload.setFont(font);
+        JMenuItem reset = new JMenuItem("reset");
+        reset.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                route.reset();
+            }
+        });
+        reset.setFont(font);
+        JMenuItem undo = new JMenuItem("undo");
+        undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                route.undo();
+            }
+        });
+        undo.setFont(font);
+        JMenuItem offDef = new JMenuItem("Offense/Defense");
+        offDef.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.startGame();
+            }
+        });
+        offDef.setFont(font);
+
+        JMenuItem sixman = new JMenuItem("6 man");
+        sixman.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.startGame();
+            }
+        });
+        sixman.setFont(font);
+
+        JMenuItem eightman = new JMenuItem("8 man");
+        eightman.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.startGame();
+            }
+        });
+        eightman.setFont(font);
+
+        JMenuItem elevenman = new JMenuItem("11 man");
+        elevenman.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.startGame();
+            }
+        });
+        elevenman.setFont(font);
+
+
+
+        jMenuBar.add(jMenuFile);
+        jMenuBar.add(jMenuEdit);
+        jMenuBar.add(jMenuType);
+        jMenuFile.add(newMenu);
+        jMenuFile.add(saveMenu);
+        jMenuFile.add(playBook);
+        jMenuFile.add(animate);
+        jMenuFile.add(jMenuSub);
+        jMenuSub.add(punt);
+        jMenuSub.add(FG);
+        jMenuSub.add(KO);
+        jMenuFile.add(offDef);
+        jMenuType.add(sixman);
+        jMenuType.add(eightman);
+        jMenuType.add(elevenman);
+        jMenuEdit.add(undo);
+        jMenuEdit.add(reset);
+        jMenuEdit.add(reload);
+        frame.setJMenuBar(jMenuBar);
 
         this.addKeyListener(new KeyListener() {
             @Override
@@ -240,6 +279,9 @@ public class Game extends Canvas implements Runnable {
                 if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_Z) {
                     //undo with ctrl + z
                     route.undo();
+                }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    route.play();
                 }
             }
             @Override
