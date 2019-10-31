@@ -1,10 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,6 +15,9 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
+    JButton motion, routeline, zone, block;
+    JTextArea defensivePlay;
+
 
 
     public Game() {
@@ -29,13 +29,57 @@ public class Game extends Canvas implements Runnable {
         frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
         frame.setIconImage(new ImageIcon(getClass().getResource("/images/field.png")).getImage());
 
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getSource() == motion) {
+                    motion.setSelected(true);
+                    routeline.setSelected(false);
+                    zone.setSelected(false);
+                    block.setSelected(false);
+                } else if (e.getSource() == routeline) {
+                    motion.setSelected(false);
+                    routeline.setSelected(true);
+                    zone.setSelected(false);
+                    block.setSelected(false);
+                } else if (e.getSource() == zone) {
+                    motion.setSelected(false);
+                    routeline.setSelected(false);
+                    zone.setSelected(true);
+                    block.setSelected(false);
+                } else if (e.getSource() == block) {
+                    motion.setSelected(false);
+                    routeline.setSelected(false);
+                    zone.setSelected(false);
+                    block.setSelected(true);
+                }
+            }
+        };
+
+        motion = new JButton("Motion");
+        motion.addActionListener(actionListener);
+        motion.setBounds(400, 725, 75, 50);
+        frame.add(motion);
+        routeline = new JButton("Line");
+        routeline.addActionListener(actionListener);
+        routeline.setBounds(475, 725, 75, 50);
+        frame.add(routeline);
+        zone = new JButton("Zone");
+        zone.addActionListener(actionListener);
+        zone.setBounds(550, 725, 75, 50);
+        frame.add(zone);
+        block = new JButton("Block");
+        block.addActionListener(actionListener);
+        block.setBounds(625, 725, 75, 50);
+        frame.add(block);
+
         //top left offense play
         JTextArea offensivePlay = new JTextArea("insert play name");
         offensivePlay.setFont(font);
         offensivePlay.setBounds(0, 725, 300, 50);
         frame.add(offensivePlay);
         //top left defensive play
-        JTextArea defensivePlay = new JTextArea("insert play name");
+        defensivePlay = new JTextArea("insert play name");
         defensivePlay.setFont(font);
         defensivePlay.setBounds(1100-300, 725, 300, 50);
         frame.add(defensivePlay);

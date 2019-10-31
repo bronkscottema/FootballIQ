@@ -12,7 +12,9 @@ public class Route extends MouseAdapter {
 
     private Handler handler;
     private Game game;
-    private ArrayList list = new ArrayList();
+    private ArrayList routeList = new ArrayList();
+    private ArrayList motionList = new ArrayList();
+    private ArrayList zoneList = new ArrayList();
     private Line line;
     private int clicks = 0;
     private Long startTime;
@@ -23,19 +25,22 @@ public class Route extends MouseAdapter {
     private Point pointOnTimeLine, pointOnTimeLines;
     private double pointInTime;
 
-    public Route( Handler handler, Game game) {
+
+    public Route(Handler handler, Game game) {
         this.handler = handler;
         this.game = game;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
     }
 
-    public void mousePressed(MouseEvent e){
-        if (SwingUtilities.isLeftMouseButton(e)) {
+    public void mousePressed(MouseEvent e) {
+        if (SwingUtilities.isLeftMouseButton(e) && game.routeline.isSelected()) {
             int x = e.getX();
             int y = e.getY();
+            Point eventPoint = new Point(x, y);
 
             if (clicks == 0 && SwingUtilities.isLeftMouseButton(e)) {
                 line = new Line();
@@ -45,16 +50,69 @@ public class Route extends MouseAdapter {
                     if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
                         clicks++;
                         line.setId(player.getID());
+                    } else if (!mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                        for (int i = 0; i < motionList.size(); i++) {
+                            Line currLine;
+                            currLine = (Line) (motionList.get(i));
+                            if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
+                                clicks++;
+                                line.setId(player.getID());
+                                return;
+                            }
+                        }
                     }
                 }
             } else if (clicks == 1) {
-                line.setP2(new Point(x,y));
+                line.setP2(new Point(x, y));
                 clicks++;
             } else {
                 line.setP3(new Point(x, y));
-                list.add(line);
+                routeList.add(line);
                 clicks = 0;
             }
+        }
+        if (SwingUtilities.isLeftMouseButton(e) && game.motion.isSelected()) {
+            int x = e.getX();
+            int y = e.getY();
+
+            if (clicks == 0) {
+                LinkedList<GameObject> jags = handler.object;
+                for (GameObject player : jags) {
+                    if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                    line = new Line();
+                    line.setP1(new Point(x, y));
+                    line.setId(player.getID());
+                    clicks++;
+                    }
+                }
+            } else {
+                line.setP2(new Point(x, y));
+                motionList.add(line);
+                clicks = 0;
+            }
+        }
+        if (SwingUtilities.isLeftMouseButton(e) && game.zone.isSelected()) {
+            int x = e.getX();
+            int y = e.getY();
+
+            if (clicks == 0) {
+                LinkedList<GameObject> jags = handler.object;
+                for (GameObject player : jags) {
+                    if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                        line = new Line();
+                        line.setP1(new Point(x, y));
+                        line.setId(player.getID());
+                        clicks++;
+                    }
+                }
+            } else {
+                line.setP2(new Point(x, y));
+                zoneList.add(line);
+                clicks = 0;
+            }
+        }
+        if (SwingUtilities.isLeftMouseButton(e) && game.block.isSelected()) {
+
         }
     }
 
@@ -89,44 +147,75 @@ public class Route extends MouseAdapter {
         LinkedList<GameObject> players = handler.object;
         Iterator<GameObject> jag = players.iterator();
         while (jag.hasNext()) {
-           GameObject player = jag.next();
-           if (!list.isEmpty()) {
-               int size = list.size() - 1;
-               list.remove(size);
-           }
+            GameObject player = jag.next();
+            if (!routeList.isEmpty()) {
+                int size = routeList.size() - 1;
+                routeList.remove(size);
+            }
+            if (!motionList.isEmpty()) {
+                int size = motionList.size() - 1;
+                motionList.remove(size);
+            }
         }
     }
 
     public void reload() {
         LinkedList<GameObject> jags = handler.object;
         for (GameObject player : jags) {
-            if (!list.isEmpty()) {
-                for (int l = 0; l < list.size(); l++) {
-                    Line currLine;
-                    currLine = (Line) (list.get(l));
-                    if (currLine.getId() == player.getID()) {
-                        player.setX(currLine.getP1().getX()-12);
-                        player.setY(currLine.getP1().getY()-12);
+            for (int l = 0; l < routeList.size(); l++) {
+                Line currLine;
+                currLine = (Line) (routeList.get(l));
+                if (currLine.getId() == player.getID()) {
+                    player.setX(currLine.getP1().getX() - 12);
+                    player.setY(currLine.getP1().getY() - 12);
+                    for (int i = 0; i < motionList.size(); i++) {
+                        Line currLines;
+                        currLines = (Line) (motionList.get(i));
+                        if (currLines.getId() == player.getID() &&  player.getID() == currLine.getId()) {
+                            player.setX(currLines.getP1().getX()-12);
+                            player.setY(currLines.getP1().getY()-12);
+                        }
                     }
                 }
             }
+
         }
-        for (int p = 0; p < pOTL.size(); p++) {
-            pOTL.remove(p);
-        }
+//        for (int p = 0; p < pOTL.size(); p++) {
+//            pOTL.remove(p);
+//        }
 
     }
 
     public void play() {
-        Timer timer = new Timer(100, new ActionListener() {
+        Timer timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 LinkedList<GameObject> jags = handler.object;
                 for (GameObject player : jags) {
-                    for (int l = 0; l < list.size(); l++) {
-                        if (mouseOver(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
-                            int p2x = ((Line) list.get(l)).getP3().getX() - 12;
-                            int p2y = ((Line) list.get(l)).getP3().getY() - 12;
+                    for (int m = 0; m < motionList.size(); m++) {
+                        if (mouseOver(((Line) motionList.get(m)).getP1().getX(), ((Line) routeList.get(m)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
+                            int p2x = ((Line) motionList.get(m)).getP2().getX() - 12;
+                            int p2y = ((Line) motionList.get(m)).getP2().getY() - 12;
+                            player.setX(p2x);
+                            player.setY(p2y);
+                            ((Timer) e.getSource()).stop();
+                        }
+
+                    }
+                }
+
+            }
+        });
+        timer.start();
+        Timer timer2 = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LinkedList<GameObject> jags = handler.object;
+                for (GameObject player : jags) {
+                    for (int l = 0; l < routeList.size(); l++) {
+                        if (mouseOver(((Line) routeList.get(l)).getP1().getX(), ((Line) routeList.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
+                            int p2x = ((Line) routeList.get(l)).getP3().getX() - 12;
+                            int p2y = ((Line) routeList.get(l)).getP3().getY() - 12;
                             player.setX(p2x);
                             player.setY(p2y);
                             //TODO figure out animation
@@ -162,17 +251,29 @@ public class Route extends MouseAdapter {
                         }
 
                     }
+                   for (int l = 0; l < zoneList.size(); l++) {
+                       if (mouseOver(((Line) zoneList.get(l)).getP1().getX(), ((Line) zoneList.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
+                           int p2x = ((Line) zoneList.get(l)).getP2().getX() - 12;
+                           int p2y = ((Line) zoneList.get(l)).getP2().getY() - 12;
+                           player.setX(p2x);
+                           player.setY(p2y);
+                       }
+                   }
                 }
 
             }
         });
-        timer.start();
+        timer2.start();
     }
 
     public void undo() {
-        if (!list.isEmpty()) {
-            int size = list.size() - 1;
-            list.remove(size);
+        if (!routeList.isEmpty()) {
+            int size = routeList.size() - 1;
+            routeList.remove(size);
+        }
+        if (!motionList.isEmpty()) {
+            int size = motionList.size() - 1;
+            motionList.remove(size);
         }
     }
 
@@ -181,12 +282,41 @@ public class Route extends MouseAdapter {
         g.setColor(Color.red);
         Graphics2D g2 = (Graphics2D) g;
         Line currLine;
-        for (int i = 0; i < list.size(); i++) {
-            currLine = (Line) (list.get(i));
+        for (int i = 0; i < routeList.size(); i++) {
+            currLine = (Line) (routeList.get(i));
             g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
-            g2.drawPolyline(new int[] {currLine.getP1().getX(),currLine.getP2().getX(), currLine.getP3().getX()},
-                            new int[] {currLine.getP1().getY(),currLine.getP2().getY(), currLine.getP3().getY()}, 3);
+             g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
+                    new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
         }
+        for (int m = 0; m < motionList.size(); m++) {
+            currLine = (Line) (motionList.get(m));
+            g2.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
+            g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+        }
+        for (int m = 0; m < zoneList.size(); m++) {
+            currLine = (Line) (zoneList.get(m));
+            g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+            g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+            if (game.defensivePlay.getText().contains("cov 3") || game.defensivePlay.getText().contains("cover 3")) {
+                if (currLine.getId().toString().equals("SCB") || currLine.getId().toString().equals("WCB") || currLine.getId().toString().equals("FS")) {
+                g2.drawRect(currLine.getP2().getX() - 100, currLine.getP2().getY() - 75, 200, 150);
+                } else {
+                    g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
+                }
+            } else if (game.defensivePlay.getText().contains("cov 2") || game.defensivePlay.getText().contains("cover 2")) {
+                if (currLine.getId().toString().equals("SS")|| currLine.getId().toString().equals("FS")) {
+                g2.drawRect(currLine.getP2().getX() - 100, currLine.getP2().getY() - 75, 200, 150);
+                } else {
+                    g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
+                }
+            } else if (game.defensivePlay.getText().isBlank()) {
+                g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
+            } else {
+                g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
+
+            }
+        }
+
         //TODO figure out more animation
 //        if (pointOnTimeLine != null) {
 //            for (int i = 0; i < pOTL.size(); i++) {
