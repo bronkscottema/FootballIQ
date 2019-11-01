@@ -168,14 +168,23 @@ public class Route extends MouseAdapter {
                 if (currLine.getId() == player.getID()) {
                     player.setX(currLine.getP1().getX() - 12);
                     player.setY(currLine.getP1().getY() - 12);
-                    for (int i = 0; i < motionList.size(); i++) {
-                        Line currLines;
-                        currLines = (Line) (motionList.get(i));
-                        if (currLines.getId() == player.getID() &&  player.getID() == currLine.getId()) {
-                            player.setX(currLines.getP1().getX()-12);
-                            player.setY(currLines.getP1().getY()-12);
-                        }
-                    }
+
+                }
+            }
+            for (int i = 0; i < motionList.size(); i++) {
+                Line currLine;
+                currLine = (Line) (motionList.get(i));
+                if (currLine.getId() == player.getID() &&  player.getID() == currLine.getId()) {
+                    player.setX(currLine.getP1().getX()-12);
+                    player.setY(currLine.getP1().getY()-12);
+                }
+            }
+            for (int z = 0; z < zoneList.size(); z++) {
+                Line currLine;
+                currLine = (Line) (zoneList.get(z));
+                if (currLine.getId() == player.getID()) {
+                    player.setX(currLine.getP1().getX() - 12);
+                    player.setY(currLine.getP1().getY() - 12);
                 }
             }
 
@@ -218,6 +227,7 @@ public class Route extends MouseAdapter {
                             int p2y = ((Line) routeList.get(l)).getP3().getY() - 12;
                             player.setX(p2x);
                             player.setY(p2y);
+                            ((Timer) e.getSource()).stop();
                             //TODO figure out animation
 //                            startPoint = new Point(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY());
 //                            midpoint = new Point(((Line) list.get(l)).getP2().getX(), ((Line) list.get(l)).getP2().getY());
@@ -267,14 +277,20 @@ public class Route extends MouseAdapter {
     }
 
     public void undo() {
-        if (!routeList.isEmpty()) {
+
+        if (!routeList.isEmpty() && game.routeline.isSelected()) {
             int size = routeList.size() - 1;
             routeList.remove(size);
         }
-        if (!motionList.isEmpty()) {
+        if (!motionList.isEmpty() && game.motion.isSelected()) {
             int size = motionList.size() - 1;
             motionList.remove(size);
         }
+        if (!zoneList.isEmpty() && game.zone.isSelected()) {
+            int size = zoneList.size() - 1;
+            zoneList.remove(size);
+        }
+
     }
 
     public void render(Graphics g) {
@@ -304,8 +320,20 @@ public class Route extends MouseAdapter {
                     g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
                 }
             } else if (game.defensivePlay.getText().contains("cov 2") || game.defensivePlay.getText().contains("cover 2")) {
-                if (currLine.getId().toString().equals("SS")|| currLine.getId().toString().equals("FS")) {
-                g2.drawRect(currLine.getP2().getX() - 100, currLine.getP2().getY() - 75, 200, 150);
+                if (currLine.getId().toString().equals("SS") || currLine.getId().toString().equals("FS")) {
+                    g2.drawRect(currLine.getP2().getX() - 100, currLine.getP2().getY() - 75, 200, 150);
+                } else {
+                    g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
+                }
+            } else if (game.defensivePlay.getText().contains("cov 4") || game.defensivePlay.getText().contains("cover 4")) {
+                if (currLine.getId().toString().equals("SCB") || currLine.getId().toString().equals("WCB") || currLine.getId().toString().equals("SS") || currLine.getId().toString().equals("FS")) {
+                    g2.drawRect(currLine.getP2().getX() - 100, currLine.getP2().getY() - 75, 200, 150);
+                } else {
+                    g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
+                }
+            } else if (game.defensivePlay.getText().contains("cov 6") || game.defensivePlay.getText().contains("cover 6")) {
+                if (currLine.getId().toString().equals("WCB") || currLine.getId().toString().equals("SS")|| currLine.getId().toString().equals("FS")) {
+                    g2.drawRect(currLine.getP2().getX() - 100, currLine.getP2().getY() - 75, 200, 150);
                 } else {
                     g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
                 }
