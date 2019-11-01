@@ -15,6 +15,7 @@ public class Route extends MouseAdapter {
     private ArrayList routeList = new ArrayList();
     private ArrayList motionList = new ArrayList();
     private ArrayList zoneList = new ArrayList();
+    private ArrayList blockList = new ArrayList();
     private Line line;
     private int clicks = 0;
     private Long startTime;
@@ -112,7 +113,24 @@ public class Route extends MouseAdapter {
             }
         }
         if (SwingUtilities.isLeftMouseButton(e) && game.block.isSelected()) {
+            int x = e.getX();
+            int y = e.getY();
 
+            if (clicks == 0) {
+                LinkedList<GameObject> jags = handler.object;
+                for (GameObject player : jags) {
+                    if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                        line = new Line();
+                        line.setP1(new Point(x, y));
+                        line.setId(player.getID());
+                        clicks++;
+                    }
+                }
+            } else {
+                line.setP2(new Point(x, y));
+                blockList.add(line);
+                clicks = 0;
+            }
         }
     }
 
@@ -133,6 +151,7 @@ public class Route extends MouseAdapter {
     }
 
     public void mouseDragged(MouseEvent e) {
+        clicks = 0;
     }
 
 
@@ -155,6 +174,14 @@ public class Route extends MouseAdapter {
             if (!motionList.isEmpty()) {
                 int size = motionList.size() - 1;
                 motionList.remove(size);
+            }
+            if (!zoneList.isEmpty()) {
+                int size = zoneList.size() - 1;
+                zoneList.remove(size);
+            }
+            if (!blockList.isEmpty()) {
+                int size = blockList.size() - 1;
+                blockList.remove(size);
             }
         }
     }
@@ -182,6 +209,14 @@ public class Route extends MouseAdapter {
             for (int z = 0; z < zoneList.size(); z++) {
                 Line currLine;
                 currLine = (Line) (zoneList.get(z));
+                if (currLine.getId() == player.getID()) {
+                    player.setX(currLine.getP1().getX() - 12);
+                    player.setY(currLine.getP1().getY() - 12);
+                }
+            }
+            for (int z = 0; z < blockList.size(); z++) {
+                Line currLine;
+                currLine = (Line) (blockList.get(z));
                 if (currLine.getId() == player.getID()) {
                     player.setX(currLine.getP1().getX() - 12);
                     player.setY(currLine.getP1().getY() - 12);
@@ -269,6 +304,14 @@ public class Route extends MouseAdapter {
                            player.setY(p2y);
                        }
                    }
+                   for (int l = 0; l < blockList.size(); l++) {
+                       if (mouseOver(((Line) blockList.get(l)).getP1().getX(), ((Line) blockList.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
+                           int p2x = ((Line) blockList.get(l)).getP2().getX() - 12;
+                           int p2y = ((Line) blockList.get(l)).getP2().getY() - 12;
+                           player.setX(p2x);
+                           player.setY(p2y);
+                       }
+                   }
                 }
 
             }
@@ -289,6 +332,10 @@ public class Route extends MouseAdapter {
         if (!zoneList.isEmpty() && game.zone.isSelected()) {
             int size = zoneList.size() - 1;
             zoneList.remove(size);
+        }
+        if (!blockList.isEmpty() && game.block.isSelected()) {
+            int size = blockList.size() - 1;
+            blockList.remove(size);
         }
 
     }
@@ -343,6 +390,12 @@ public class Route extends MouseAdapter {
                 g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
 
             }
+        }
+        for (int m = 0; m < blockList.size(); m++) {
+            currLine = (Line) (blockList.get(m));
+            g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+            g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+            g2.drawArc(currLine.getP2().x-12, currLine.getP2().y-20, 25, 20, 180, 180);
         }
 
         //TODO figure out more animation
