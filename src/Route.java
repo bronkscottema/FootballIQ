@@ -52,13 +52,25 @@ public class Route extends MouseAdapter {
                         clicks++;
                         line.setId(player.getID());
                     } else if (!mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
-                        for (int i = 0; i < motionList.size(); i++) {
-                            Line currLine;
-                            currLine = (Line) (motionList.get(i));
-                            if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
-                                clicks++;
-                                line.setId(player.getID());
-                                return;
+                        if (motionList.size() > 0) {
+                            for (int i = 0; i < motionList.size(); i++) {
+                                Line currLine;
+                                currLine = (Line) (motionList.get(i));
+                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
+                                    clicks++;
+                                    line.setId(player.getID());
+                                    return;
+                                }
+                            }
+                        } else if (routeList.size() > 0) {
+                            for (int i = 0; i < routeList.size(); i++) {
+                                Line currLine;
+                                currLine = (Line) (routeList.get(i));
+                                if (player.getID().equals(currLine.getId()) && currLine.getP3().getX() - line.getP1().getX() <= 10 || currLine.getP3().getX() - line.getP1().getX() <= -10) {
+                                    clicks++;
+                                    line.setId(player.getID());
+                                    return;
+                                }
                             }
                         }
                     }

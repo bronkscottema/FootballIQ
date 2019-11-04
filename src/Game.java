@@ -16,8 +16,7 @@ public class Game extends Canvas implements Runnable {
     private Movement movement;
     private Route route;
     JButton motion, routeline, zone, block;
-    JTextArea defensivePlay;
-
+    JTextArea defensivePlay, offensivePlay;
 
 
     public Game() {
@@ -72,17 +71,6 @@ public class Game extends Canvas implements Runnable {
         block.addActionListener(actionListener);
         block.setBounds(625, 725, 75, 50);
         frame.add(block);
-
-        //top left offense play
-        JTextArea offensivePlay = new JTextArea("insert play name");
-        offensivePlay.setFont(font);
-        offensivePlay.setBounds(0, 725, 300, 50);
-        frame.add(offensivePlay);
-        //top left defensive play
-        defensivePlay = new JTextArea("insert play name");
-        defensivePlay.setFont(font);
-        defensivePlay.setBounds(1100-300, 725, 300, 50);
-        frame.add(defensivePlay);
 
         JMenuBar jMenuBar = new JMenuBar();
         JMenu jMenuFile = new JMenu("File");
@@ -194,6 +182,13 @@ public class Game extends Canvas implements Runnable {
 
         JMenuItem playBook = new JMenuItem("Playbook");
         playBook.setFont(font);
+        playBook.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                playBook.setSelected(true);
+                handler.playbook();
+            }
+        });
 
         JMenuItem animate = new JMenuItem("Animate");
         animate.setFont(font);
@@ -333,6 +328,18 @@ public class Game extends Canvas implements Runnable {
 
             }
         });
+
+        //top left offense play
+        JTextArea offensivePlay = new JTextArea("insert play name");
+        offensivePlay.setFont(font);
+        offensivePlay.setBounds(0, 725, 300, 50);
+        frame.add(offensivePlay);
+        //top left defensive play
+        defensivePlay = new JTextArea("insert play name");
+        defensivePlay.setFont(font);
+        defensivePlay.setBounds(1100-300, 725, 300, 50);
+        frame.add(defensivePlay);
+
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(true);
