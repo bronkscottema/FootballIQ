@@ -16,7 +16,11 @@ public class Game extends Canvas implements Runnable {
     private Movement movement;
     private Route route;
     JButton motion, routeline, zone, block;
-    JTextArea defensivePlay, offensivePlay;
+    JTextArea defensivePlay, offensivePlay, header1, header2,
+            f1a, f2a, f3a, f4a, f5a, f6a, f7a, f8a, f9a, f10a, f11a,
+            f1b, f2b, f3b, f4b, f5b, f6b, f7b, f8b, f9b, f10b, f11b;
+    JFrame frame = new JFrame("FootballIQ");
+    Font font = new Font("Courrier New", Font.PLAIN, 16);
 
 
     public Game() {
@@ -164,8 +168,33 @@ public class Game extends Canvas implements Runnable {
                 g2.drawLine((WIDTH/2)+210,680,(WIDTH/2)+200,680);
 
                 g2.setFont(font);
-                g2.drawString(offensivePlay.getText(), 0, 750);
-                g2.drawString(defensivePlay.getText(), 800, 750);
+                g2.drawString(offensivePlay.getText(), offensivePlay.getX(), offensivePlay.getY());
+                g2.drawString(defensivePlay.getText(), defensivePlay.getX(), defensivePlay.getY());
+                g2.drawString(header1.getText(), header1.getX(), header1.getY());
+                g2.drawString(header2.getText(), header2.getX(), header2.getY());
+                g2.drawString(f1a.getText(), f1a.getX(), f1a.getY());
+                g2.drawString(f2a.getText(), f2a.getX(), f2a.getY());
+                g2.drawString(f3a.getText(), f3a.getX(), f3a.getY());
+                g2.drawString(f4a.getText(), f4a.getX(), f4a.getY());
+                g2.drawString(f5a.getText(), f5a.getX(), f5a.getY());
+                g2.drawString(f6a.getText(), f6a.getX(), f6a.getY());
+                g2.drawString(f7a.getText(), f7a.getX(), f7a.getY());
+                g2.drawString(f8a.getText(), f8a.getX(), f8a.getY());
+                g2.drawString(f9a.getText(), f9a.getX(), f9a.getY());
+                g2.drawString(f10a.getText(), f10a.getX(), f10a.getY());
+                g2.drawString(f11a.getText(), f11a.getX(), f11a.getY());
+                g2.drawString(f1b.getText(), f1b.getX(), f1b.getY());
+                g2.drawString(f2b.getText(), f2b.getX(), f2b.getY());
+                g2.drawString(f3b.getText(), f3b.getX(), f3b.getY());
+                g2.drawString(f4b.getText(), f4b.getX(), f4b.getY());
+                g2.drawString(f5b.getText(), f5b.getX(), f5b.getY());
+                g2.drawString(f6b.getText(), f6b.getX(), f6b.getY());
+                g2.drawString(f7b.getText(), f7b.getX(), f7b.getY());
+                g2.drawString(f8b.getText(), f8b.getX(), f8b.getY());
+                g2.drawString(f9b.getText(), f9b.getX(), f9b.getY());
+                g2.drawString(f10b.getText(), f10b.getX(), f10b.getY());
+                g2.drawString(f11b.getText(), f11b.getX(), f11b.getY());
+
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 handler.render(g2);
                 route.render(g2);
@@ -187,6 +216,7 @@ public class Game extends Canvas implements Runnable {
             public void actionPerformed(ActionEvent e) {
                 playBook.setSelected(true);
                 handler.playbook();
+                playbookTemplate();
             }
         });
 
@@ -255,7 +285,9 @@ public class Game extends Canvas implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handler.startGame();
+                offDef();
             }
+
         });
         offDef.setFont(font);
 
@@ -285,8 +317,6 @@ public class Game extends Canvas implements Runnable {
             }
         });
         elevenman.setFont(font);
-
-
 
         jMenuBar.add(jMenuFile);
         jMenuBar.add(jMenuEdit);
@@ -330,7 +360,7 @@ public class Game extends Canvas implements Runnable {
         });
 
         //top left offense play
-        JTextArea offensivePlay = new JTextArea("insert play name");
+        offensivePlay = new JTextArea("insert play name");
         offensivePlay.setFont(font);
         offensivePlay.setBounds(0, 725, 300, 50);
         frame.add(offensivePlay);
@@ -340,9 +370,154 @@ public class Game extends Canvas implements Runnable {
         defensivePlay.setBounds(1100-300, 725, 300, 50);
         frame.add(defensivePlay);
 
+        //playbook
+        header1 = new JTextArea("Position");
+        header1.setFont(font);
+        header1.setBounds(0,HEIGHT/2, 75,25);
+        header1.setVisible(false);
+        header1.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(header1);
+        header2 = new JTextArea("Description");
+        header2.setFont(font);
+        header2.setBounds(75,HEIGHT/2, WIDTH-75,25);
+        header2.setVisible(false);
+        header2.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(header2);
+        f1a = new JTextArea();
+        f1a.setFont(font);
+        f1a.setBounds(0,HEIGHT/2+25, 75,25);
+        f1a.setVisible(false);
+        f1a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f1a);
+        f2a = new JTextArea();
+        f2a.setFont(font);
+        f2a.setBounds(0,HEIGHT/2+50, 75,25);
+        f2a.setVisible(false);
+        f2a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f2a);
+        f3a = new JTextArea();
+        f3a.setFont(font);
+        f3a.setBounds(0,HEIGHT/2+75, 75,25);
+        f3a.setVisible(false);
+        f3a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f3a);
+        f4a = new JTextArea();
+        f4a.setFont(font);
+        f4a.setBounds(0,HEIGHT/2+100, 75,25);
+        f4a.setVisible(false);
+        f4a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f4a);
+        f5a = new JTextArea();
+        f5a.setFont(font);
+        f5a.setBounds(0,HEIGHT/2+125, 75,25);
+        f5a.setVisible(false);
+        f5a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f5a);
+        f6a = new JTextArea();
+        f6a.setFont(font);
+        f6a.setBounds(0,HEIGHT/2+150, 75,25);
+        f6a.setVisible(false);
+        f6a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f6a);
+        f7a = new JTextArea();
+        f7a.setFont(font);
+        f7a.setBounds(0,HEIGHT/2+175, 75,25);
+        f7a.setVisible(false);
+        f7a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f7a);
+        f8a = new JTextArea();
+        f8a.setFont(font);
+        f8a.setBounds(0,HEIGHT/2+200, 75,25);
+        f8a.setVisible(false);
+        f8a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f8a);
+        f9a = new JTextArea();
+        f9a.setFont(font);
+        f9a.setBounds(0,HEIGHT/2+225, 75,25);
+        f9a.setVisible(false);
+        f9a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f9a);
+        f10a = new JTextArea();
+        f10a.setFont(font);
+        f10a.setBounds(0,HEIGHT/2+250, 75,25);
+        f10a.setVisible(false);
+        f10a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f10a);
+        f11a = new JTextArea();
+        f11a.setFont(font);
+        f11a.setBounds(0,HEIGHT/2+275, 75,25);
+        f11a.setVisible(false);
+        f11a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f11a);
+        f1b = new JTextArea();
+        f1b.setFont(font);
+        f1b.setBounds(75,HEIGHT/2+25, WIDTH-75,25);
+        f1b.setVisible(false);
+        f1b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f1b);
+        f2b = new JTextArea();
+        f2b.setFont(font);
+        f2b.setBounds(75,HEIGHT/2+50, WIDTH-75,25);
+        f2b.setVisible(false);
+        f2b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f2b);
+        f3b = new JTextArea();
+        f3b.setFont(font);
+        f3b.setBounds(75,HEIGHT/2+75, WIDTH-75,25);
+        f3b.setVisible(false);
+        f3b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f3b);
+        f4b = new JTextArea();
+        f4b.setFont(font);
+        f4b.setBounds(75,HEIGHT/2+100, WIDTH-75,25);
+        f4b.setVisible(false);
+        f4b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f4b);
+        f5b = new JTextArea();
+        f5b.setFont(font);
+        f5b.setBounds(75,HEIGHT/2+125, WIDTH-75,25);
+        f5b.setVisible(false);
+        f5b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f5b);
+        f6b = new JTextArea();
+        f6b.setFont(font);
+        f6b.setBounds(75,HEIGHT/2+150, WIDTH-75,25);
+        f6b.setVisible(false);
+        f6b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f6b);
+        f7b = new JTextArea();
+        f7b.setFont(font);
+        f7b.setBounds(75,HEIGHT/2+175, WIDTH-75,25);
+        f7b.setVisible(false);
+        f7b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f7b);
+        f8b = new JTextArea();
+        f8b.setFont(font);
+        f8b.setBounds(75,HEIGHT/2+200, WIDTH-75,25);
+        f8b.setVisible(false);
+        f8b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f8b);
+        f9b = new JTextArea();
+        f9b.setFont(font);
+        f9b.setBounds(75,HEIGHT/2+225, WIDTH-75,25);
+        f9b.setVisible(false);
+        f9b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f9b);
+        f10b = new JTextArea();
+        f10b.setFont(font);
+        f10b.setBounds(75,HEIGHT/2+250, WIDTH-75,25);
+        f10b.setVisible(false);
+        f10b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f10b);
+        f11b = new JTextArea();
+        f11b.setFont(font);
+        f11b.setBounds(75,HEIGHT/2+275, WIDTH-75,25);
+        f11b.setVisible(false);
+        f11b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
+        frame.add(f11b);
+
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(true);
         frame.setLocationRelativeTo(null);
 
         frame.add(this);
@@ -427,7 +602,7 @@ public class Game extends Canvas implements Runnable {
         bs.show();
     }
 
-    public static int clamp (int var, int min, int max) {
+    public static int clamp(int var, int min, int max) {
         if (var >= max)
             return var = max;
         else if (var <= min)
@@ -435,6 +610,63 @@ public class Game extends Canvas implements Runnable {
         else
             return var;
 
+    }
+
+    public void playbookTemplate() {
+
+        header1.setVisible(true);
+        header2.setVisible(true);
+        f1b.setVisible(true);
+        f2b.setVisible(true);
+        f3b.setVisible(true);
+        f4b.setVisible(true);
+        f5b.setVisible(true);
+        f6b.setVisible(true);
+        f7b.setVisible(true);
+        f8b.setVisible(true);
+        f9b.setVisible(true);
+        f10b.setVisible(true);
+        f11b.setVisible(true);
+        f1a.setVisible(true);
+        f2a.setVisible(true);
+        f3a.setVisible(true);
+        f4a.setVisible(true);
+        f5a.setVisible(true);
+        f6a.setVisible(true);
+        f7a.setVisible(true);
+        f8a.setVisible(true);
+        f9a.setVisible(true);
+        f10a.setVisible(true);
+        f11a.setVisible(true);
+//        frame.revalidate();
+    }
+
+    public void offDef() {
+
+        header1.setVisible(false);
+        header2.setVisible(false);
+        f1b.setVisible(false);
+        f2b.setVisible(false);
+        f3b.setVisible(false);
+        f4b.setVisible(false);
+        f5b.setVisible(false);
+        f6b.setVisible(false);
+        f7b.setVisible(false);
+        f8b.setVisible(false);
+        f9b.setVisible(false);
+        f10b.setVisible(false);
+        f11b.setVisible(false);
+        f1a.setVisible(false);
+        f2a.setVisible(false);
+        f3a.setVisible(false);
+        f4a.setVisible(false);
+        f5a.setVisible(false);
+        f6a.setVisible(false);
+        f7a.setVisible(false);
+        f8a.setVisible(false);
+        f9a.setVisible(false);
+        f10a.setVisible(false);
+        f11a.setVisible(false);
     }
 
     public static void main(String[] args) {
