@@ -15,6 +15,7 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
+    JMenuItem playBook;
     JButton motion, routeline, zone, block;
     JTextArea defensivePlay, offensivePlay, header1, header2,
             f1a, f2a, f3a, f4a, f5a, f6a, f7a, f8a, f9a, f10a, f11a,
@@ -26,10 +27,7 @@ public class Game extends Canvas implements Runnable {
     public Game() {
         Font font = new Font("Courrier New", Font.PLAIN, 16);
         handler = new Handler();
-        JFrame frame = new JFrame("FootballIQ");
-        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        frame.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        frame.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        frame.setSize(new Dimension(WIDTH,HEIGHT));
         frame.setIconImage(new ImageIcon(getClass().getResource("/images/field.png")).getImage());
 
         ActionListener actionListener = new ActionListener() {
@@ -85,7 +83,9 @@ public class Game extends Canvas implements Runnable {
         newMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                playBook.setSelected(false);
                 handler.startGame();
+                newOffDef();
             }
         });
         newMenu.setFont(font);
@@ -93,123 +93,176 @@ public class Game extends Canvas implements Runnable {
         JMenuItem saveMenu = new JMenuItem("Save");
         saveMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JFileChooser chooseDirec = new JFileChooser();
-                chooseDirec.setFileSelectionMode(JFileChooser.FILES_ONLY);
-                chooseDirec.showSaveDialog(frame.getContentPane());
-                File file = chooseDirec.getSelectedFile();
-                file = new File(file+".gif");
-                BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB_PRE);
-                Graphics2D g2=(Graphics2D)image.getGraphics();
-                g2.setColor(Color.WHITE);
-                g2.fillRect(0,0,WIDTH,HEIGHT);
-                g2.setStroke(new BasicStroke(1));
-                g2.setColor(Color.black);
-                g2.drawLine((WIDTH/2)-210,20,(WIDTH/2)-200,20);
-                g2.drawLine((WIDTH/2)+210,20,(WIDTH/2)+200,20);
-                g2.drawLine((WIDTH/2)-210,40,(WIDTH/2)-200,40);
-                g2.drawLine((WIDTH/2)+210,40,(WIDTH/2)+200,40);
-                g2.drawLine((WIDTH/2)-210,60,(WIDTH/2)-200,60);
-                g2.drawLine((WIDTH/2)+210,60,(WIDTH/2)+200,60);
-                g2.drawLine((WIDTH/2)-210,80,(WIDTH/2)-200,80);
-                g2.drawLine((WIDTH/2)+210,80,(WIDTH/2)+200,80);
-                g2.drawLine(0,100,WIDTH,100);
-                g2.drawLine((WIDTH/2)-210,120,(WIDTH/2)-200,120);
-                g2.drawLine((WIDTH/2)+210,120,(WIDTH/2)+200,120);
-                g2.drawLine((WIDTH/2)-210,140,(WIDTH/2)-200,140);
-                g2.drawLine((WIDTH/2)+210,140,(WIDTH/2)+200,140);
-                g2.drawLine((WIDTH/2)-210,160,(WIDTH/2)-200,160);
-                g2.drawLine((WIDTH/2)+210,160,(WIDTH/2)+200,160);
-                g2.drawLine((WIDTH/2)-210,180,(WIDTH/2)-200,180);
-                g2.drawLine((WIDTH/2)+210,180,(WIDTH/2)+200,180);
-                g2.drawLine(0,200,WIDTH,200);
-                g2.drawLine((WIDTH/2)-210,220,(WIDTH/2)-200,220);
-                g2.drawLine((WIDTH/2)+210,220,(WIDTH/2)+200,220);
-                g2.drawLine((WIDTH/2)-210,240,(WIDTH/2)-200,240);
-                g2.drawLine((WIDTH/2)+210,240,(WIDTH/2)+200,240);
-                g2.drawLine((WIDTH/2)-210,260,(WIDTH/2)-200,260);
-                g2.drawLine((WIDTH/2)+210,260,(WIDTH/2)+200,260);
-                g2.drawLine((WIDTH/2)-210,280,(WIDTH/2)-200,280);
-                g2.drawLine((WIDTH/2)+210,280,(WIDTH/2)+200,280);
-                g2.drawLine(0,300,WIDTH,300);
-                g2.drawLine((WIDTH/2)-210,320,(WIDTH/2)-200,320);
-                g2.drawLine((WIDTH/2)+210,320,(WIDTH/2)+200,320);
-                g2.drawLine((WIDTH/2)-210,340,(WIDTH/2)-200,340);
-                g2.drawLine((WIDTH/2)+210,340,(WIDTH/2)+200,340);
-                g2.drawLine((WIDTH/2)-210,360,(WIDTH/2)-200,360);
-                g2.drawLine((WIDTH/2)+210,360,(WIDTH/2)+200,360);
-                g2.drawLine((WIDTH/2)+210,380,(WIDTH/2)+200,380);
-                g2.drawLine((WIDTH/2)-210,380,(WIDTH/2)-200,380);
-                g2.drawLine(0,HEIGHT/2,WIDTH,HEIGHT/2);
-                g2.drawLine((WIDTH/2)-210,420,(WIDTH/2)-200,420);
-                g2.drawLine((WIDTH/2)+210,420,(WIDTH/2)+200,420);
-                g2.drawLine((WIDTH/2)-210,440,(WIDTH/2)-200,440);
-                g2.drawLine((WIDTH/2)+210,440,(WIDTH/2)+200,440);
-                g2.drawLine((WIDTH/2)-210,460,(WIDTH/2)-200,460);
-                g2.drawLine((WIDTH/2)+210,460,(WIDTH/2)+200,460);
-                g2.drawLine((WIDTH/2)-210,480,(WIDTH/2)-200,480);
-                g2.drawLine((WIDTH/2)+210,480,(WIDTH/2)+200,480);
-                g2.drawLine(0,500,WIDTH,500);
-                g2.drawLine((WIDTH/2)-210,520,(WIDTH/2)-200,520);
-                g2.drawLine((WIDTH/2)+210,520,(WIDTH/2)+200,520);
-                g2.drawLine((WIDTH/2)-210,540,(WIDTH/2)-200,540);
-                g2.drawLine((WIDTH/2)+210,540,(WIDTH/2)+200,540);
-                g2.drawLine((WIDTH/2)-210,560,(WIDTH/2)-200,560);
-                g2.drawLine((WIDTH/2)+210,560,(WIDTH/2)+200,560);
-                g2.drawLine((WIDTH/2)-210,580,(WIDTH/2)-200,580);
-                g2.drawLine((WIDTH/2)+210,580,(WIDTH/2)+200,580);
-                g2.drawLine(0,600,WIDTH,600);
-                g2.drawLine((WIDTH/2)-210,620,(WIDTH/2)-200,620);
-                g2.drawLine((WIDTH/2)+210,620,(WIDTH/2)+200,620);
-                g2.drawLine((WIDTH/2)-210,640,(WIDTH/2)-200,640);
-                g2.drawLine((WIDTH/2)+210,640,(WIDTH/2)+200,640);
-                g2.drawLine((WIDTH/2)-210,660,(WIDTH/2)-200,660);
-                g2.drawLine((WIDTH/2)+210,660,(WIDTH/2)+200,660);
-                g2.drawLine((WIDTH/2)-210,680,(WIDTH/2)-200,680);
-                g2.drawLine((WIDTH/2)+210,680,(WIDTH/2)+200,680);
-
-                g2.setFont(font);
-                g2.drawString(offensivePlay.getText(), offensivePlay.getX(), offensivePlay.getY());
-                g2.drawString(defensivePlay.getText(), defensivePlay.getX(), defensivePlay.getY());
-                g2.drawString(header1.getText(), header1.getX(), header1.getY());
-                g2.drawString(header2.getText(), header2.getX(), header2.getY());
-                g2.drawString(f1a.getText(), f1a.getX(), f1a.getY());
-                g2.drawString(f2a.getText(), f2a.getX(), f2a.getY());
-                g2.drawString(f3a.getText(), f3a.getX(), f3a.getY());
-                g2.drawString(f4a.getText(), f4a.getX(), f4a.getY());
-                g2.drawString(f5a.getText(), f5a.getX(), f5a.getY());
-                g2.drawString(f6a.getText(), f6a.getX(), f6a.getY());
-                g2.drawString(f7a.getText(), f7a.getX(), f7a.getY());
-                g2.drawString(f8a.getText(), f8a.getX(), f8a.getY());
-                g2.drawString(f9a.getText(), f9a.getX(), f9a.getY());
-                g2.drawString(f10a.getText(), f10a.getX(), f10a.getY());
-                g2.drawString(f11a.getText(), f11a.getX(), f11a.getY());
-                g2.drawString(f1b.getText(), f1b.getX(), f1b.getY());
-                g2.drawString(f2b.getText(), f2b.getX(), f2b.getY());
-                g2.drawString(f3b.getText(), f3b.getX(), f3b.getY());
-                g2.drawString(f4b.getText(), f4b.getX(), f4b.getY());
-                g2.drawString(f5b.getText(), f5b.getX(), f5b.getY());
-                g2.drawString(f6b.getText(), f6b.getX(), f6b.getY());
-                g2.drawString(f7b.getText(), f7b.getX(), f7b.getY());
-                g2.drawString(f8b.getText(), f8b.getX(), f8b.getY());
-                g2.drawString(f9b.getText(), f9b.getX(), f9b.getY());
-                g2.drawString(f10b.getText(), f10b.getX(), f10b.getY());
-                g2.drawString(f11b.getText(), f11b.getX(), f11b.getY());
-
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                handler.render(g2);
-                route.render(g2);
-                try
-                {
-                    ImageIO.write(image, "gif", new File("/"+file));
-                }
-                catch (Exception ev) {
-                    ev.printStackTrace();
+                if (!playBook.isSelected()) {
+                    JFileChooser chooseDirec = new JFileChooser();
+                    chooseDirec.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    chooseDirec.showSaveDialog(frame.getContentPane());
+                    File file = chooseDirec.getSelectedFile();
+                    file = new File(file + ".gif");
+                    BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB_PRE);
+                    Graphics2D g2 = (Graphics2D) image.getGraphics();
+                    g2.setColor(Color.WHITE);
+                    g2.fillRect(0, 0, WIDTH, HEIGHT);
+                    g2.setStroke(new BasicStroke(1));
+                    g2.setColor(Color.black);
+                    g2.drawLine((WIDTH / 2) - 210, 20, (WIDTH / 2) - 200, 20);
+                    g2.drawLine((WIDTH / 2) + 210, 20, (WIDTH / 2) + 200, 20);
+                    g2.drawLine((WIDTH / 2) - 210, 40, (WIDTH / 2) - 200, 40);
+                    g2.drawLine((WIDTH / 2) + 210, 40, (WIDTH / 2) + 200, 40);
+                    g2.drawLine((WIDTH / 2) - 210, 60, (WIDTH / 2) - 200, 60);
+                    g2.drawLine((WIDTH / 2) + 210, 60, (WIDTH / 2) + 200, 60);
+                    g2.drawLine((WIDTH / 2) - 210, 80, (WIDTH / 2) - 200, 80);
+                    g2.drawLine((WIDTH / 2) + 210, 80, (WIDTH / 2) + 200, 80);
+                    g2.drawLine(0, 100, WIDTH, 100);
+                    g2.drawLine((WIDTH / 2) - 210, 120, (WIDTH / 2) - 200, 120);
+                    g2.drawLine((WIDTH / 2) + 210, 120, (WIDTH / 2) + 200, 120);
+                    g2.drawLine((WIDTH / 2) - 210, 140, (WIDTH / 2) - 200, 140);
+                    g2.drawLine((WIDTH / 2) + 210, 140, (WIDTH / 2) + 200, 140);
+                    g2.drawLine((WIDTH / 2) - 210, 160, (WIDTH / 2) - 200, 160);
+                    g2.drawLine((WIDTH / 2) + 210, 160, (WIDTH / 2) + 200, 160);
+                    g2.drawLine((WIDTH / 2) - 210, 180, (WIDTH / 2) - 200, 180);
+                    g2.drawLine((WIDTH / 2) + 210, 180, (WIDTH / 2) + 200, 180);
+                    g2.drawLine(0, 200, WIDTH, 200);
+                    g2.drawLine((WIDTH / 2) - 210, 220, (WIDTH / 2) - 200, 220);
+                    g2.drawLine((WIDTH / 2) + 210, 220, (WIDTH / 2) + 200, 220);
+                    g2.drawLine((WIDTH / 2) - 210, 240, (WIDTH / 2) - 200, 240);
+                    g2.drawLine((WIDTH / 2) + 210, 240, (WIDTH / 2) + 200, 240);
+                    g2.drawLine((WIDTH / 2) - 210, 260, (WIDTH / 2) - 200, 260);
+                    g2.drawLine((WIDTH / 2) + 210, 260, (WIDTH / 2) + 200, 260);
+                    g2.drawLine((WIDTH / 2) - 210, 280, (WIDTH / 2) - 200, 280);
+                    g2.drawLine((WIDTH / 2) + 210, 280, (WIDTH / 2) + 200, 280);
+                    g2.drawLine(0, 300, WIDTH, 300);
+                    g2.drawLine((WIDTH / 2) - 210, 320, (WIDTH / 2) - 200, 320);
+                    g2.drawLine((WIDTH / 2) + 210, 320, (WIDTH / 2) + 200, 320);
+                    g2.drawLine((WIDTH / 2) - 210, 340, (WIDTH / 2) - 200, 340);
+                    g2.drawLine((WIDTH / 2) + 210, 340, (WIDTH / 2) + 200, 340);
+                    g2.drawLine((WIDTH / 2) - 210, 360, (WIDTH / 2) - 200, 360);
+                    g2.drawLine((WIDTH / 2) + 210, 360, (WIDTH / 2) + 200, 360);
+                    g2.drawLine((WIDTH / 2) + 210, 380, (WIDTH / 2) + 200, 380);
+                    g2.drawLine((WIDTH / 2) - 210, 380, (WIDTH / 2) - 200, 380);
+                    g2.drawLine(0, HEIGHT / 2, WIDTH, HEIGHT / 2);
+                    g2.drawLine((WIDTH / 2) - 210, 420, (WIDTH / 2) - 200, 420);
+                    g2.drawLine((WIDTH / 2) + 210, 420, (WIDTH / 2) + 200, 420);
+                    g2.drawLine((WIDTH / 2) - 210, 440, (WIDTH / 2) - 200, 440);
+                    g2.drawLine((WIDTH / 2) + 210, 440, (WIDTH / 2) + 200, 440);
+                    g2.drawLine((WIDTH / 2) - 210, 460, (WIDTH / 2) - 200, 460);
+                    g2.drawLine((WIDTH / 2) + 210, 460, (WIDTH / 2) + 200, 460);
+                    g2.drawLine((WIDTH / 2) - 210, 480, (WIDTH / 2) - 200, 480);
+                    g2.drawLine((WIDTH / 2) + 210, 480, (WIDTH / 2) + 200, 480);
+                    g2.drawLine(0, 500, WIDTH, 500);
+                    g2.drawLine((WIDTH / 2) - 210, 520, (WIDTH / 2) - 200, 520);
+                    g2.drawLine((WIDTH / 2) + 210, 520, (WIDTH / 2) + 200, 520);
+                    g2.drawLine((WIDTH / 2) - 210, 540, (WIDTH / 2) - 200, 540);
+                    g2.drawLine((WIDTH / 2) + 210, 540, (WIDTH / 2) + 200, 540);
+                    g2.drawLine((WIDTH / 2) - 210, 560, (WIDTH / 2) - 200, 560);
+                    g2.drawLine((WIDTH / 2) + 210, 560, (WIDTH / 2) + 200, 560);
+                    g2.drawLine((WIDTH / 2) - 210, 580, (WIDTH / 2) - 200, 580);
+                    g2.drawLine((WIDTH / 2) + 210, 580, (WIDTH / 2) + 200, 580);
+                    g2.drawLine(0, 600, WIDTH, 600);
+                    g2.drawLine((WIDTH / 2) - 210, 620, (WIDTH / 2) - 200, 620);
+                    g2.drawLine((WIDTH / 2) + 210, 620, (WIDTH / 2) + 200, 620);
+                    g2.drawLine((WIDTH / 2) - 210, 640, (WIDTH / 2) - 200, 640);
+                    g2.drawLine((WIDTH / 2) + 210, 640, (WIDTH / 2) + 200, 640);
+                    g2.drawLine((WIDTH / 2) - 210, 660, (WIDTH / 2) - 200, 660);
+                    g2.drawLine((WIDTH / 2) + 210, 660, (WIDTH / 2) + 200, 660);
+                    g2.drawLine((WIDTH / 2) - 210, 680, (WIDTH / 2) - 200, 680);
+                    g2.drawLine((WIDTH / 2) + 210, 680, (WIDTH / 2) + 200, 680);
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    handler.render(g2);
+                    route.render(g2);
+                    try {
+                        ImageIO.write(image, "gif", new File("/" + file));
+                    } catch (Exception ev) {
+                        ev.printStackTrace();
+                    }
+                } else if (playBook.isSelected()) {
+                    JFileChooser chooseDirec = new JFileChooser();
+                    chooseDirec.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    chooseDirec.showSaveDialog(frame.getContentPane());
+                    File file = chooseDirec.getSelectedFile();
+                    file = new File(file + ".gif");
+                    BufferedImage image = new BufferedImage(HEIGHT, WIDTH-150, BufferedImage.TYPE_INT_ARGB_PRE);
+                    Graphics2D g2 = (Graphics2D) image.getGraphics();
+                    g2.setColor(Color.WHITE);
+                    g2.fillRect(0, 0, HEIGHT, WIDTH-150);
+                    g2.setStroke(new BasicStroke(1));
+                    g2.setStroke(new BasicStroke(1));
+                    g2.setColor(Color.black);
+                    g2.drawLine(0, 370, HEIGHT, 370);
+                    g2.drawLine(265, 350, 275, 350);
+                    g2.drawLine(535, 350, 545, 350);
+                    g2.drawLine(265, 330, 275, 330);
+                    g2.drawLine(535, 330, 545, 330);
+                    g2.drawLine(265, 310, 275, 310);
+                    g2.drawLine(535, 310, 545, 310);
+                    g2.drawLine(265, 290, 275, 290);
+                    g2.drawLine(535, 290, 545, 290);
+                    g2.drawLine(0, 270, HEIGHT, 270);
+                    g2.drawLine(265, 250, 275, 250);
+                    g2.drawLine(535, 250, 545, 250);
+                    g2.drawLine(265, 230, 275, 230);
+                    g2.drawLine(535, 230, 545, 230);
+                    g2.drawLine(265, 210, 275, 210);
+                    g2.drawLine(535, 210, 545, 210);
+                    g2.drawLine(265, 190, 275, 190);
+                    g2.drawLine(535, 190, 545, 190);
+                    g2.drawLine(0, 170, HEIGHT, 170);
+                    g2.drawLine(265, 150, 275, 150);
+                    g2.drawLine(535, 150, 545, 150);
+                    g2.drawLine(265, 130, 275, 130);
+                    g2.drawLine(535, 130, 545, 130);
+                    g2.drawLine(265, 110, 275, 110);
+                    g2.drawLine(535, 110, 545, 110);
+                    g2.drawLine(265, 90, 275, 90);
+                    g2.drawLine(535, 90, 545, 90);
+                    g2.drawLine(0, 70, HEIGHT, 70);
+                    g2.drawLine(265, 50, 275, 50);
+                    g2.drawLine(535, 50, 545, 50);
+                    g2.drawLine(265, 30, 275, 30);
+                    g2.drawLine(535, 30, 545, 30);
+                    g2.drawLine(265, 10, 275, 10);
+                    g2.drawLine(535, 10, 545, 10);
+                    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    g2.setFont(font);
+                    g2.drawString(offensivePlay.getText(), offensivePlay.getX(), offensivePlay.getY());
+                    g2.drawString(defensivePlay.getText(), defensivePlay.getX(), defensivePlay.getY());
+                    g2.drawString(header1.getText(), header1.getX(), header1.getY());
+                    g2.drawString(header2.getText(), header2.getX(), header2.getY());
+                    g2.drawString(f1a.getText(), f1a.getX(), f1a.getY());
+                    g2.drawString(f2a.getText(), f2a.getX(), f2a.getY());
+                    g2.drawString(f3a.getText(), f3a.getX(), f3a.getY());
+                    g2.drawString(f4a.getText(), f4a.getX(), f4a.getY());
+                    g2.drawString(f5a.getText(), f5a.getX(), f5a.getY());
+                    g2.drawString(f6a.getText(), f6a.getX(), f6a.getY());
+                    g2.drawString(f7a.getText(), f7a.getX(), f7a.getY());
+                    g2.drawString(f8a.getText(), f8a.getX(), f8a.getY());
+                    g2.drawString(f9a.getText(), f9a.getX(), f9a.getY());
+                    g2.drawString(f10a.getText(), f10a.getX(), f10a.getY());
+                    g2.drawString(f11a.getText(), f11a.getX(), f11a.getY());
+                    g2.drawString(f1b.getText(), f1b.getX(), f1b.getY());
+                    g2.drawString(f2b.getText(), f2b.getX(), f2b.getY());
+                    g2.drawString(f3b.getText(), f3b.getX(), f3b.getY());
+                    g2.drawString(f4b.getText(), f4b.getX(), f4b.getY());
+                    g2.drawString(f5b.getText(), f5b.getX(), f5b.getY());
+                    g2.drawString(f6b.getText(), f6b.getX(), f6b.getY());
+                    g2.drawString(f7b.getText(), f7b.getX(), f7b.getY());
+                    g2.drawString(f8b.getText(), f8b.getX(), f8b.getY());
+                    g2.drawString(f9b.getText(), f9b.getX(), f9b.getY());
+                    g2.drawString(f10b.getText(), f10b.getX(), f10b.getY());
+                    g2.drawString(f11b.getText(), f11b.getX(), f11b.getY());
+                    handler.render(g2);
+                    route.render(g2);
+                    try {
+                        ImageIO.write(image, "gif", new File("/" + file));
+                    } catch (Exception ev) {
+                        ev.printStackTrace();
+                    }
                 }
             }
         });
         saveMenu.setFont(font);
 
-        JMenuItem playBook = new JMenuItem("Playbook");
+        playBook = new JMenuItem("Playbook");
         playBook.setFont(font);
         playBook.addActionListener(new ActionListener() {
             @Override
@@ -229,33 +282,39 @@ public class Game extends Canvas implements Runnable {
             }
         });
         animate.setFont(font);
+            JMenu jMenuSub = new JMenu("Special Teams");
+            jMenuSub.setFont(font);
+            JMenuItem punt = new JMenuItem("Punt/Punt Return");
+            punt.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!playBook.isSelected()) {
+                        handler.punt();
+                    }
+                }
+            });
+            punt.setFont(font);
+            JMenuItem FG = new JMenuItem("Field Goal");
+            FG.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!playBook.isSelected()) {
+                        handler.FG();
+                    }
+                }
+            });
+            FG.setFont(font);
+            JMenuItem KO = new JMenuItem("Kick Off/Kick Off Return");
+            KO.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (!playBook.isSelected()) {
+                        handler.KO();
+                    }
+                }
+            });
+            KO.setFont(font);
 
-        JMenu jMenuSub = new JMenu("Special Teams");
-        jMenuSub.setFont(font);
-        JMenuItem punt = new JMenuItem("Punt/Punt Return");
-        punt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handler.punt();
-            }
-        });
-        punt.setFont(font);
-        JMenuItem FG = new JMenuItem("Field Goal");
-        FG.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handler.FG();
-            }
-        });
-        FG.setFont(font);
-        JMenuItem KO = new JMenuItem("Kick Off/Kick Off Return");
-        KO.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                handler.KO();
-            }
-        });
-        KO.setFont(font);
         JMenuItem reload = new JMenuItem("reload");
         reload.addActionListener(new ActionListener() {
             @Override
@@ -285,7 +344,9 @@ public class Game extends Canvas implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 handler.startGame();
-                offDef();
+                if (playBook.isSelected()) {
+                    handler.playbook();
+                }
             }
 
         });
@@ -373,145 +434,145 @@ public class Game extends Canvas implements Runnable {
         //playbook
         header1 = new JTextArea("Position");
         header1.setFont(font);
-        header1.setBounds(0,HEIGHT/2, 75,25);
+        header1.setBounds(0,430, 75,40);
         header1.setVisible(false);
         header1.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(header1);
         header2 = new JTextArea("Description");
         header2.setFont(font);
-        header2.setBounds(75,HEIGHT/2, WIDTH-75,25);
+        header2.setBounds(75,430, HEIGHT-75,40);
         header2.setVisible(false);
         header2.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(header2);
         f1a = new JTextArea();
         f1a.setFont(font);
-        f1a.setBounds(0,HEIGHT/2+25, 75,25);
+        f1a.setBounds(0,470, 75,40);
         f1a.setVisible(false);
         f1a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f1a);
         f2a = new JTextArea();
         f2a.setFont(font);
-        f2a.setBounds(0,HEIGHT/2+50, 75,25);
+        f2a.setBounds(0,510, 75,40);
         f2a.setVisible(false);
         f2a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f2a);
         f3a = new JTextArea();
         f3a.setFont(font);
-        f3a.setBounds(0,HEIGHT/2+75, 75,25);
+        f3a.setBounds(0,550, 75,40);
         f3a.setVisible(false);
         f3a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f3a);
         f4a = new JTextArea();
         f4a.setFont(font);
-        f4a.setBounds(0,HEIGHT/2+100, 75,25);
+        f4a.setBounds(0,590, 75,40);
         f4a.setVisible(false);
         f4a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f4a);
         f5a = new JTextArea();
         f5a.setFont(font);
-        f5a.setBounds(0,HEIGHT/2+125, 75,25);
+        f5a.setBounds(0,630, 75,40);
         f5a.setVisible(false);
         f5a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f5a);
         f6a = new JTextArea();
         f6a.setFont(font);
-        f6a.setBounds(0,HEIGHT/2+150, 75,25);
+        f6a.setBounds(0,670, 75,40);
         f6a.setVisible(false);
         f6a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f6a);
         f7a = new JTextArea();
         f7a.setFont(font);
-        f7a.setBounds(0,HEIGHT/2+175, 75,25);
+        f7a.setBounds(0,710, 75,40);
         f7a.setVisible(false);
         f7a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f7a);
         f8a = new JTextArea();
         f8a.setFont(font);
-        f8a.setBounds(0,HEIGHT/2+200, 75,25);
+        f8a.setBounds(0, 750, 75,40);
         f8a.setVisible(false);
         f8a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f8a);
         f9a = new JTextArea();
         f9a.setFont(font);
-        f9a.setBounds(0,HEIGHT/2+225, 75,25);
+        f9a.setBounds(0,790, 75,40);
         f9a.setVisible(false);
         f9a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f9a);
         f10a = new JTextArea();
         f10a.setFont(font);
-        f10a.setBounds(0,HEIGHT/2+250, 75,25);
+        f10a.setBounds(0,830, 75,40);
         f10a.setVisible(false);
         f10a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f10a);
         f11a = new JTextArea();
         f11a.setFont(font);
-        f11a.setBounds(0,HEIGHT/2+275, 75,25);
+        f11a.setBounds(0,870, 75,40);
         f11a.setVisible(false);
         f11a.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f11a);
         f1b = new JTextArea();
         f1b.setFont(font);
-        f1b.setBounds(75,HEIGHT/2+25, WIDTH-75,25);
+        f1b.setBounds(75,470, HEIGHT-75,40);
         f1b.setVisible(false);
         f1b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f1b);
         f2b = new JTextArea();
         f2b.setFont(font);
-        f2b.setBounds(75,HEIGHT/2+50, WIDTH-75,25);
+        f2b.setBounds(75,510, HEIGHT-75,40);
         f2b.setVisible(false);
         f2b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f2b);
         f3b = new JTextArea();
         f3b.setFont(font);
-        f3b.setBounds(75,HEIGHT/2+75, WIDTH-75,25);
+        f3b.setBounds(75,550, HEIGHT-75,40);
         f3b.setVisible(false);
         f3b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f3b);
         f4b = new JTextArea();
         f4b.setFont(font);
-        f4b.setBounds(75,HEIGHT/2+100, WIDTH-75,25);
+        f4b.setBounds(75,590, HEIGHT-75,40);
         f4b.setVisible(false);
         f4b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f4b);
         f5b = new JTextArea();
         f5b.setFont(font);
-        f5b.setBounds(75,HEIGHT/2+125, WIDTH-75,25);
+        f5b.setBounds(75,630, HEIGHT-75,40);
         f5b.setVisible(false);
         f5b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f5b);
         f6b = new JTextArea();
         f6b.setFont(font);
-        f6b.setBounds(75,HEIGHT/2+150, WIDTH-75,25);
+        f6b.setBounds(75,670, HEIGHT-75,40);
         f6b.setVisible(false);
         f6b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f6b);
         f7b = new JTextArea();
         f7b.setFont(font);
-        f7b.setBounds(75,HEIGHT/2+175, WIDTH-75,25);
+        f7b.setBounds(75,710, HEIGHT-75,40);
         f7b.setVisible(false);
         f7b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f7b);
         f8b = new JTextArea();
         f8b.setFont(font);
-        f8b.setBounds(75,HEIGHT/2+200, WIDTH-75,25);
+        f8b.setBounds(75,750, HEIGHT-75,40);
         f8b.setVisible(false);
         f8b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f8b);
         f9b = new JTextArea();
         f9b.setFont(font);
-        f9b.setBounds(75,HEIGHT/2+225, WIDTH-75,25);
+        f9b.setBounds(75,790, HEIGHT-75,40);
         f9b.setVisible(false);
         f9b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f9b);
         f10b = new JTextArea();
         f10b.setFont(font);
-        f10b.setBounds(75,HEIGHT/2+250, WIDTH-75,25);
+        f10b.setBounds(75,830, HEIGHT-75,40);
         f10b.setVisible(false);
         f10b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f10b);
         f11b = new JTextArea();
         f11b.setFont(font);
-        f11b.setBounds(75,HEIGHT/2+275, WIDTH-75,25);
+        f11b.setBounds(75,870, HEIGHT-75,40);
         f11b.setVisible(false);
         f11b.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
         frame.add(f11b);
@@ -596,6 +657,12 @@ public class Game extends Canvas implements Runnable {
         Image img;
         img = Toolkit.getDefaultToolkit().getImage((getClass().getResource("/images/field.png")));
         g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
+        if (playBook.isSelected()) {
+            g.drawImage(img,0, 0, HEIGHT, WIDTH, this);
+        } else {
+            img = Toolkit.getDefaultToolkit().getImage((getClass().getResource("/images/field.png")));
+            g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
+        }
         route.render(g);
         handler.render(g);
         g.dispose();
@@ -613,7 +680,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void playbookTemplate() {
-
+        frame.setSize(new Dimension(HEIGHT,WIDTH));
+        frame.setResizable(false);
         header1.setVisible(true);
         header2.setVisible(true);
         f1b.setVisible(true);
@@ -638,11 +706,19 @@ public class Game extends Canvas implements Runnable {
         f9a.setVisible(true);
         f10a.setVisible(true);
         f11a.setVisible(true);
-//        frame.revalidate();
+        //resize the other buttons
+        offensivePlay.setBounds(0,910,275, 75 );
+        defensivePlay.setBounds(HEIGHT-275,910,275, 75 );
+        motion.setBounds(275, 910, 68, 75);
+        routeline.setBounds(343, 910, 68, 75);
+        zone.setBounds(411, 910, 67, 75);
+        block.setBounds(478, 910, 67, 75);
+
     }
 
-    public void offDef() {
-
+    public void newOffDef() {
+        frame.setSize(new Dimension(WIDTH,HEIGHT));
+        frame.setResizable(false);
         header1.setVisible(false);
         header2.setVisible(false);
         f1b.setVisible(false);
@@ -667,6 +743,13 @@ public class Game extends Canvas implements Runnable {
         f9a.setVisible(false);
         f10a.setVisible(false);
         f11a.setVisible(false);
+        motion.setBounds(400, 725, 75, 50);
+        routeline.setBounds(475, 725, 75, 50);
+        zone.setBounds(550, 725, 75, 50);
+        block.setBounds(625, 725, 75, 50);
+        offensivePlay.setBounds(0, 725, 300, 50);
+        defensivePlay.setBounds(1100-300, 725, 300, 50);
+
     }
 
     public static void main(String[] args) {

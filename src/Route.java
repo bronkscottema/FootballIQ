@@ -34,7 +34,9 @@ public class Route extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        int x = e.getX();
+        int y = e.getY();
+        System.out.println(x+","+y);
     }
 
     public void mousePressed(MouseEvent e) {
