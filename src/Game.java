@@ -356,7 +356,7 @@ public class Game extends Canvas implements Runnable {
         sixman.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handler.startGame();
+                handler.sixMan();
             }
         });
         sixman.setFont(font);
@@ -365,7 +365,7 @@ public class Game extends Canvas implements Runnable {
         eightman.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                handler.startGame();
+                handler.eightMan();
             }
         });
         eightman.setFont(font);

@@ -63,6 +63,7 @@ public class Handler {
         this.addObject(new Player((WIDTH/2)+450, (HEIGHT/2)-105, ID.SCB));
         this.addObject(new Player((WIDTH/2)-450, (HEIGHT/2)-105, ID.WCB));
     }
+
     public void punt() {
         LinkedList<GameObject> players = object;
         Iterator<GameObject> jag = players.iterator();
@@ -189,5 +190,53 @@ public class Handler {
         this.addObject(new Player((WIDTH/2)-225, (HEIGHT/2)-220, ID.SS));
         this.addObject(new Player((WIDTH/2)+325, (HEIGHT/2)-255, ID.SCB));
         this.addObject(new Player((WIDTH/2)-325, (HEIGHT/2)-255, ID.WCB));
+    }
+
+    public void sixMan() {
+        LinkedList<GameObject> players = object;
+        Iterator<GameObject> jag = players.iterator();
+        while (jag.hasNext()) {
+            GameObject player = jag.next();
+            jag.remove();
+        }
+        final int WIDTH = 1100, HEIGHT = WIDTH / 12 * 9;
+        this.addObject(new Player(WIDTH/2, HEIGHT/2, ID.C));
+        this.addObject(new Player((WIDTH/2)+35, HEIGHT/2, ID.RG));
+        this.addObject(new Player((WIDTH/2)-35, HEIGHT/2, ID.LG));
+        this.addObject(new Player(WIDTH/2, (HEIGHT/2)+75, ID.QB));
+        this.addObject(new Player((WIDTH/2)-35, (HEIGHT/2)+85, ID.RB));
+        this.addObject(new Player((WIDTH/2)+35, (HEIGHT/2)+85, ID.WRH));
+        this.addObject(new Player((WIDTH/2)+115, (HEIGHT/2)-60, ID.SDE));
+        this.addObject(new Player((WIDTH/2)-115, HEIGHT/2-60, ID.WDE));
+        this.addObject(new Player((WIDTH/2)-40, (HEIGHT/2)-30, ID.WDT));
+        this.addObject(new Player((WIDTH/2)+40, (HEIGHT/2)-30, ID.SDT));
+        this.addObject(new Player(WIDTH/2, (HEIGHT/2)-70, ID.SOSLB));
+        this.addObject(new Player(WIDTH/2, (HEIGHT/2)-150, ID.FS));
+    }
+
+    public void eightMan() {
+        LinkedList<GameObject> players = object;
+        Iterator<GameObject> jag = players.iterator();
+        while (jag.hasNext()) {
+            GameObject player = jag.next();
+            jag.remove();
+        }
+        final int WIDTH = 1100, HEIGHT = WIDTH / 12 * 9;
+        this.addObject(new Player(WIDTH/2, HEIGHT/2, ID.C));
+        this.addObject(new Player((WIDTH/2)+35, HEIGHT/2, ID.RG));
+        this.addObject(new Player((WIDTH/2)+70, HEIGHT/2, ID.RT));
+        this.addObject(new Player((WIDTH/2)-35, HEIGHT/2, ID.LG));
+        this.addObject(new Player((WIDTH/2)-70, HEIGHT/2, ID.LT));
+        this.addObject(new Player(WIDTH/2, (HEIGHT/2)+75, ID.QB));
+        this.addObject(new Player((WIDTH/2)-35, (HEIGHT/2)+85, ID.RB));
+        this.addObject(new Player((WIDTH/2)+35, (HEIGHT/2)+85, ID.WRH));
+        this.addObject(new Player((WIDTH/2)+115, (HEIGHT/2)-30, ID.SDE));
+        this.addObject(new Player((WIDTH/2)-115, HEIGHT/2-30, ID.WDE));
+        this.addObject(new Player((WIDTH/2)-40, (HEIGHT/2)-30, ID.WDT));
+        this.addObject(new Player((WIDTH/2)+40, (HEIGHT/2)-30, ID.SDT));
+        this.addObject(new Player((WIDTH/2)+40, (HEIGHT/2)-70, ID.SOSLB));
+        this.addObject(new Player((WIDTH/2)-40, (HEIGHT/2)-70, ID.WOSLB));
+        this.addObject(new Player((WIDTH/2)-125, (HEIGHT/2)-70, ID.SS));
+        this.addObject(new Player((WIDTH/2)+125, (HEIGHT/2)-70, ID.FS));
     }
 }
