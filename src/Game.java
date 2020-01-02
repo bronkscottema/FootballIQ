@@ -8,11 +8,14 @@ import java.io.File;
 
 public class Game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 1100, HEIGHT = WIDTH / 12 * 9;
+    private static final long serialVersionUID = 1L;
+
+	public static final int WIDTH = 1100, HEIGHT = WIDTH / 12 * 9;
 
     private Thread thread;
     private boolean running = false;
     private Handler handler;
+    private EmbedYoutube EmbedYoutube;
     private Movement movement;
     private Route route;
     JMenuItem playBook;
@@ -28,7 +31,7 @@ public class Game extends Canvas implements Runnable {
         Font font = new Font("Courrier New", Font.PLAIN, 16);
         handler = new Handler();
         frame.setSize(new Dimension(WIDTH,HEIGHT));
-        frame.setIconImage(new ImageIcon(getClass().getResource("/images/field.png")).getImage());
+        frame.setIconImage(new ImageIcon(getClass().getResource("images/field.png")).getImage());
 
         ActionListener actionListener = new ActionListener() {
             @Override
@@ -59,19 +62,19 @@ public class Game extends Canvas implements Runnable {
 
         motion = new JButton("Motion");
         motion.addActionListener(actionListener);
-        motion.setBounds(400, 725, 75, 50);
+        motion.setBounds(400, 710, 75, 50);
         frame.add(motion);
         routeline = new JButton("Line");
         routeline.addActionListener(actionListener);
-        routeline.setBounds(475, 725, 75, 50);
+        routeline.setBounds(475, 710, 75, 50);
         frame.add(routeline);
         zone = new JButton("Zone");
         zone.addActionListener(actionListener);
-        zone.setBounds(550, 725, 75, 50);
+        zone.setBounds(550, 710, 75, 50);
         frame.add(zone);
         block = new JButton("Block");
         block.addActionListener(actionListener);
-        block.setBounds(625, 725, 75, 50);
+        block.setBounds(625, 710, 75, 50);
         frame.add(block);
 
         JMenuBar jMenuBar = new JMenuBar();
@@ -83,9 +86,7 @@ public class Game extends Canvas implements Runnable {
         newMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                playBook.setSelected(false);
-                handler.startGame();
-                newOffDef();
+            	DetectFace.main(null);
             }
         });
         newMenu.setFont(font);
@@ -423,12 +424,12 @@ public class Game extends Canvas implements Runnable {
         //top left offense play
         offensivePlay = new JTextArea("insert play name");
         offensivePlay.setFont(font);
-        offensivePlay.setBounds(0, 725, 300, 50);
+        offensivePlay.setBounds(0, 710, 300, 50);
         frame.add(offensivePlay);
         //top left defensive play
         defensivePlay = new JTextArea("insert play name");
         defensivePlay.setFont(font);
-        defensivePlay.setBounds(1100-300, 725, 300, 50);
+        defensivePlay.setBounds(1100-300, 710, 300, 50);
         frame.add(defensivePlay);
 
         //playbook
