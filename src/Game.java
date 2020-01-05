@@ -1,5 +1,8 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import org.opencv.core.Core;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferStrategy;
@@ -15,7 +18,7 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private boolean running = false;
     private Handler handler;
-    private EmbedYoutube EmbedYoutube;
+    private FaceDetection FaceDetection;
     private Movement movement;
     private Route route;
     JMenuItem playBook;
@@ -86,7 +89,7 @@ public class Game extends Canvas implements Runnable {
         newMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	DetectFace.main(null);
+            	FaceDetection = new FaceDetection();
             }
         });
         newMenu.setFont(font);
@@ -754,6 +757,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void main(String[] args) {
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         new Game();
     }
 }
