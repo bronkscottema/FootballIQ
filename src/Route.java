@@ -16,6 +16,7 @@ public class Route extends MouseAdapter {
     private ArrayList motionList = new ArrayList();
     private ArrayList zoneList = new ArrayList();
     private ArrayList blockList = new ArrayList();
+    private ArrayList bubbleList = new ArrayList();
     private Line line;
     private int clicks = 0;
     private Long startTime;
@@ -25,6 +26,7 @@ public class Route extends MouseAdapter {
     private Point startPoint, midpoint, endPoint;
     private Point pointOnTimeLine, pointOnTimeLines;
     private double pointInTime;
+    private Line savedRoutes;
 
 
     public Route(Handler handler, Game game) {
@@ -37,6 +39,113 @@ public class Route extends MouseAdapter {
         int x = e.getX();
         int y = e.getY();
         System.out.println(x+","+y);
+        ArrayList<ID> nonRouteRunners;
+        {
+            nonRouteRunners = new ArrayList<ID>();
+            nonRouteRunners.add(ID.SDE);
+            nonRouteRunners.add(ID.SDT);
+            nonRouteRunners.add(ID.WDT);
+            nonRouteRunners.add(ID.WDE);
+            nonRouteRunners.add(ID.SOSLB);
+            nonRouteRunners.add(ID.SISLB);
+            nonRouteRunners.add(ID.WOSLB);
+            nonRouteRunners.add(ID.WISLB);
+            nonRouteRunners.add(ID.FS);
+            nonRouteRunners.add(ID.SS);
+            nonRouteRunners.add(ID.WCB);
+            nonRouteRunners.add(ID.SCB);
+            nonRouteRunners.add(ID.C);
+            nonRouteRunners.add(ID.LG);
+            nonRouteRunners.add(ID.LT);
+            nonRouteRunners.add(ID.RT);
+            nonRouteRunners.add(ID.RG);
+        }
+        LinkedList<GameObject> jags = handler.object;
+        for (GameObject player : jags) {
+            if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                if (nonRouteRunners.contains(player.getID())) {
+                    break;
+                }
+                if (SwingUtilities.isRightMouseButton(e)) {
+                    String[] choices = {"Bubble", "Comeback", "Corner", "Corner Post", "Curl", "Dig", "Flat", "Go", "Hitch", "Hitch and Go", "Post", "Post Corner", "Sail",
+                            "Skinny Post/Bender", "Slant", "Slant and Go", "Swing", "Under/Drag", "Wheel", "Whip/Return/Pivot", "5 Yard In", "5 Yard Out", "10 Yard Out"};
+                    String input = (String) JOptionPane.showInputDialog(null, null,
+                            "Choose Route", JOptionPane.QUESTION_MESSAGE, null, // Use
+                            choices, // Array of choices
+                            choices[0]); // Initial choice
+                    System.out.println(input);
+                    if (input.equals("Bubble")) {
+                        preSavedRoutes("Bubble", new Point(player.getX()+12, player.getY()), player.getID());
+                    }
+                    if (input.equals("Comeback")) {
+                        preSavedRoutes("Comeback", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Corner")) {
+                        preSavedRoutes("Corner", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Corner Post")) {
+                        preSavedRoutes("Corner Post", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Curl")) {
+                        preSavedRoutes("Curl", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Dig")) {
+                        preSavedRoutes("Dig", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Flat")) {
+                        preSavedRoutes("Flat", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Go")) {
+                        preSavedRoutes("Go", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Hitch")) {
+                        preSavedRoutes("Hitch", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Hitch and Go")) {
+                        preSavedRoutes("Hitch and Go", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Post")) {
+                        preSavedRoutes("Post", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Post Corner")) {
+                        preSavedRoutes("Post Corner", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Sail")) {
+                        preSavedRoutes("Sail", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Skinny Post/Bender")) {
+                        preSavedRoutes("Skinny Post/Bender", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Slant")) {
+                        preSavedRoutes("Slant", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Slant and Go")) {
+                        preSavedRoutes("Slant and Go", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Swing")) {
+                        preSavedRoutes("Swing", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Under/Drag")) {
+                        preSavedRoutes("Under/Drag", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Wheel")) {
+                        preSavedRoutes("Wheel", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("Whip/Return/Pivot")) {
+                        preSavedRoutes("Whip/Return/Pivot", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("5 Yard In")) {
+                        preSavedRoutes("5 Yard In", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("5 Yard Out")) {
+                        preSavedRoutes("5 Yard Out", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                    if (input.equals("10 Yard Out")) {
+                        preSavedRoutes("10 Yard Out", new Point(player.getX()+12, player.getY()+12), player.getID());
+                    }
+                }
+            }
+        }
     }
 
     public void mousePressed(MouseEvent e) {
@@ -272,10 +381,24 @@ public class Route extends MouseAdapter {
                 for (GameObject player : jags) {
                     for (int l = 0; l < routeList.size(); l++) {
                         if (mouseOver(((Line) routeList.get(l)).getP1().getX(), ((Line) routeList.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
-                            int p2x = ((Line) routeList.get(l)).getP3().getX() - 12;
-                            int p2y = ((Line) routeList.get(l)).getP3().getY() - 12;
-                            player.setX(p2x);
-                            player.setY(p2y);
+                           if (((Line) routeList.get(l)).getP5() != null) {
+
+                               int p5x = ((Line) routeList.get(l)).getP5().getX() - 12;
+                               int p5y = ((Line) routeList.get(l)).getP5().getY() - 12;
+                               player.setX(p5x);
+                               player.setY(p5y);
+                           } else if (((Line) routeList.get(l)).getP4() != null) {
+                               int p4x = ((Line) routeList.get(l)).getP4().getX() - 12;
+                               int p4y = ((Line) routeList.get(l)).getP4().getY() - 12;
+                               player.setX(p4x);
+                               player.setY(p4y);
+                           } else {
+                               int p3x = ((Line) routeList.get(l)).getP3().getX() - 12;
+                               int p3y = ((Line) routeList.get(l)).getP3().getY() - 12;
+                               player.setX(p3x);
+                               player.setY(p3y);
+                           }
+
                             ((Timer) e.getSource()).stop();
                             //TODO figure out animation
 //                            startPoint = new Point(((Line) list.get(l)).getP1().getX(), ((Line) list.get(l)).getP1().getY());
@@ -361,9 +484,19 @@ public class Route extends MouseAdapter {
         Line currLine;
         for (int i = 0; i < routeList.size(); i++) {
             currLine = (Line) (routeList.get(i));
-            g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
-             g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
-                    new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
+            if (currLine.getP4() == null) {
+                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
+                new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
+            } else if (currLine.getP5() == null) {
+                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX(), currLine.getP4().getX()},
+                new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY(), currLine.getP4().getY()}, 4);
+            } else {
+                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX(), currLine.getP4().getX(), currLine.getP5().getX()},
+                new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY(), currLine.getP4().getY(), currLine.getP5().getY()}, 5);
+            }
         }
         for (int m = 0; m < motionList.size(); m++) {
             currLine = (Line) (motionList.get(m));
@@ -410,6 +543,19 @@ public class Route extends MouseAdapter {
             g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
             g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
             g2.drawArc(currLine.getP2().x-12, currLine.getP2().y-20, 25, 20, 180, 180);
+        }
+        for (int m = 0; m < bubbleList.size(); m++) {
+            currLine = (Line) (bubbleList.get(m));
+            g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+            if (currLine.getP1().getX() <= game.frame.getWidth()/2 && currLine.getP2() == null) {
+                g2.drawArc(currLine.getP1().x -125, currLine.getP1().y-12, 125, 40, 180, 180);
+            } else if (currLine.getP1().getX() >= game.frame.getWidth()/2 && currLine.getP2() == null) {
+                g2.drawArc(currLine.getP1().x, currLine.getP1().y-12, 125, 40, 180, 180);
+            } else if (currLine.getP1().getX() <= game.frame.getWidth()/2 && currLine.getP2().equals(currLine.getP1())) {
+                g2.drawArc(currLine.getP1().x - 325, currLine.getP1().y - 24, 325, 40, 180, 180);
+            } else if (currLine.getP1().getX() >= game.frame.getWidth()/2 && currLine.getP2().equals(currLine.getP1())) {
+                g2.drawArc(currLine.getP1().x, currLine.getP1().y - 24, 325, 40, 180, 180);
+            }
         }
 
         //TODO figure out more animation
@@ -460,7 +606,7 @@ public class Route extends MouseAdapter {
 //        time.start();
 //    }
 
-    private boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
+    protected boolean mouseOver(int mx, int my, int x, int y, int width, int height) {
         if (mx > x && mx < x + width) {
             if (my > y && my < y + height) {
                 return true;
@@ -477,6 +623,441 @@ public class Route extends MouseAdapter {
         // match the gradients
         return (A.getX() - C.getX())*(A.getY() - C.getY()) == (C.getX() - B.getX())*(C.getY() - B.getY());
     }
+
+    public void preSavedRoutes(String string, Point p1, ID id) {
+        if (string.isEmpty()) {
+            return;
+        } else if (string.equals("Bubble")) {
+            savedRoutes = new Line();
+            savedRoutes.setP1(p1);
+            savedRoutes.setId(id);
+            bubbleList.add(savedRoutes);
+        } else if (string.equals("Comeback")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 225);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 45, p2.y + 45));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 225);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 45, p2.y + 45));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Corner")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 85, p2.y - 75));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 85, p2.y - 75));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Corner Post")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x - 30, p2.y - 25);
+                savedRoutes.setP3(p3);
+                savedRoutes.setP4(new Point(p3.x + 150, p3.y - 75));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x + 30, p2.y - 25);
+                savedRoutes.setP3(p3);
+                savedRoutes.setP4(new Point(p3.x - 150, p3.y - 75));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Curl")) {
+            if (p1.getX() <= game.frame.getWidth()/2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x+20, p1.y-170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x+10, p2.y+10));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x-20, p1.y-170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x-10, p2.y+10));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+        } else if (string.equals("Dig")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 100, p2.y));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 100, p2.y));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+        } else if (string.equals("Flat")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 300, p1.y - 50);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(p2);
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 300, p1.y -50);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(p2);
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Go")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 250);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(p2);
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 250);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(p2);
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Hitch")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 85);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 10, p2.y + 10));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 85);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 10, p2.y + 10));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+        } else if (string.equals("Hitch and Go")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 85);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x + 10, p2.y + 10);
+                savedRoutes.setP3(p3);
+                savedRoutes.setP4(new Point(p3.getX() +20, p3.y-150));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 85);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x - 10, p2.y + 10);
+                savedRoutes.setP3(p3);
+                savedRoutes.setP4(new Point(p3.getX()-20, p3.y-150));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Post")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 85, p2.y - 75));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 85, p2.y - 75));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Post Corner")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x + 30, p2.y - 25);
+                savedRoutes.setP3(p3);
+                savedRoutes.setP4(new Point(p3.x - 150, p3.y - 75));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x - 30, p2.y - 25);
+                savedRoutes.setP3(p3);
+                savedRoutes.setP4(new Point(p3.x + 150, p3.y - 75));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Sail")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 50, p1.y - 100);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 300, p2.y - 100));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 50, p1.y - 100);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 300, p2.y - 100));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Skinny Post/Bender")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 75, p2.y - 125));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 75, p2.y - 125));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Slant")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 70);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 95, p2.y - 65));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 70);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 95, p2.y - 65));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Slant and Go")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 70);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x + 95, p2.y - 65);
+                savedRoutes.setP3(p3);
+                savedRoutes.setP4(new Point(p3.x+10, p3.y-100));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 70);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x - 95, p2.y - 65);
+                savedRoutes.setP3(p3);
+                savedRoutes.setP4(new Point(p3.x-10, p3.y-100));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Swing")) {
+            savedRoutes = new Line();
+            savedRoutes.setP1(p1);
+            savedRoutes.setP2(p1);
+            savedRoutes.setId(id);
+            bubbleList.add(savedRoutes);
+
+        } else if (string.equals("Under/Drag")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 50, p1.y - 90);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x + 400, p2.y);
+                savedRoutes.setP3(p3);
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 50, p1.y - 90);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x - 400, p2.y);
+                savedRoutes.setP3(p3);
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+        } else if (string.equals("Wheel")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20 , p1.y - 50);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x - 200, p2.y);
+                savedRoutes.setP3(p3);
+                Point p4 = new Point(p3.x - 50, p3.y - 30);
+                savedRoutes.setP4(p4);
+                Point p5 = new Point(p4.x + 50, p4.y - 200);
+                savedRoutes.setP5(p5);
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20 , p1.y - 50);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x + 200, p2.y);
+                savedRoutes.setP3(p3);
+                Point p4 = new Point(p3.x - 50, p3.y - 30);
+                savedRoutes.setP4(p4);
+                Point p5 = new Point(p4.x - 50, p4.y - 200);
+                savedRoutes.setP5(p5);
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("Whip/Return/Pivot")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 100 , p1.y - 100);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x, p2.y + 10);
+                savedRoutes.setP3(p3);
+                Point p4 = new Point(p3.x - 150, p3.y);
+                savedRoutes.setP4(p4);
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 100 , p1.y - 100);
+                savedRoutes.setP2(p2);
+                Point p3 = new Point(p2.x, p2.y + 10);
+                savedRoutes.setP3(p3);
+                Point p4 = new Point(p3.x +150, p3.y);
+                savedRoutes.setP4(p4);
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("5 Yard In")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 80);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 100, p2.y));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 80);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 100, p2.y));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        } else if (string.equals("5 Yard Out")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 80);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 100, p2.y));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 80);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 100, p2.y));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+
+        }else if (string.equals("10 Yard Out")) {
+            if (p1.getX() <= game.frame.getWidth() / 2) {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x + 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x - 100, p2.y));
+                savedRoutes.setId(id);
+            } else {
+                savedRoutes = new Line();
+                savedRoutes.setP1(p1);
+                Point p2 = new Point(p1.x - 20, p1.y - 170);
+                savedRoutes.setP2(p2);
+                savedRoutes.setP3(new Point(p2.x + 100, p2.y));
+                savedRoutes.setId(id);
+            }
+            routeList.add(savedRoutes);
+        }
+    }
+
+    public void preSavedRuns(Point p1, Point p2, Player id) {
+
+    }
+
+    public void preSavedCoverages(Point p1, Point p2, Player id) {
+
+    }
+
 }
 
 class Line {
@@ -484,6 +1065,10 @@ class Line {
     private Point p1;
     private Point p2;
     private Point p3;
+    private Point p4;
+    private Point p5;
+    private Point p6;
+    private Point p7;
     private ID id;
 
     public Line() {
@@ -508,6 +1093,22 @@ class Line {
         return p3;
     }
 
+    public Point getP4(){
+        return p4;
+    }
+
+    public Point getP5(){
+        return p5;
+    }
+
+    public Point getP6(){
+        return p6;
+    }
+
+    public Point getP7(){
+        return p7;
+    }
+
     public ID getId() { return id; }
 
     public void setP1(Point p1) {
@@ -520,6 +1121,22 @@ class Line {
 
     public void setP3(Point p3) {
         this.p3 = p3;
+    }
+
+    public void setP4(Point p4) {
+        this.p4 = p4;
+    }
+
+    public void setP5(Point p5) {
+        this.p5 = p5;
+    }
+
+    public void setP6(Point p6) {
+        this.p6 = p6;
+    }
+
+    public void setP7(Point p7) {
+        this.p7 = p7;
     }
 
     public void setId(ID id) {
