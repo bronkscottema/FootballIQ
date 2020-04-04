@@ -7,6 +7,7 @@ public class Handler {
     Font font = new Font("Courrier New", Font.PLAIN, 16);
     Game game;
     JFrame frame;
+    private Player player;
 
     LinkedList<GameObject> object = new LinkedList<GameObject>();
 
@@ -273,4 +274,33 @@ public class Handler {
         this.addObject(new Player((WIDTH/2)+450, (HEIGHT/2)-105, ID.SCB));
         this.addObject(new Player((WIDTH/2)-450, (HEIGHT/2)-105, ID.WCB));
     }
+
+    public void nineOnSeven() {
+        LinkedList<GameObject> players = object;
+        Iterator<GameObject> jag = players.iterator();
+        while (jag.hasNext()) {
+            GameObject player = jag.next();
+            jag.remove();
+        }
+        final int WIDTH = 1100, HEIGHT = WIDTH / 12 * 9;
+        this.addObject(new Player(WIDTH/2, HEIGHT/2, ID.C));
+        this.addObject(new Player((WIDTH/2)+75, HEIGHT/2, ID.RG));
+        this.addObject(new Player((WIDTH/2)+155, HEIGHT/2, ID.RT));
+        this.addObject(new Player((WIDTH/2)-75, HEIGHT/2, ID.LG));
+        this.addObject(new Player((WIDTH/2)-155, HEIGHT/2, ID.LT));
+        this.addObject(new Player(WIDTH/2, (HEIGHT/2)+125, ID.QB));
+        this.addObject(new Player((WIDTH/2)-75, (HEIGHT/2)+155, ID.RB));
+        this.addObject(new Player((WIDTH/2)+225, HEIGHT/2, ID.TE));
+        this.addObject(new Player((WIDTH/2)+75, (HEIGHT/2)+155, ID.WRH));
+        this.addObject(new Player((WIDTH/2)+275, (HEIGHT/2)-60, ID.SDE));
+        this.addObject(new Player((WIDTH/2)-175, HEIGHT/2-60, ID.WDE));
+        this.addObject(new Player((WIDTH/2)-30, (HEIGHT/2)-60, ID.WDT));
+        this.addObject(new Player((WIDTH/2)+95, (HEIGHT/2)-60, ID.SDT));
+        this.addObject(new Player((WIDTH/2)+170, (HEIGHT/2)-200, ID.SOSLB));
+        this.addObject(new Player((WIDTH/2)-100, (HEIGHT/2)-200, ID.WOSLB));
+        this.addObject(new Player((WIDTH/2)+35, (HEIGHT/2)-200, ID.SISLB));
+        this.addObject(new Player(WIDTH/2, (HEIGHT/2)-325, ID.FS));
+        this.addObject(new Player((WIDTH/2)-225, (HEIGHT/2)-200, ID.SS));
+    }
+
 }

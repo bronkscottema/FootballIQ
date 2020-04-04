@@ -5,6 +5,7 @@ public abstract class GameObject {
     protected int x, y;
     protected ID id;
     protected int velX, velY;
+    protected boolean isInsideRun;
 
     public GameObject(int x, int y, ID id) {
         this.x = x;
@@ -44,4 +45,5 @@ public abstract class GameObject {
     public int getVelY() {
         return velY;
     }
+    public void setInsideRun(boolean isInsideRun) {this.isInsideRun = isInsideRun; }
 }

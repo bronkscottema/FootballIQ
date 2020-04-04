@@ -19,6 +19,7 @@ public class Route extends MouseAdapter {
     private ArrayList bubbleList = new ArrayList();
     private Line line;
     private int clicks = 0;
+    private JMenuItem playbook;
     private String input;
     private Long startTime;
     private long playTime = 2000;
@@ -67,7 +68,6 @@ public class Route extends MouseAdapter {
         for (GameObject player : jags) {
             if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
                 if (defense.contains(player.getID())) {
-                    //TODO put presaved coverages here
                     if (SwingUtilities.isRightMouseButton(e)) {
                         String[] choices = {"1", "2", "3", "4", "6"};
                         String input = (String) JOptionPane.showInputDialog(null, null,
@@ -124,67 +124,67 @@ public class Route extends MouseAdapter {
                                 choices[0]); // Initial choice
                         System.out.println(input);
                         if (input.equals("Bubble")) {
-                            preSavedRoutes("Bubble", new Point(player.getX()+12, player.getY()), player.getID());
+                            preSavedRoutes("Bubble", new Point(player.getX() + 12, player.getY()), player.getID());
                         }
                         if (input.equals("Comeback")) {
-                            preSavedRoutes("Comeback", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Comeback", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Corner")) {
-                            preSavedRoutes("Corner", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Corner", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Corner Post")) {
-                            preSavedRoutes("Corner Post", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Corner Post", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Curl")) {
-                            preSavedRoutes("Curl", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Curl", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Dig")) {
-                            preSavedRoutes("Dig", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Dig", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Flat")) {
-                            preSavedRoutes("Flat", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Flat", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Go")) {
-                            preSavedRoutes("Go", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Go", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Hitch")) {
-                            preSavedRoutes("Hitch", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Hitch", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Hitch and Go")) {
-                            preSavedRoutes("Hitch and Go", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Hitch and Go", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Post")) {
-                            preSavedRoutes("Post", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Post", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Post Corner")) {
-                            preSavedRoutes("Post Corner", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Post Corner", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Sail")) {
-                            preSavedRoutes("Sail", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Sail", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Skinny Post/Bender")) {
-                            preSavedRoutes("Skinny Post/Bender", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Skinny Post/Bender", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Slant")) {
-                            preSavedRoutes("Slant", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Slant", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Slant and Go")) {
-                            preSavedRoutes("Slant and Go", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Slant and Go", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Swing")) {
-                            preSavedRoutes("Swing", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Swing", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Under/Drag")) {
-                            preSavedRoutes("Under/Drag", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Under/Drag", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Wheel")) {
-                            preSavedRoutes("Wheel", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Wheel", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("Whip/Return/Pivot")) {
-                            preSavedRoutes("Whip/Return/Pivot", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("Whip/Return/Pivot", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("5 Yard In")) {
-                            preSavedRoutes("5 Yard In", new Point(player.getX()+12, player.getY()+12), player.getID());
+                            preSavedRoutes("5 Yard In", new Point(player.getX() + 12, player.getY() + 12), player.getID());
                         }
                         if (input.equals("5 Yard Out")) {
                             preSavedRoutes("5 Yard Out", new Point(player.getX()+12, player.getY()+12), player.getID());
@@ -338,6 +338,13 @@ public class Route extends MouseAdapter {
     }
 
     public void tick() {
+    }
+
+    public void insideRun() {
+        LinkedList<GameObject> jags = handler.object;
+        for (GameObject player : jags) {
+            player.isInsideRun = true;
+        }
     }
 
     public void reset() {

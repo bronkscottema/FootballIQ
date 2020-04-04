@@ -94,82 +94,147 @@ public class Player extends GameObject {
     }
 
     public void render(Graphics g) {
-        Font font = new Font("Courrier New", Font.PLAIN, 16);
-        Graphics2D g2 = (Graphics2D) g;
-        if (offense.contains(getID()) || kickOff.contains(getID())) {
-            g2.drawOval(x, y, 24, 24);
-            g2.setStroke(new BasicStroke(3));
-            g2.setColor(Color.black);
-            if (getID() == ID.A) {
+        if (!isInsideRun) {
+            Font font = new Font("Courrier New", Font.PLAIN, 16);
+            Graphics2D g2 = (Graphics2D) g;
+            if (offense.contains(getID()) || kickOff.contains(getID())) {
+                g2.drawOval(x, y, 24, 24);
+                g2.setStroke(new BasicStroke(3));
                 g2.setColor(Color.black);
-                g2.setFont(font);
-                g2.drawString("A", x + 7, y + 15);
-            }
-            if (getID() == ID.B) {
+                if (getID() == ID.A) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("A", x + 7, y + 15);
+                }
+                if (getID() == ID.B) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("B", x + 7, y + 17);
+                }
+                if (getID() == ID.F) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("F", x + 7, y + 17);
+                }
+                if (getID() == ID.WRH) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("H", x + 6, y + 17);
+                }
+                if (getID() == ID.QB) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("Q", x + 6, y + 17);
+                }
+                if (getID() == ID.RB) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("F", x + 7, y + 17);
+                }
+                if (getID() == ID.T) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("T", x + 7, y + 17);
+                }
+                if (getID() == ID.TE) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("Y", x + 7, y + 17);
+                }
+                if (getID() == ID.U) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("U", x + 7, y + 17);
+                }
+                if (getID() == ID.WRX) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("X", x + 7, y + 17);
+                }
+                if (getID() == ID.W) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("W", x + 7, y + 17);
+                }
+                if (getID() == ID.WRZ) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("Z", x + 7, y + 17);
+                }
+            } else if (defense.contains(getID())) {
                 g.setColor(Color.black);
-                g2.setFont(font);
-                g.drawString("B", x + 7, y + 17);
+                g.fillRect(x, y, 24, 24);
+                g.setColor(Color.white);
+                g.fillRect(x + 2, y + 2, 20, 20);
             }
-            if (getID() == ID.F) {
-                g.setColor(Color.black);
-                g2.setFont(font);
-                g.drawString("F", x + 7, y + 17);
-            }
-            if (getID() == ID.WRH) {
+        } else {
+            Font font = new Font("Courrier New", Font.PLAIN, 24);
+            Graphics2D g2 = (Graphics2D) g;
+            if (offense.contains(getID()) || kickOff.contains(getID())) {
+                g2.drawOval(x, y, 50, 50);
+                g2.setStroke(new BasicStroke(3));
                 g2.setColor(Color.black);
-                g2.setFont(font);
-                g2.drawString("H", x + 6, y + 17);
-            }
-            if (getID() == ID.QB) {
+                if (getID() == ID.A) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("A", x + 7, y + 15);
+                }
+                if (getID() == ID.B) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("B", x + 7, y + 17);
+                }
+                if (getID() == ID.WRH) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("H", x + 16, y + 27);
+                }
+                if (getID() == ID.QB) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("Q", x + 16, y + 27);
+                }
+                if (getID() == ID.RB) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("F", x + 17, y + 27);
+                }
+                if (getID() == ID.T) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("T", x + 7, y + 17);
+                }
+                if (getID() == ID.TE) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("Y", x + 17, y + 27);
+                }
+                if (getID() == ID.U) {
+                    g.setColor(Color.black);
+                    g2.setFont(font);
+                    g.drawString("U", x + 7, y + 17);
+                }
+                if (getID() == ID.WRX) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("X", x + 7, y + 17);
+                }
+                if (getID() == ID.W) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("W", x + 7, y + 17);
+                }
+                if (getID() == ID.WRZ) {
+                    g2.setColor(Color.black);
+                    g2.setFont(font);
+                    g2.drawString("Z", x + 7, y + 17);
+                }
+            } else if (defense.contains(getID())) {
                 g.setColor(Color.black);
-                g2.setFont(font);
-                g.drawString("Q", x + 6, y + 17);
+                g.fillRect(x, y, 50, 50);
+                g.setColor(Color.white);
+                g.fillRect(x + 2, y + 2, 46, 46);
             }
-            if (getID() == ID.RB) {
-                g.setColor(Color.black);
-                g2.setFont(font);
-                g.drawString("F", x + 7, y + 17);
-            }
-            if (getID() == ID.T) {
-                g.setColor(Color.black);
-                g2.setFont(font);
-                g.drawString("T", x + 7, y + 17);
-            }
-            if (getID() == ID.TE) {
-                g.setColor(Color.black);
-                g2.setFont(font);
-                g.drawString("Y", x + 7, y + 17);
-            }
-            if (getID() == ID.U) {
-                g.setColor(Color.black);
-                g2.setFont(font);
-                g.drawString("U", x + 7, y + 17);
-            }
-            if (getID() == ID.WRX) {
-                g2.setColor(Color.black);
-                g2.setFont(font);
-                g2.drawString("X", x + 7, y + 17);
-            }
-            if (getID() == ID.W) {
-                g2.setColor(Color.black);
-                g2.setFont(font);
-                g2.drawString("W", x + 7, y + 17);
-            }
-            if (getID() == ID.TE) {
-                g2.setColor(Color.black);
-                g2.setFont(font);
-                g.drawString("Y", x + 7, y + 17);
-            }
-            if (getID() == ID.WRZ) {
-                g2.setColor(Color.black);
-                g2.setFont(font);
-                g2.drawString("Z", x + 7, y + 17);
-            }
-        } else if (defense.contains(getID())) {
-            g.setColor(Color.black);
-            g.fillRect(x, y, 24, 24);
-            g.setColor(Color.white);
-            g.fillRect(x+2, y+2, 20,20);
         }
     }
 }

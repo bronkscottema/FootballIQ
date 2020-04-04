@@ -15,7 +15,7 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
-    JMenuItem playBook;
+    JMenuItem playBook, insideRun;
     JButton motion, routeline, zone, block;
     JTextArea defensivePlay, offensivePlay, header1, header2,
             f1a, f2a, f3a, f4a, f5a, f6a, f7a, f8a, f9a, f10a, f11a,
@@ -268,8 +268,20 @@ public class Game extends Canvas implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 playBook.setSelected(true);
+                insideRun.setSelected(false);
                 handler.playbook();
                 playbookTemplate();
+            }
+        });
+        insideRun = new JMenuItem("Inside Run");
+        insideRun.setFont(font);
+        insideRun.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                playBook.setSelected(false);
+                insideRun.setSelected(true);
+                handler.nineOnSeven();
+                route.insideRun();
             }
         });
 
@@ -394,6 +406,7 @@ public class Game extends Canvas implements Runnable {
         jMenuFile.add(newMenu);
         jMenuFile.add(saveMenu);
         jMenuFile.add(playBook);
+        jMenuFile.add(insideRun);
         jMenuFile.add(animate);
         jMenuFile.add(jMenuSub);
         jMenuSub.add(punt);
@@ -665,10 +678,14 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.black);
         Image img;
+        Image imgInsideRun;
+        imgInsideRun = Toolkit.getDefaultToolkit().getImage((getClass().getResource("/images/insideRun.png")));
         img = Toolkit.getDefaultToolkit().getImage((getClass().getResource("/images/field.png")));
         g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
         if (playBook.isSelected()) {
             g.drawImage(img,0, 0, HEIGHT, WIDTH, this);
+        } else if (insideRun.isSelected()) {
+            g.drawImage(imgInsideRun,0, 0, WIDTH, HEIGHT, this);
         } else {
             img = Toolkit.getDefaultToolkit().getImage((getClass().getResource("/images/field.png")));
             g.drawImage(img,0, 0, WIDTH, HEIGHT, this);
