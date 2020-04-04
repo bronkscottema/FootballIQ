@@ -28,13 +28,14 @@ public class Player extends GameObject {
         offense.add(ID.U);
         offense.add(ID.F);
         offense.add(ID.T);
-        offense.add(ID.N);
-        offense.add(ID.N1);
-        offense.add(ID.N2);
-        offense.add(ID.N3);
-        offense.add(ID.N4);
-        offense.add(ID.N5);
-        offense.add(ID.N6);
+        offense.add(ID.W);
+        offense.add(ID.O);
+        offense.add(ID.O1);
+        offense.add(ID.O2);
+        offense.add(ID.O3);
+        offense.add(ID.O4);
+        offense.add(ID.O5);
+        offense.add(ID.O6);
     }
 
     ArrayList<ID> defense;
@@ -53,6 +54,13 @@ public class Player extends GameObject {
         defense.add(ID.SS);
         defense.add(ID.WCB);
         defense.add(ID.SCB);
+        defense.add(ID.D);
+        defense.add(ID.D1);
+        defense.add(ID.D2);
+        defense.add(ID.D3);
+        defense.add(ID.D4);
+        defense.add(ID.D5);
+        defense.add(ID.D6);
     }
     ArrayList<ID> kickOff;
 
@@ -142,6 +150,11 @@ public class Player extends GameObject {
                 g2.setFont(font);
                 g2.drawString("X", x + 7, y + 17);
             }
+            if (getID() == ID.W) {
+                g2.setColor(Color.black);
+                g2.setFont(font);
+                g2.drawString("W", x + 7, y + 17);
+            }
             if (getID() == ID.TE) {
                 g2.setColor(Color.black);
                 g2.setFont(font);
@@ -152,12 +165,11 @@ public class Player extends GameObject {
                 g2.setFont(font);
                 g2.drawString("Z", x + 7, y + 17);
             }
-            if (getID() == ID.N) {
-                g2.setColor(Color.black);
-            }
         } else if (defense.contains(getID())) {
             g.setColor(Color.black);
             g.fillRect(x, y, 24, 24);
+            g.setColor(Color.white);
+            g.fillRect(x+2, y+2, 20,20);
         }
     }
 }

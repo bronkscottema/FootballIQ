@@ -616,13 +616,16 @@ public class Route extends MouseAdapter {
                 g2.drawRect(currLine.getP2().getX() - 50, currLine.getP2().getY() - 50, 100, 100);
             }
         }
+
         for (int m = 0; m < blockList.size(); m++) {
             currLine = (Line) (blockList.get(m));
             g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
             g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
                     new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
-            g2.drawArc(currLine.getP3().x-12, currLine.getP3().y-20, 25, 20, 180, 180);
+            g2.drawPolyline(new int[] {currLine.getP3().getX()-10, currLine.getP3().getX(), currLine.getP3().getX()+10},
+                        new int[] {currLine.getP3().getY(), currLine.getP3().getY(), currLine.getP3().getY()}, 3);
         }
+
         for (int m = 0; m < bubbleList.size(); m++) {
             currLine = (Line) (bubbleList.get(m));
             g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));

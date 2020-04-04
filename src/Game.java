@@ -379,6 +379,15 @@ public class Game extends Canvas implements Runnable {
         });
         elevenman.setFont(font);
 
+        JMenuItem twelveMan = new JMenuItem("12 man");
+        twelveMan.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handler.twelveMan();
+            }
+        });
+        twelveMan.setFont(font);
+
         jMenuBar.add(jMenuFile);
         jMenuBar.add(jMenuEdit);
         jMenuBar.add(jMenuType);
@@ -394,6 +403,7 @@ public class Game extends Canvas implements Runnable {
         jMenuType.add(sixman);
         jMenuType.add(eightman);
         jMenuType.add(elevenman);
+        jMenuType.add(twelveMan);
         jMenuEdit.add(undo);
         jMenuEdit.add(reset);
         jMenuEdit.add(reload);
