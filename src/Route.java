@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -385,7 +386,6 @@ public class Route extends MouseAdapter {
                 if (currLine.getId() == player.getID()) {
                     player.setX(currLine.getP1().getX() - 12);
                     player.setY(currLine.getP1().getY() - 12);
-
                 }
             }
             for (int i = 0; i < motionList.size(); i++) {
@@ -435,7 +435,7 @@ public class Route extends MouseAdapter {
                 LinkedList<GameObject> jags = handler.object;
                 for (GameObject player : jags) {
                     for (int m = 0; m < motionList.size(); m++) {
-                        if (mouseOver(((Line) motionList.get(m)).getP1().getX(), ((Line) routeList.get(m)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
+                        if (mouseOver(((Line) motionList.get(m)).getP1().getX(), ((Line) motionList.get(m)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
                             int p2x = ((Line) motionList.get(m)).getP2().getX() - 12;
                             int p2y = ((Line) motionList.get(m)).getP2().getY() - 12;
                             player.setX(p2x);
@@ -449,7 +449,8 @@ public class Route extends MouseAdapter {
             }
         });
         timer.start();
-        Timer timer2 = new Timer(200, new ActionListener() {
+        timer.restart();
+        Timer timer2 = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 LinkedList<GameObject> jags = handler.object;
@@ -490,11 +491,6 @@ public class Route extends MouseAdapter {
 //                            if (diff >= playTime) {
 //                                diff = playTime;
 //                                ((Timer) e.getSource()).stop();
-//                                pOTL.clear();
-//                                pOTLs.clear();
-//                            }
-//                            double i = (double) diff / (double) playTime;
-//                            pointInTime = i;
 //
 //                            pointOnTimeLine.x = (int) (startPoint.x + ((midpoint.x - startPoint.x) * i));
 //                            pointOnTimeLine.y = (int) (startPoint.y + ((midpoint.y - startPoint.y) * i));
@@ -537,6 +533,7 @@ public class Route extends MouseAdapter {
             }
         });
         timer2.start();
+        timer2.restart();
     }
 
     public void undo() {
@@ -571,7 +568,9 @@ public class Route extends MouseAdapter {
         Line currLine;
         for (int i = 0; i < routeList.size(); i++) {
             currLine = (Line) (routeList.get(i));
-            if (currLine.getP4() == null) {
+            if (currLine.getP3() == null) {
+                g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+            } else if (currLine.getP4() == null && currLine.getP3() != null) {
                 g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
                 g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
                 new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
@@ -648,15 +647,15 @@ public class Route extends MouseAdapter {
         }
 
         //TODO figure out more animation
-//        if (pointOnTimeLine != null) {
-//            for (int i = 0; i < pOTL.size(); i++) {
-//                Point currPolt;
-//                currPolt = (Point) pOTL.get(i);
-//                g2.setColor(Color.black);
-//                Ellipse2D shape = new Ellipse2D.Float(currPolt.x-12, currPolt.y-12, 24, 24);
-//                g2.draw(shape);
-//                remove();
-//            }
+        if (pointOnTimeLine != null) {
+            for (int i = 0; i < pOTL.size(); i++) {
+                Point currPolt;
+                currPolt = (Point) pOTL.get(i);
+                g2.setColor(Color.black);
+                Ellipse2D shape = new Ellipse2D.Float(currPolt.x-12, currPolt.y-12, 24, 24);
+                g2.draw(shape);
+                remove();
+            }
 //            for (int s = 0; s < pOTLs.size(); s++) {
 //                Point currPolts;
 //                currPolts = (Point) pOTLs.get(s);
@@ -665,22 +664,22 @@ public class Route extends MouseAdapter {
 //                g2.draw(shapes);
 //                remove2nd();
 //            }
-//        }
+        }
     }
 
     //TODO figure out more animation
-//    public void remove() {
-//        Timer time = new Timer(100, new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                int n = list.size();
-//                if (pOTL.size() > n) {
-//                    pOTL.remove(0);
-//                }
-//            }
-//        });
-//        time.start();
-//    }
+    public void remove() {
+        Timer time = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+//                int n = routeList.size();
+                if (pOTL.size() > 0) {
+                    pOTL.remove(0);
+                }
+            }
+        });
+        time.start();
+    }
 //
 //    public void remove2nd() {
 //        Timer time = new Timer(100, new ActionListener() {
