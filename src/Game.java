@@ -93,7 +93,7 @@ public class Game extends Canvas implements Runnable {
         JMenuItem saveMenu = new JMenuItem("Save");
         saveMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (!playBook.isSelected()) {
+                if (!playBook.isSelected() && !insideRun.isSelected()) {
                     JFileChooser chooseDirec = new JFileChooser();
                     chooseDirec.setFileSelectionMode(JFileChooser.FILES_ONLY);
                     chooseDirec.showSaveDialog(frame.getContentPane());
@@ -113,7 +113,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine((WIDTH / 2) + 210, 60, (WIDTH / 2) + 200, 60);
                     g2.drawLine((WIDTH / 2) - 210, 80, (WIDTH / 2) - 200, 80);
                     g2.drawLine((WIDTH / 2) + 210, 80, (WIDTH / 2) + 200, 80);
+                    g2.drawString("##", (WIDTH / 2)-450, 95);
+                    g2.drawString("##", (WIDTH / 2)+450, 95);
                     g2.drawLine(0, 100, WIDTH, 100);
+                    g2.drawString("##", (WIDTH / 2)-450, 115);
+                    g2.drawString("##", (WIDTH / 2)+450, 115);
                     g2.drawLine((WIDTH / 2) - 210, 120, (WIDTH / 2) - 200, 120);
                     g2.drawLine((WIDTH / 2) + 210, 120, (WIDTH / 2) + 200, 120);
                     g2.drawLine((WIDTH / 2) - 210, 140, (WIDTH / 2) - 200, 140);
@@ -122,7 +126,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine((WIDTH / 2) + 210, 160, (WIDTH / 2) + 200, 160);
                     g2.drawLine((WIDTH / 2) - 210, 180, (WIDTH / 2) - 200, 180);
                     g2.drawLine((WIDTH / 2) + 210, 180, (WIDTH / 2) + 200, 180);
+                    g2.drawString("##", (WIDTH / 2)-450, 195);
+                    g2.drawString("##", (WIDTH / 2)+450, 195);
                     g2.drawLine(0, 200, WIDTH, 200);
+                    g2.drawString("##", (WIDTH / 2)-450, 215);
+                    g2.drawString("##", (WIDTH / 2)+450, 215);
                     g2.drawLine((WIDTH / 2) - 210, 220, (WIDTH / 2) - 200, 220);
                     g2.drawLine((WIDTH / 2) + 210, 220, (WIDTH / 2) + 200, 220);
                     g2.drawLine((WIDTH / 2) - 210, 240, (WIDTH / 2) - 200, 240);
@@ -131,7 +139,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine((WIDTH / 2) + 210, 260, (WIDTH / 2) + 200, 260);
                     g2.drawLine((WIDTH / 2) - 210, 280, (WIDTH / 2) - 200, 280);
                     g2.drawLine((WIDTH / 2) + 210, 280, (WIDTH / 2) + 200, 280);
+                    g2.drawString("##", (WIDTH / 2)-450, 295);
+                    g2.drawString("##", (WIDTH / 2)+450, 295);
                     g2.drawLine(0, 300, WIDTH, 300);
+                    g2.drawString("##", (WIDTH / 2)-450, 315);
+                    g2.drawString("##", (WIDTH / 2)+450, 315);
                     g2.drawLine((WIDTH / 2) - 210, 320, (WIDTH / 2) - 200, 320);
                     g2.drawLine((WIDTH / 2) + 210, 320, (WIDTH / 2) + 200, 320);
                     g2.drawLine((WIDTH / 2) - 210, 340, (WIDTH / 2) - 200, 340);
@@ -140,7 +152,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine((WIDTH / 2) + 210, 360, (WIDTH / 2) + 200, 360);
                     g2.drawLine((WIDTH / 2) + 210, 380, (WIDTH / 2) + 200, 380);
                     g2.drawLine((WIDTH / 2) - 210, 380, (WIDTH / 2) - 200, 380);
+                    g2.drawString("##", (WIDTH / 2)-450, 400);
+                    g2.drawString("##", (WIDTH / 2)+450, 400);
                     g2.drawLine(0, HEIGHT / 2, WIDTH, HEIGHT / 2);
+                    g2.drawString("##", (WIDTH / 2)-450, 425);
+                    g2.drawString("##", (WIDTH / 2)+450, 425);
                     g2.drawLine((WIDTH / 2) - 210, 420, (WIDTH / 2) - 200, 420);
                     g2.drawLine((WIDTH / 2) + 210, 420, (WIDTH / 2) + 200, 420);
                     g2.drawLine((WIDTH / 2) - 210, 440, (WIDTH / 2) - 200, 440);
@@ -149,7 +165,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine((WIDTH / 2) + 210, 460, (WIDTH / 2) + 200, 460);
                     g2.drawLine((WIDTH / 2) - 210, 480, (WIDTH / 2) - 200, 480);
                     g2.drawLine((WIDTH / 2) + 210, 480, (WIDTH / 2) + 200, 480);
+                    g2.drawString("##", (WIDTH / 2)-450, 495);
+                    g2.drawString("##", (WIDTH / 2)+450, 495);
                     g2.drawLine(0, 500, WIDTH, 500);
+                    g2.drawString("##", (WIDTH / 2)-450, 515);
+                    g2.drawString("##", (WIDTH / 2)+450, 515);
                     g2.drawLine((WIDTH / 2) - 210, 520, (WIDTH / 2) - 200, 520);
                     g2.drawLine((WIDTH / 2) + 210, 520, (WIDTH / 2) + 200, 520);
                     g2.drawLine((WIDTH / 2) - 210, 540, (WIDTH / 2) - 200, 540);
@@ -158,7 +178,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine((WIDTH / 2) + 210, 560, (WIDTH / 2) + 200, 560);
                     g2.drawLine((WIDTH / 2) - 210, 580, (WIDTH / 2) - 200, 580);
                     g2.drawLine((WIDTH / 2) + 210, 580, (WIDTH / 2) + 200, 580);
+                    g2.drawString("##", (WIDTH / 2)-450, 595);
+                    g2.drawString("##", (WIDTH / 2)+450, 595);
                     g2.drawLine(0, 600, WIDTH, 600);
+                    g2.drawString("##", (WIDTH / 2)-450, 615);
+                    g2.drawString("##", (WIDTH / 2)+450, 615);
                     g2.drawLine((WIDTH / 2) - 210, 620, (WIDTH / 2) - 200, 620);
                     g2.drawLine((WIDTH / 2) + 210, 620, (WIDTH / 2) + 200, 620);
                     g2.drawLine((WIDTH / 2) - 210, 640, (WIDTH / 2) - 200, 640);
@@ -167,6 +191,10 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine((WIDTH / 2) + 210, 660, (WIDTH / 2) + 200, 660);
                     g2.drawLine((WIDTH / 2) - 210, 680, (WIDTH / 2) - 200, 680);
                     g2.drawLine((WIDTH / 2) + 210, 680, (WIDTH / 2) + 200, 680);
+                    g2.drawString("##", (WIDTH / 2)-450, 695);
+                    g2.drawString("##", (WIDTH / 2)+450, 695);
+                    g2.drawLine(0, 700, WIDTH, 700);
+
                     g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     handler.render(g2);
                     route.render(g2);
@@ -189,6 +217,8 @@ public class Game extends Canvas implements Runnable {
                     g2.setStroke(new BasicStroke(1));
                     g2.setColor(Color.black);
                     g2.drawLine(0, 370, HEIGHT, 370);
+                    g2.drawString("##", 65, 350);
+                    g2.drawString("##", 745, 350);
                     g2.drawLine(265, 350, 275, 350);
                     g2.drawLine(535, 350, 545, 350);
                     g2.drawLine(265, 330, 275, 330);
@@ -197,7 +227,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine(535, 310, 545, 310);
                     g2.drawLine(265, 290, 275, 290);
                     g2.drawLine(535, 290, 545, 290);
+                    g2.drawString("##", 65, 290);
+                    g2.drawString("##", 745, 290);
                     g2.drawLine(0, 270, HEIGHT, 270);
+                    g2.drawString("##", 65, 250);
+                    g2.drawString("##", 745, 250);
                     g2.drawLine(265, 250, 275, 250);
                     g2.drawLine(535, 250, 545, 250);
                     g2.drawLine(265, 230, 275, 230);
@@ -206,7 +240,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine(535, 210, 545, 210);
                     g2.drawLine(265, 190, 275, 190);
                     g2.drawLine(535, 190, 545, 190);
+                    g2.drawString("##", 65, 190);
+                    g2.drawString("##", 745, 190);
                     g2.drawLine(0, 170, HEIGHT, 170);
+                    g2.drawString("##", 65, 150);
+                    g2.drawString("##", 745, 150);
                     g2.drawLine(265, 150, 275, 150);
                     g2.drawLine(535, 150, 545, 150);
                     g2.drawLine(265, 130, 275, 130);
@@ -215,7 +253,11 @@ public class Game extends Canvas implements Runnable {
                     g2.drawLine(535, 110, 545, 110);
                     g2.drawLine(265, 90, 275, 90);
                     g2.drawLine(535, 90, 545, 90);
+                    g2.drawString("##", 65, 90);
+                    g2.drawString("##", 745, 90);
                     g2.drawLine(0, 70, HEIGHT, 70);
+                    g2.drawString("##", 65, 50);
+                    g2.drawString("##", 745, 50);
                     g2.drawLine(265, 50, 275, 50);
                     g2.drawLine(535, 50, 545, 50);
                     g2.drawLine(265, 30, 275, 30);
@@ -250,6 +292,60 @@ public class Game extends Canvas implements Runnable {
                     g2.drawString(f9b.getText(), f9b.getX(), f9b.getY());
                     g2.drawString(f10b.getText(), f10b.getX(), f10b.getY());
                     g2.drawString(f11b.getText(), f11b.getX(), f11b.getY());
+                    handler.render(g2);
+                    route.render(g2);
+                    try {
+                        ImageIO.write(image, "gif", new File("/" + file));
+                    } catch (Exception ev) {
+                        ev.printStackTrace();
+                    }
+                } else if (insideRun.isSelected()) {
+                    JFileChooser chooseDirec = new JFileChooser();
+                    chooseDirec.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    chooseDirec.showSaveDialog(frame.getContentPane());
+                    File file = chooseDirec.getSelectedFile();
+                    file = new File(file + ".gif");
+                    BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB_PRE);
+                    Graphics2D g2 = (Graphics2D) image.getGraphics();
+                    g2.setColor(Color.WHITE);
+                    g2.fillRect(0, 0, WIDTH, HEIGHT);
+                    g2.setStroke(new BasicStroke(1));
+                    g2.setColor(Color.black);
+                    g2.drawLine((WIDTH / 2) - 310, 40, (WIDTH / 2) - 300, 40);
+                    g2.drawLine((WIDTH / 2) + 310, 40, (WIDTH / 2) + 300, 40);
+                    g2.drawLine((WIDTH / 2) - 310, 80, (WIDTH / 2) - 300, 80);
+                    g2.drawLine((WIDTH / 2) + 310, 80, (WIDTH / 2) + 300, 80);
+                    g2.drawLine((WIDTH / 2) - 310, 120, (WIDTH / 2) - 300, 120);
+                    g2.drawLine((WIDTH / 2) + 310, 120, (WIDTH / 2) + 300, 120);
+                    g2.drawLine((WIDTH / 2) - 310, 160, (WIDTH / 2) - 300, 160);
+                    g2.drawLine((WIDTH / 2) + 310, 160, (WIDTH / 2) + 300, 160);
+                    g2.drawLine(0, 200, WIDTH, 200);
+                    g2.drawLine((WIDTH / 2) - 310, 240, (WIDTH / 2) - 300, 240);
+                    g2.drawLine((WIDTH / 2) + 310, 240, (WIDTH / 2) + 300, 240);
+                    g2.drawLine((WIDTH / 2) - 310, 280, (WIDTH / 2) - 300, 280);
+                    g2.drawLine((WIDTH / 2) + 310, 280, (WIDTH / 2) + 300, 280);
+                    g2.drawLine((WIDTH / 2) - 310, 320, (WIDTH / 2) - 300, 320);
+                    g2.drawLine((WIDTH / 2) + 310, 320, (WIDTH / 2) + 300, 320);
+                    g2.drawLine((WIDTH / 2) - 310, 360, (WIDTH / 2) - 300, 360);
+                    g2.drawLine((WIDTH / 2) + 310, 360, (WIDTH / 2) + 300, 360);
+                    g2.drawLine(0, HEIGHT / 2, WIDTH, HEIGHT / 2);
+                    g2.drawLine((WIDTH / 2) - 310, 440, (WIDTH / 2) - 300, 440);
+                    g2.drawLine((WIDTH / 2) + 310, 440, (WIDTH / 2) + 300, 440);
+                    g2.drawLine((WIDTH / 2) - 310, 480, (WIDTH / 2) - 300, 480);
+                    g2.drawLine((WIDTH / 2) + 310, 480, (WIDTH / 2) + 300, 480);
+                    g2.drawLine((WIDTH / 2) - 310, 520, (WIDTH / 2) - 300, 520);
+                    g2.drawLine((WIDTH / 2) + 310, 520, (WIDTH / 2) + 300, 520);
+                    g2.drawLine((WIDTH / 2) - 310, 560, (WIDTH / 2) - 300, 560);
+                    g2.drawLine((WIDTH / 2) + 310, 560, (WIDTH / 2) + 300, 560);
+                    g2.drawLine(0, 600, WIDTH, 600);
+                    g2.drawLine((WIDTH / 2) - 310, 640, (WIDTH / 2) - 300, 640);
+                    g2.drawLine((WIDTH / 2) + 310, 640, (WIDTH / 2) + 300, 640);
+                    g2.drawLine((WIDTH / 2) - 310, 680, (WIDTH / 2) - 300, 680);
+                    g2.drawLine((WIDTH / 2) + 310, 680, (WIDTH / 2) + 300, 680);
+                    g2.drawLine((WIDTH / 2) - 310, 720, (WIDTH / 2) - 300, 720);
+                    g2.drawLine((WIDTH / 2) + 310, 720, (WIDTH / 2) + 300, 720);
+                    g2.drawString(offensivePlay.getText(), offensivePlay.getX(), offensivePlay.getY());
+                    g2.drawString(defensivePlay.getText(), defensivePlay.getX(), defensivePlay.getY());
                     handler.render(g2);
                     route.render(g2);
                     try {
