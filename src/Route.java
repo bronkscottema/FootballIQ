@@ -495,11 +495,16 @@ public class Route extends MouseAdapter {
                                int p4y = ((Line) routeList.get(l)).getP4().getY() - 12;
                                player.setX(p4x);
                                player.setY(p4y);
-                           } else {
-                               int p3x = ((Line) routeList.get(l)).getP2().getX() - 12;
-                               int p3y = ((Line) routeList.get(l)).getP2().getY() - 12;
+                           } else if (((Line) routeList.get(l)).getP3() != null) {
+                               int p3x = ((Line) routeList.get(l)).getP3().getX() - 12;
+                               int p3y = ((Line) routeList.get(l)).getP3().getY() - 12;
                                player.setX(p3x);
                                player.setY(p3y);
+                           } else  {
+                               int p2x = ((Line) routeList.get(l)).getP2().getX() - 12;
+                               int p2y = ((Line) routeList.get(l)).getP2().getY() - 12;
+                               player.setX(p2x);
+                               player.setY(p2y);
                            }
 
                             ((Timer) e.getSource()).stop();
@@ -596,7 +601,21 @@ public class Route extends MouseAdapter {
         for (int i = 0; i < routeList.size(); i++) {
             currLine = (Line) (routeList.get(i));
             g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
-            g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+            if (currLine.getP3() == null) {
+                g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+            } else if (currLine.getP4() == null && currLine.getP3() != null) {
+                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
+                        new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
+            } else if (currLine.getP5() == null) {
+                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX(), currLine.getP4().getX()},
+                        new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY(), currLine.getP4().getY()}, 4);
+            } else {
+                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX(), currLine.getP4().getX(), currLine.getP5().getX()},
+                        new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY(), currLine.getP4().getY(), currLine.getP5().getY()}, 5);
+            }
         }
         for (int m = 0; m < motionList.size(); m++) {
             currLine = (Line) (motionList.get(m));
@@ -639,7 +658,14 @@ public class Route extends MouseAdapter {
         for (int m = 0; m < blockList.size(); m++) {
             currLine = (Line) (blockList.get(m));
             g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
-            g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+            if (currLine.getP3() == null) {
+                g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+            } else if (currLine.getP4() == null && currLine.getP3() != null) {
+            g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
+                    new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
+            g2.drawPolyline(new int[] {currLine.getP3().getX()-10, currLine.getP3().getX(), currLine.getP3().getX()+10},
+                    new int[] {currLine.getP3().getY(), currLine.getP3().getY(), currLine.getP3().getY()}, 3);
+            }
         }
 
         for (int m = 0; m < bubbleList.size(); m++) {
