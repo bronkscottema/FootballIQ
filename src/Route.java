@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -20,6 +19,7 @@ public class Route extends MouseAdapter {
     private ArrayList bubbleList = new ArrayList();
     private Line line;
     private int clicks = 0;
+    private int playerDone = 0;
     private JMenuItem playbook;
     private String input;
     private Long startTime;
@@ -211,27 +211,35 @@ public class Route extends MouseAdapter {
                 LinkedList<GameObject> jags = handler.object;
                 for (GameObject player : jags) {
                     if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
-                        clicks++;
-                        line.setId(player.getID());
+                        if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
+                            clicks++;
+                            line.setId(player.getID());
+                        }
                     } else if (!mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
-                        if (motionList.size() > 0) {
-                            for (int i = 0; i < motionList.size(); i++) {
-                                Line currLine;
-                                currLine = (Line) (motionList.get(i));
-                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
-                                    clicks++;
-                                    line.setId(player.getID());
-                                    return;
+                        if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
+                            if (motionList.size() > 0) {
+                                for (int i = 0; i < motionList.size(); i++) {
+                                    Line currLine;
+                                    currLine = (Line) (motionList.get(i));
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
+                                        if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                            clicks++;
+                                            line.setId(player.getID());
+                                            return;
+                                        }
+                                    }
                                 }
-                            }
-                        } else if (routeList.size() > 0) {
-                            for (int i = 0; i < routeList.size(); i++) {
-                                Line currLine;
-                                currLine = (Line) (routeList.get(i));
-                                if (player.getID().equals(currLine.getId()) && currLine.getP3().getX() - line.getP1().getX() <= 10 || currLine.getP3().getX() - line.getP1().getX() <= -10) {
-                                    clicks++;
-                                    line.setId(player.getID());
-                                    return;
+                            } else if (routeList.size() > 0) {
+                                for (int i = 0; i < routeList.size(); i++) {
+                                    Line currLine;
+                                    currLine = (Line) (routeList.get(i));
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
+                                        if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                            clicks++;
+                                            line.setId(player.getID());
+                                            return;
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -239,9 +247,6 @@ public class Route extends MouseAdapter {
                 }
             } else if (clicks == 1) {
                 line.setP2(new Point(x, y));
-                clicks++;
-            } else {
-                line.setP3(new Point(x, y));
                 routeList.add(line);
                 clicks = 0;
             }
@@ -262,9 +267,6 @@ public class Route extends MouseAdapter {
                 }
             } else if (clicks == 1) {
                 line.setP2(new Point(x, y));
-                clicks++;
-            } else {
-                line.setP3(new Point(x, y));
                 motionList.add(line);
                 clicks = 0;
             }
@@ -276,11 +278,25 @@ public class Route extends MouseAdapter {
             if (clicks == 0) {
                 LinkedList<GameObject> jags = handler.object;
                 for (GameObject player : jags) {
+                    ArrayList<ID> defense;
+                    {
+                        defense = new ArrayList<ID>();
+                        defense.add(ID.SOSLB);
+                        defense.add(ID.SISLB);
+                        defense.add(ID.WOSLB);
+                        defense.add(ID.WISLB);
+                        defense.add(ID.FS);
+                        defense.add(ID.SS);
+                        defense.add(ID.WCB);
+                        defense.add(ID.SCB);
+                    }
                     if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
-                        line = new Line();
-                        line.setP1(new Point(x, y));
-                        line.setId(player.getID());
-                        clicks++;
+                        if (defense.contains(player.getID())) {
+                            line = new Line();
+                            line.setP1(new Point(x, y));
+                            line.setId(player.getID());
+                            clicks++;
+                        }
                     }
                 }
             } else {
@@ -305,9 +321,6 @@ public class Route extends MouseAdapter {
                 }
             } else if (clicks == 1) {
                 line.setP2(new Point(x, y));
-                clicks++;
-            } else {
-                line.setP3(new Point(x, y));
                 blockList.add(line);
                 clicks = 0;
             }
@@ -383,44 +396,58 @@ public class Route extends MouseAdapter {
             for (int l = 0; l < routeList.size(); l++) {
                 Line currLine;
                 currLine = (Line) (routeList.get(l));
-                if (currLine.getId() == player.getID()) {
+                if (currLine.getId() == player.getID() && playerDone == 0) {
                     player.setX(currLine.getP1().getX() - 12);
                     player.setY(currLine.getP1().getY() - 12);
+                    playerDone++;
+                    break;
                 }
             }
-            for (int i = 0; i < motionList.size(); i++) {
+            playerDone = 0;
+            for (int i = 0; i < motionList.size(); i++ ) {
                 Line currLine;
                 currLine = (Line) (motionList.get(i));
-                if (currLine.getId() == player.getID() &&  player.getID() == currLine.getId()) {
+                if (currLine.getId() == player.getID() &&  player.getID() == currLine.getId() && playerDone == 0) {
                     player.setX(currLine.getP1().getX()-12);
                     player.setY(currLine.getP1().getY()-12);
+                    playerDone++;
+                    break;
                 }
             }
+            playerDone = 0;
             for (int z = 0; z < zoneList.size(); z++) {
                 Line currLine;
                 currLine = (Line) (zoneList.get(z));
-                if (currLine.getId() == player.getID()) {
+                if (currLine.getId() == player.getID() && playerDone == 0) {
                     player.setX(currLine.getP1().getX() - 12);
                     player.setY(currLine.getP1().getY() - 12);
+                    playerDone++;
+                    break;
                 }
             }
-            for (int z = 0; z < blockList.size(); z++) {
+            playerDone = 0;
+            for (int b = 0; b < blockList.size(); b++) {
                 Line currLine;
-                currLine = (Line) (blockList.get(z));
-                if (currLine.getId() == player.getID()) {
+                currLine = (Line) (blockList.get(b));
+                if (currLine.getId() == player.getID() && playerDone == 0) {
                     player.setX(currLine.getP1().getX() - 12);
                     player.setY(currLine.getP1().getY() - 12);
-                }
-            } 
-            for (int z = 0; z < bubbleList.size(); z++) {
-                Line currLine;
-                currLine = (Line) (bubbleList.get(z));
-                if (currLine.getId() == player.getID()) {
-                    player.setX(currLine.getP1().getX() - 12);
-                    player.setY(currLine.getP1().getY() - 12);
+                    playerDone++;
+                    break;
                 }
             }
-
+            playerDone = 0;
+            for (int bu = 0; bu < bubbleList.size(); bu++) {
+                Line currLine;
+                currLine = (Line) (bubbleList.get(bu));
+                if (currLine.getId() == player.getID() && playerDone == 0) {
+                    player.setX(currLine.getP1().getX() - 12);
+                    player.setY(currLine.getP1().getY() - 12);
+                    playerDone++;
+                    break;
+                }
+            }
+            playerDone = 0;
         }
 //        for (int p = 0; p < pOTL.size(); p++) {
 //            pOTL.remove(p);
@@ -469,8 +496,8 @@ public class Route extends MouseAdapter {
                                player.setX(p4x);
                                player.setY(p4y);
                            } else {
-                               int p3x = ((Line) routeList.get(l)).getP3().getX() - 12;
-                               int p3y = ((Line) routeList.get(l)).getP3().getY() - 12;
+                               int p3x = ((Line) routeList.get(l)).getP2().getX() - 12;
+                               int p3y = ((Line) routeList.get(l)).getP2().getY() - 12;
                                player.setX(p3x);
                                player.setY(p3y);
                            }
@@ -568,27 +595,13 @@ public class Route extends MouseAdapter {
         Line currLine;
         for (int i = 0; i < routeList.size(); i++) {
             currLine = (Line) (routeList.get(i));
-            if (currLine.getP3() == null) {
-                g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
-            } else if (currLine.getP4() == null && currLine.getP3() != null) {
-                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
-                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
-                new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
-            } else if (currLine.getP5() == null) {
-                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
-                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX(), currLine.getP4().getX()},
-                new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY(), currLine.getP4().getY()}, 4);
-            } else {
-                g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
-                g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX(), currLine.getP4().getX(), currLine.getP5().getX()},
-                new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY(), currLine.getP4().getY(), currLine.getP5().getY()}, 5);
-            }
+            g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
+            g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
         }
         for (int m = 0; m < motionList.size(); m++) {
             currLine = (Line) (motionList.get(m));
             g2.setStroke(new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0));
-            g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
-                    new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
+            g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
         }
         for (int m = 0; m < zoneList.size(); m++) {
             currLine = (Line) (zoneList.get(m));
@@ -626,10 +639,7 @@ public class Route extends MouseAdapter {
         for (int m = 0; m < blockList.size(); m++) {
             currLine = (Line) (blockList.get(m));
             g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
-            g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
-                    new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
-            g2.drawPolyline(new int[] {currLine.getP3().getX()-10, currLine.getP3().getX(), currLine.getP3().getX()+10},
-                        new int[] {currLine.getP3().getY(), currLine.getP3().getY(), currLine.getP3().getY()}, 3);
+            g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
         }
 
         for (int m = 0; m < bubbleList.size(); m++) {
@@ -647,15 +657,15 @@ public class Route extends MouseAdapter {
         }
 
         //TODO figure out more animation
-        if (pointOnTimeLine != null) {
-            for (int i = 0; i < pOTL.size(); i++) {
-                Point currPolt;
-                currPolt = (Point) pOTL.get(i);
-                g2.setColor(Color.black);
-                Ellipse2D shape = new Ellipse2D.Float(currPolt.x-12, currPolt.y-12, 24, 24);
-                g2.draw(shape);
-                remove();
-            }
+//        if (pointOnTimeLine != null) {
+//            for (int i = 0; i < pOTL.size(); i++) {
+//                Point currPolt;
+//                currPolt = (Point) pOTL.get(i);
+//                g2.setColor(Color.black);
+//                Ellipse2D shape = new Ellipse2D.Float(currPolt.x-12, currPolt.y-12, 24, 24);
+//                g2.draw(shape);
+//                remove();
+//            }
 //            for (int s = 0; s < pOTLs.size(); s++) {
 //                Point currPolts;
 //                currPolts = (Point) pOTLs.get(s);
@@ -664,22 +674,22 @@ public class Route extends MouseAdapter {
 //                g2.draw(shapes);
 //                remove2nd();
 //            }
-        }
+
     }
 
     //TODO figure out more animation
-    public void remove() {
-        Timer time = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                int n = routeList.size();
-                if (pOTL.size() > 0) {
-                    pOTL.remove(0);
-                }
-            }
-        });
-        time.start();
-    }
+//    public void remove() {
+//        Timer time = new Timer(1000, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+////                int n = routeList.size();
+//                if (pOTL.size() > 0) {
+//                    pOTL.remove(0);
+//                }
+//            }
+//        });
+//        time.start();
+//    }
 //
 //    public void remove2nd() {
 //        Timer time = new Timer(100, new ActionListener() {
@@ -1118,7 +1128,7 @@ public class Route extends MouseAdapter {
             }
             routeList.add(savedRoutes);
 
-        }else if (string.equals("10 Yard Out")) {
+        } else if (string.equals("10 Yard Out")) {
             if (p1.getX() <= game.frame.getWidth() / 2) {
                 savedRoutes = new Line();
                 savedRoutes.setP1(p1);
