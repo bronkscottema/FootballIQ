@@ -46,4 +46,6 @@ public abstract class GameObject {
         return velY;
     }
     public void setInsideRun(boolean isInsideRun) {this.isInsideRun = isInsideRun; }
+
+    public abstract void changePlayer(String userInput, ID id);
 }

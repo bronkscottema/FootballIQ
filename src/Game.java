@@ -1,10 +1,14 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.LinkedList;
 
 public class Game extends Canvas implements Runnable {
 
@@ -15,8 +19,9 @@ public class Game extends Canvas implements Runnable {
     private Handler handler;
     private Movement movement;
     private Route route;
+    private Player player;
     JMenuItem playBook, insideRun;
-    JButton motion, routeline, zone, block;
+    JButton motion, routeline, zone, block, freeDraw;
     JTextArea defensivePlay, offensivePlay, header1, header2,
             f1a, f2a, f3a, f4a, f5a, f6a, f7a, f8a, f9a, f10a, f11a,
             f1b, f2b, f3b, f4b, f5b, f6b, f7b, f8b, f9b, f10b, f11b;
@@ -33,22 +38,32 @@ public class Game extends Canvas implements Runnable {
         ActionListener actionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (e.getSource() == motion) {
+                if (e.getSource() == freeDraw) {
+                    freeDraw.setSelected(true);
+                    motion.setSelected(false);
+                    routeline.setSelected(false);
+                    zone.setSelected(false);
+                    block.setSelected(false);
+                } else if (e.getSource() == motion) {
+                    freeDraw.setSelected(false);
                     motion.setSelected(true);
                     routeline.setSelected(false);
                     zone.setSelected(false);
                     block.setSelected(false);
                 } else if (e.getSource() == routeline) {
+                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(true);
                     zone.setSelected(false);
                     block.setSelected(false);
                 } else if (e.getSource() == zone) {
+                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(false);
                     zone.setSelected(true);
                     block.setSelected(false);
                 } else if (e.getSource() == block) {
+                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(false);
                     zone.setSelected(false);
@@ -56,7 +71,11 @@ public class Game extends Canvas implements Runnable {
                 }
             }
         };
-
+//TODO
+//        freeDraw = new JButton("free draw");
+//        freeDraw.addActionListener(actionListener);
+//        freeDraw.setBounds(350, 725, 75, 50);
+//        frame.add(freeDraw);
         motion = new JButton("Motion");
         motion.addActionListener(actionListener);
         motion.setBounds(400, 725, 75, 50);
@@ -423,6 +442,59 @@ public class Game extends Canvas implements Runnable {
             });
             KO.setFont(font);
 
+        JMenuItem changePlayer = new JMenuItem("Change Player");
+        changePlayer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LinkedList<GameObject> jags = handler.object;
+                String[] array = new String[jags.size()];
+                String[] arrayInRun = new String[jags.size()];
+                for(int i = 0; i < array.length; i++) {
+                    array[i] = jags.get(i).getID().toString();
+                }
+                for(int i = 0; i < arrayInRun.length; i++) {
+                    if (jags.get(i).getID().toString().equals("WRX") || jags.get(i).getID().toString().equals("WRZ") ||
+                            jags.get(i).getID().toString().equals("WCB") || jags.get(i).getID().toString().equals("SCB")) {
+                        break;
+                    }
+                    arrayInRun[i] = jags.get(i).getID().toString();
+                }
+                if (!insideRun.isSelected()) {
+                    String input = (String) JOptionPane.showInputDialog(null, "which player would you like to change the name of?",
+                            "Change Position", JOptionPane.QUESTION_MESSAGE, null, // Use
+                            array, // Array of choices
+                            array[1]); // Initial choice
+                    if (input != null) {
+                        String userInput = (String) JOptionPane.showInputDialog(null, "what letter or special character do you want to name him?",
+                                "Change Position", JOptionPane.QUESTION_MESSAGE);// Initial choice
+                        if (userInput != null) {
+                            for (GameObject player : jags) {
+                                if (input.equals(player.getID().toString())) {
+                                    player.changePlayer(userInput, player.getID());
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    String input = (String) JOptionPane.showInputDialog(null, "which player would you like to change the name of?",
+                            "Change Position", JOptionPane.QUESTION_MESSAGE, null, // Use
+                            arrayInRun, // Array of choices
+                            arrayInRun[0]); // Initial choice
+                    if (input != null) {
+                        String userInput = (String) JOptionPane.showInputDialog(null, "what letter or special character do you want to name him?",
+                                "Change Position", JOptionPane.QUESTION_MESSAGE);// Initial choice
+                        if (userInput != null) {
+                            for (GameObject player : jags) {
+                                if (input.equals(player.getID().toString())) {
+                                    player.changePlayer(userInput, player.getID());
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        changePlayer.setFont(font);
         JMenuItem reload = new JMenuItem("reload");
         reload.addActionListener(new ActionListener() {
             @Override
@@ -516,6 +588,7 @@ public class Game extends Canvas implements Runnable {
         jMenuEdit.add(undo);
         jMenuEdit.add(reset);
         jMenuEdit.add(reload);
+        jMenuEdit.add(changePlayer);
         frame.setJMenuBar(jMenuBar);
 
         this.addKeyListener(new KeyListener() {

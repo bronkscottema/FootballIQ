@@ -19,6 +19,7 @@ public class Route extends MouseAdapter {
     private ArrayList bubbleList = new ArrayList();
     private Line line;
     private int clicks = 0;
+    boolean isDragging;
     private int playerDone = 0;
     private JMenuItem playbook;
     private String input;
@@ -203,7 +204,6 @@ public class Route extends MouseAdapter {
         if (SwingUtilities.isLeftMouseButton(e) && game.routeline.isSelected()) {
             int x = e.getX();
             int y = e.getY();
-            Point eventPoint = new Point(x, y);
 
             if (clicks == 0 && SwingUtilities.isLeftMouseButton(e)) {
                 line = new Line();
@@ -251,6 +251,30 @@ public class Route extends MouseAdapter {
                 clicks = 0;
             }
         }
+        //TODO
+//        if (SwingUtilities.isLeftMouseButton(e) && game.freeDraw.isSelected()) {
+//            int x = e.getX();
+//            int y = e.getY();
+//
+//            if (clicks == 0 && SwingUtilities.isLeftMouseButton(e)) {
+//                isDragging = true;
+//                line = new Line();
+//                line.setP1(new Point(x, y));
+//                LinkedList<GameObject> jags = handler.object;
+//                for (GameObject player : jags) {
+//                    if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+//                        if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
+//                            clicks++;
+//                            line.setId(player.getID());
+//                            line.setP2(new Point( x,y));
+//                            isDragging = false;
+//                        }
+//                        game.repaint();
+//
+//                    }
+//                }
+//            }
+//        }
         if (SwingUtilities.isLeftMouseButton(e) && game.motion.isSelected()) {
             int x = e.getX();
             int y = e.getY();
@@ -344,7 +368,6 @@ public class Route extends MouseAdapter {
     }
 
     public void mouseDragged(MouseEvent e) {
-        clicks = 0;
     }
 
 
@@ -708,7 +731,7 @@ public class Route extends MouseAdapter {
 //        Timer time = new Timer(1000, new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
-////                int n = routeList.size();
+//                int n = routeList.size();
 //                if (pOTL.size() > 0) {
 //                    pOTL.remove(0);
 //                }

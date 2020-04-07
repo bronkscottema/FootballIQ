@@ -3,6 +3,10 @@ import java.util.ArrayList;
 
 public class Player extends GameObject {
 
+    Handler handler;
+    ArrayList<String> playerChangeString = new ArrayList<String>();
+    ArrayList<ID> playerChangeId = new ArrayList<ID>();
+
     public Player(int x, int y, ID id) {
 
         super(x, y, id);
@@ -81,6 +85,12 @@ public class Player extends GameObject {
 
     }
 
+    public void changePlayer(String userInput, ID id) {
+        if (userInput != null) {
+            playerChangeString.add(userInput);
+            playerChangeId.add(id);
+        }
+    }
 
     public void tick() {
         //route methods go here
@@ -192,6 +202,7 @@ public class Player extends GameObject {
                 g.fillRect(x, y, 24, 24);
                 g.setColor(Color.white);
                 g.fillRect(x + 2, y + 2, 20, 20);
+
             }
         } else {
             Font font = new Font("Courrier New", Font.PLAIN, 24);
@@ -200,91 +211,153 @@ public class Player extends GameObject {
                 g2.drawOval(x, y, 50, 50);
                 g2.setStroke(new BasicStroke(3));
                 g2.setColor(Color.black);
-                if (getID() == ID.A) {
-                    g2.setColor(Color.black);
-                    g2.setFont(font);
-                    g2.drawString("A", x + 7, y + 15);
-                }
-                if (getID() == ID.B) {
-                    g.setColor(Color.black);
-                    g2.setFont(font);
-                    g.drawString("B", x + 7, y + 17);
-                }
                 if (getID() == ID.WRH) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
-                    g2.drawString("H", x + 16, y + 27);
+                    g2.drawString("H", x + 16, y + 30);
                 }
                 if (getID() == ID.QB) {
                     g.setColor(Color.black);
                     g2.setFont(font);
-                    g.drawString("Q", x + 16, y + 27);
+                    g.drawString("Q", x + 16, y + 30);
                 }
                 if (getID() == ID.RB) {
                     g.setColor(Color.black);
                     g2.setFont(font);
-                    g.drawString("F", x + 17, y + 27);
-                }
-                if (getID() == ID.T) {
-                    g.setColor(Color.black);
-                    g2.setFont(font);
-                    g.drawString("T", x + 7, y + 17);
+                    g.drawString("F", x + 17, y + 30);
                 }
                 if (getID() == ID.TE) {
                     g.setColor(Color.black);
                     g2.setFont(font);
-                    g.drawString("Y", x + 17, y + 27);
-                }
-                if (getID() == ID.U) {
-                    g.setColor(Color.black);
-                    g2.setFont(font);
-                    g.drawString("U", x + 7, y + 17);
+                    g.drawString("Y", x + 17, y + 30);
                 }
                 if (getID() == ID.WRX) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
-                    g2.drawString("X", x + 7, y + 17);
-                }
-                if (getID() == ID.W) {
-                    g2.setColor(Color.black);
-                    g2.setFont(font);
-                    g2.drawString("W", x + 7, y + 17);
+                    g2.drawString("X", x + 17, y + 30);
                 }
                 if (getID() == ID.WRZ) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
-                    g2.drawString("Z", x + 7, y + 17);
+                    g2.drawString("Z", x + 17, y + 30);
                 }
                 if (getID() == ID.LT) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
-                    g2.drawString("LT", x + 7, y + 17);
+                    g2.drawString("LT", x + 10, y + 30);
                 }
                 if (getID() == ID.LG) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
-                    g2.drawString("LG", x + 7, y + 17);
+                    g2.drawString("LG", x + 10, y + 30);
                 }
                 if (getID() == ID.C) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
-                    g2.drawString("C", x + 7, y + 17);
+                    g2.drawString("C", x + 10, y + 30);
                 }
                 if (getID() == ID.RG) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
-                    g2.drawString("RG", x + 7, y + 17);
+                    g2.drawString("RG", x + 10, y + 30);
                 }
                 if (getID() == ID.RT) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
-                    g2.drawString("RT", x + 7, y + 17);
+                    g2.drawString("RT", x + 10, y + 30);
                 }
             } else if (defense.contains(getID())) {
                 g.setColor(Color.black);
                 g.fillRect(x, y, 50, 50);
                 g.setColor(Color.white);
                 g.fillRect(x + 2, y + 2, 46, 46);
+            }
+        }
+        for (int p = 0; p < playerChangeId.size(); p++) {
+            Font font = new Font("Courrier New", Font.PLAIN, 16);
+            Font fontOL = new Font("Courrier New", Font.PLAIN, 14);
+            Font fontInRun = new Font("Courrier New", Font.PLAIN, 24);
+            Graphics2D g2 = (Graphics2D) g;
+            if (playerChangeId.get(p).equals(getID())) {
+                for (int i = 0; i < playerChangeString.size(); i++) {
+                    if (!isInsideRun) {
+                        if (offense.contains(getID())) {
+                            if (playerChangeString.get(i).length() == 0) {
+                                break;
+                            } else if (playerChangeString.get(i).length() == 1) {
+                                g2.setColor(Color.white);
+                                g2.fillOval(x, y, 24, 24);
+                                g2.setColor(Color.black);
+                                g2.drawOval(x, y, 24, 24);
+                                g2.setFont(font);
+                                g2.drawString(playerChangeString.get(i), x + 7, y + 17);
+                            } else if (playerChangeString.get(i).length() == 2) {
+                                g2.setColor(Color.white);
+                                g2.fillOval(x, y, 24, 24);
+                                g2.setColor(Color.black);
+                                g2.drawOval(x, y, 24, 24);
+                                g2.setFont(fontOL);
+                                g2.drawString(playerChangeString.get(i), x + 3, y + 17);
+                            }
+                        } else {
+                            if (playerChangeString.get(i).length() == 0) {
+                                break;
+                            } else if (playerChangeString.get(i).length() == 1) {
+                                g2.setColor(Color.white);
+                                g2.fillRect(x, y, 24, 24);
+                                g2.setColor(Color.black);
+                                g2.drawRect(x, y, 24, 24);
+                                g2.setFont(font);
+                                g2.drawString(playerChangeString.get(i), x + 7, y + 17);
+                            } else if (playerChangeString.get(i).length() == 2) {
+                                g2.setColor(Color.white);
+                                g2.fillRect(x, y, 24, 24);
+                                g2.setColor(Color.black);
+                                g2.drawRect(x, y, 24, 24);
+                                g2.setFont(fontOL);
+                                g2.drawString(playerChangeString.get(i), x + 3, y + 17);
+                            }
+                        }
+                    } else {
+                        if (offense.contains(getID())) {
+                            if (playerChangeString.get(i).length() == 0) {
+                                break;
+                            } else if (playerChangeString.get(i).length() == 1) {
+                                g2.setColor(Color.white);
+                                g2.fillOval(x, y, 50, 50);
+                                g2.setColor(Color.black);
+                                g2.drawOval(x, y, 50, 50);
+                                g2.setFont(fontInRun);
+                                g2.drawString(playerChangeString.get(i), x + 17, y + 30);
+                            } else if (playerChangeString.get(i).length() == 2) {
+                                g2.setColor(Color.white);
+                                g2.fillOval(x, y, 50, 50);
+                                g2.setColor(Color.black);
+                                g2.drawOval(x, y, 50, 50);
+                                g2.setFont(fontInRun);
+                                g2.drawString(playerChangeString.get(i), x + 10, y + 30);
+                            }
+                        } else {
+                            if (playerChangeString.get(i).length() == 0) {
+                                break;
+                            } else if (playerChangeString.get(i).length() == 1) {
+                                g2.setColor(Color.white);
+                                g2.fillRect(x, y, 50, 50);
+                                g2.setColor(Color.black);
+                                g2.drawRect(x, y, 50, 50);
+                                g2.setFont(fontInRun);
+                                g2.drawString(playerChangeString.get(i), x + 17, y + 30);
+                            } else if (playerChangeString.get(i).length() == 2) {
+                                g2.setColor(Color.white);
+                                g2.fillRect(x, y, 50, 50);
+                                g2.setColor(Color.black);
+                                g2.drawRect(x, y, 50, 50);
+                                g2.setFont(fontInRun);
+                                g2.drawString(playerChangeString.get(i), x + 10, y + 30);
+                            }
+                        }
+                    }
+                }
             }
         }
     }
