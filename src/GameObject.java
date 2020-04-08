@@ -48,4 +48,6 @@ public abstract class GameObject {
     public void setInsideRun(boolean isInsideRun) {this.isInsideRun = isInsideRun; }
 
     public abstract void changePlayer(String userInput, ID id);
+
+    public abstract void saveToXML(String xml);
 }

@@ -39,31 +39,31 @@ public class Game extends Canvas implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == freeDraw) {
-                    freeDraw.setSelected(true);
+//                    freeDraw.setSelected(true);
                     motion.setSelected(false);
                     routeline.setSelected(false);
                     zone.setSelected(false);
                     block.setSelected(false);
                 } else if (e.getSource() == motion) {
-                    freeDraw.setSelected(false);
+//                    freeDraw.setSelected(false);
                     motion.setSelected(true);
                     routeline.setSelected(false);
                     zone.setSelected(false);
                     block.setSelected(false);
                 } else if (e.getSource() == routeline) {
-                    freeDraw.setSelected(false);
+//                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(true);
                     zone.setSelected(false);
                     block.setSelected(false);
                 } else if (e.getSource() == zone) {
-                    freeDraw.setSelected(false);
+//                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(false);
                     zone.setSelected(true);
                     block.setSelected(false);
                 } else if (e.getSource() == block) {
-                    freeDraw.setSelected(false);
+//                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(false);
                     zone.setSelected(false);
@@ -109,7 +109,7 @@ public class Game extends Canvas implements Runnable {
         });
         newMenu.setFont(font);
 
-        JMenuItem saveMenu = new JMenuItem("Save");
+        JMenuItem saveMenu = new JMenuItem("Save Picture");
         saveMenu.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (!playBook.isSelected() && !insideRun.isSelected()) {
@@ -377,6 +377,29 @@ public class Game extends Canvas implements Runnable {
         });
         saveMenu.setFont(font);
 
+//        JMenuItem saveFile = new JMenuItem("Save Players");
+//        saveFile.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                //TODO add file chooser
+//                LinkedList<GameObject> jags = handler.object;
+//                for (GameObject player : jags) {
+//                    player.saveToXML("player config");
+//                }
+//            }
+//        });
+//        saveFile.setFont(font);
+//
+//        JMenuItem loadFile = new JMenuItem("Load Players");
+//        loadFile.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                //TODO add file chooser
+//                player.readXML("Player Configuration");
+//            }
+//        });
+//        loadFile.setFont(font);
+
         playBook = new JMenuItem("Playbook");
         playBook.setFont(font);
         playBook.addActionListener(new ActionListener() {
@@ -495,7 +518,7 @@ public class Game extends Canvas implements Runnable {
             }
         });
         changePlayer.setFont(font);
-        JMenuItem reload = new JMenuItem("reload");
+        JMenuItem reload = new JMenuItem("Reload");
         reload.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -503,7 +526,7 @@ public class Game extends Canvas implements Runnable {
             }
         });
         reload.setFont(font);
-        JMenuItem reset = new JMenuItem("reset");
+        JMenuItem reset = new JMenuItem("Reset");
         reset.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -511,7 +534,7 @@ public class Game extends Canvas implements Runnable {
             }
         });
         reset.setFont(font);
-        JMenuItem undo = new JMenuItem("undo");
+        JMenuItem undo = new JMenuItem("Undo");
         undo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -573,6 +596,8 @@ public class Game extends Canvas implements Runnable {
         jMenuBar.add(jMenuType);
         jMenuFile.add(newMenu);
         jMenuFile.add(saveMenu);
+//        jMenuFile.add(saveFile);
+//        jMenuFile.add(loadFile);
         jMenuFile.add(playBook);
         jMenuFile.add(insideRun);
         jMenuFile.add(animate);

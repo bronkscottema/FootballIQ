@@ -1,9 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -71,6 +68,9 @@ public class Route extends MouseAdapter {
             if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
                 if (defense.contains(player.getID())) {
                     if (SwingUtilities.isRightMouseButton(e)) {
+                        if (zoneList.size() > 0) {
+                            zoneList.clear();
+                        }
                         String[] choices = {"1", "2", "3", "4", "6"};
                         String input = (String) JOptionPane.showInputDialog(null, null,
                                 "Choose Coverage", JOptionPane.QUESTION_MESSAGE, null, // Use
@@ -94,6 +94,9 @@ public class Route extends MouseAdapter {
                     }
                 } else if (offensiveLine.contains(player.getID())) {
                     if (SwingUtilities.isRightMouseButton(e)) {
+                        if (blockList.size() > 0) {
+                            blockList.clear();
+                        }
                         String[] choices = {"Counter", "Inside Zone", "Outside Zone", "Power", "Trap"};
                         String input = (String) JOptionPane.showInputDialog(null, null,
                                 "Choose Run", JOptionPane.QUESTION_MESSAGE, null, // Use
@@ -201,6 +204,20 @@ public class Route extends MouseAdapter {
     }
 
     public void mousePressed(MouseEvent e) {
+        if (SwingUtilities.isRightMouseButton(e)) {
+            int modifiersEx = e.getModifiersEx();
+            int onmask = MouseEvent.SHIFT_DOWN_MASK;
+            if ((modifiersEx & onmask) == onmask) {
+                for (int i = 0; i < routeList.size(); i++) {
+                    Line currLine;
+                    currLine = (Line) (routeList.get(i));
+                    Point eventPoint = new Point(e.getX(), e.getY());
+                    if (inLine(currLine.getP1(), currLine.getP2(), eventPoint)) {
+                        routeList.remove(i);
+                    }
+                }
+            }
+        }
         if (SwingUtilities.isLeftMouseButton(e) && game.routeline.isSelected()) {
             int x = e.getX();
             int y = e.getY();
@@ -280,14 +297,31 @@ public class Route extends MouseAdapter {
             int y = e.getY();
 
             if (clicks == 0) {
+                line = new Line();
+                line.setP1(new Point(x, y));
                 LinkedList<GameObject> jags = handler.object;
                 for (GameObject player : jags) {
                     if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
-                    line = new Line();
-                    line.setP1(new Point(x, y));
-                    line.setId(player.getID());
-                    clicks++;
-                    }
+                        if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
+                            clicks++;
+                            line.setId(player.getID());
+                        }
+                    } else if (!mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                        if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
+                            }  if (motionList.size() > 0) {
+                                for (int i = 0; i < motionList.size(); i++) {
+                                    Line currLine;
+                                    currLine = (Line) (motionList.get(i));
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
+                                        if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                            clicks++;
+                                            line.setId(player.getID());
+                                            return;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                 }
             } else if (clicks == 1) {
                 line.setP2(new Point(x, y));
@@ -334,13 +368,30 @@ public class Route extends MouseAdapter {
             int y = e.getY();
 
             if (clicks == 0) {
+                line = new Line();
+                line.setP1(new Point(x, y));
                 LinkedList<GameObject> jags = handler.object;
                 for (GameObject player : jags) {
                     if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
-                        line = new Line();
-                        line.setP1(new Point(x, y));
-                        line.setId(player.getID());
-                        clicks++;
+                        if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
+                            clicks++;
+                            line.setId(player.getID());
+                        }
+                    } else if (!mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                        if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
+                        }  if (blockList.size() > 0) {
+                            for (int i = 0; i < blockList.size(); i++) {
+                                Line currLine;
+                                currLine = (Line) (blockList.get(i));
+                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                        clicks++;
+                                        line.setId(player.getID());
+                                        return;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             } else if (clicks == 1) {
@@ -763,12 +814,17 @@ public class Route extends MouseAdapter {
     }
 
     public static boolean inLine(Point A, Point B, Point C) {
-        // if AC is vertical
-        if (A.getX() == C.getX()) return B.getX() == C.getX();
-        // if AC is horizontal
-        if (A.getY() == C.getY()) return B.getY() == C.getY();
-        // match the gradients
-        return (A.getX() - C.getX())*(A.getY() - C.getY()) == (C.getX() - B.getX())*(C.getY() - B.getY());
+
+        float x1 = B.getX()-A.getX();
+        float y1 = B.getY()-A.getY();
+
+        float m = y1/x1;
+        float b = C.getY() - (m*C.getX());
+        if (C.getY() == (m * C.getX()) + b) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void preSavedRoutes(String string, Point p1, ID id) {
