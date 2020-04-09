@@ -50,4 +50,5 @@ public abstract class GameObject {
     public abstract void changePlayer(String userInput, ID id);
 
     public abstract void saveToXML(String xml);
+    public abstract void readXML(String xml);
 }

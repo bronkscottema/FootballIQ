@@ -103,8 +103,7 @@ public class Game extends Canvas implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 playBook.setSelected(false);
-                handler.startGame();
-                newOffDef();
+                main(null);
             }
         });
         newMenu.setFont(font);
@@ -377,28 +376,31 @@ public class Game extends Canvas implements Runnable {
         });
         saveMenu.setFont(font);
 
-//        JMenuItem saveFile = new JMenuItem("Save Players");
-//        saveFile.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                //TODO add file chooser
-//                LinkedList<GameObject> jags = handler.object;
-//                for (GameObject player : jags) {
-//                    player.saveToXML("player config");
-//                }
-//            }
-//        });
-//        saveFile.setFont(font);
-//
-//        JMenuItem loadFile = new JMenuItem("Load Players");
-//        loadFile.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                //TODO add file chooser
-//                player.readXML("Player Configuration");
-//            }
-//        });
-//        loadFile.setFont(font);
+        JMenuItem saveFile = new JMenuItem("Save Players");
+        saveFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LinkedList<GameObject> jags = handler.object;
+                for (GameObject player : jags) {
+                    player.saveToXML("player config");
+                    return;
+                }
+            }
+        });
+        saveFile.setFont(font);
+
+        JMenuItem loadFile = new JMenuItem("Load Players");
+        loadFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                LinkedList<GameObject> jags = handler.object;
+                for (GameObject player : jags) {
+                    player.readXML("player config");
+                    return;
+                }
+            }
+        });
+        loadFile.setFont(font);
 
         playBook = new JMenuItem("Playbook");
         playBook.setFont(font);
@@ -596,8 +598,8 @@ public class Game extends Canvas implements Runnable {
         jMenuBar.add(jMenuType);
         jMenuFile.add(newMenu);
         jMenuFile.add(saveMenu);
-//        jMenuFile.add(saveFile);
-//        jMenuFile.add(loadFile);
+        jMenuFile.add(saveFile);
+        jMenuFile.add(loadFile);
         jMenuFile.add(playBook);
         jMenuFile.add(insideRun);
         jMenuFile.add(animate);

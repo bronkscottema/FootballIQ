@@ -1,4 +1,3 @@
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -7,6 +6,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -22,28 +22,7 @@ public class Player extends GameObject {
     Handler handler;
     ArrayList<String> playerChangeString = new ArrayList<String>();
     ArrayList<ID> playerChangeId = new ArrayList<ID>();
-    private String C = null;
-    private String RG = null;
-    private String RT = null;
-    private String LG = null;
-    private String LT = null;
-    private String QB = null;
-    private String TE = null;
-    private String H = null;
-    private String Z = null;
-    private String X = null;
-    private String F = null;
-    private String SDE = null;
-    private String SDT = null;
-    private String WDT = null;
-    private String WDE = null;
-    private String Sam = null;
-    private String Mike = null;
-    private String Will = null;
-    private String SCB = null;
-    private String SS = null;
-    private String FS = null;
-    private String WCB = null;
+    ArrayList<String> xmlPlayerString = new ArrayList<String>();
     private ArrayList<String> rolev;
 
 
@@ -67,19 +46,7 @@ public class Player extends GameObject {
         offense.add(ID.WRH);
         offense.add(ID.WRX);
         offense.add(ID.WRZ);
-        offense.add(ID.A);
-        offense.add(ID.B);
-        offense.add(ID.U);
-        offense.add(ID.F);
-        offense.add(ID.T);
         offense.add(ID.W);
-        offense.add(ID.O);
-        offense.add(ID.O1);
-        offense.add(ID.O2);
-        offense.add(ID.O3);
-        offense.add(ID.O4);
-        offense.add(ID.O5);
-        offense.add(ID.O6);
     }
 
     ArrayList<ID> defense;
@@ -98,13 +65,6 @@ public class Player extends GameObject {
         defense.add(ID.SS);
         defense.add(ID.WCB);
         defense.add(ID.SCB);
-        defense.add(ID.D);
-        defense.add(ID.D1);
-        defense.add(ID.D2);
-        defense.add(ID.D3);
-        defense.add(ID.D4);
-        defense.add(ID.D5);
-        defense.add(ID.D6);
     }
     ArrayList<ID> kickOff;
 
@@ -112,16 +72,28 @@ public class Player extends GameObject {
         kickOff = new ArrayList<ID>();
         kickOff.add(ID.K);
         kickOff.add(ID.P);
-        kickOff.add(ID.L1);
-        kickOff.add(ID.L2);
-        kickOff.add(ID.L3);
-        kickOff.add(ID.L4);
-        kickOff.add(ID.L5);
-        kickOff.add(ID.R5);
-        kickOff.add(ID.R4);
-        kickOff.add(ID.R3);
-        kickOff.add(ID.R2);
-        kickOff.add(ID.R1);
+        kickOff.add(ID.D);
+        kickOff.add(ID.D1);
+        kickOff.add(ID.D2);
+        kickOff.add(ID.D3);
+        kickOff.add(ID.D4);
+        kickOff.add(ID.D5);
+        kickOff.add(ID.D6);
+        kickOff.add(ID.D7);
+        kickOff.add(ID.D8);
+        kickOff.add(ID.D9);
+        kickOff.add(ID.D10);
+        kickOff.add(ID.O);
+        kickOff.add(ID.O1);
+        kickOff.add(ID.O2);
+        kickOff.add(ID.O3);
+        kickOff.add(ID.O4);
+        kickOff.add(ID.O5);
+        kickOff.add(ID.O6);
+        kickOff.add(ID.O7);
+        kickOff.add(ID.O8);
+        kickOff.add(ID.O9);
+        kickOff.add(ID.O10);
 
     }
 
@@ -152,21 +124,6 @@ public class Player extends GameObject {
                 g2.drawOval(x, y, 24, 24);
                 g2.setStroke(new BasicStroke(3));
                 g2.setColor(Color.black);
-                if (getID() == ID.A) {
-                    g2.setColor(Color.black);
-                    g2.setFont(font);
-                    g2.drawString("A", x + 7, y + 15);
-                }
-                if (getID() == ID.B) {
-                    g.setColor(Color.black);
-                    g2.setFont(font);
-                    g.drawString("B", x + 7, y + 17);
-                }
-                if (getID() == ID.F) {
-                    g.setColor(Color.black);
-                    g2.setFont(font);
-                    g.drawString("F", x + 7, y + 17);
-                }
                 if (getID() == ID.WRH) {
                     g2.setColor(Color.black);
                     g2.setFont(font);
@@ -182,20 +139,10 @@ public class Player extends GameObject {
                     g2.setFont(font);
                     g.drawString("F", x + 7, y + 17);
                 }
-                if (getID() == ID.T) {
-                    g.setColor(Color.black);
-                    g2.setFont(font);
-                    g.drawString("T", x + 7, y + 17);
-                }
                 if (getID() == ID.TE) {
                     g.setColor(Color.black);
                     g2.setFont(font);
                     g.drawString("Y", x + 7, y + 17);
-                }
-                if (getID() == ID.U) {
-                    g.setColor(Color.black);
-                    g2.setFont(font);
-                    g.drawString("U", x + 7, y + 17);
                 }
                 if (getID() == ID.WRX) {
                     g2.setColor(Color.black);
@@ -512,7 +459,7 @@ public class Player extends GameObject {
     }
     //TODO xml shit
 
-    public boolean readXML(String xml) {
+    public void readXML(String xml) {
         playerChangeString = new ArrayList<String>();
         Document dom;
         // Make an  instance of the DocumentBuilderFactory
@@ -526,117 +473,15 @@ public class Player extends GameObject {
 
             Element doc = dom.getDocumentElement();
 
-            C = getTextValue(C, doc, "C");
-            if (C != null) {
-                if (!C.isEmpty())
-                    rolev.add(C);
+
+            for (int o = 0; o < offense.size(); o++) {
+                if (dom.getElementsByTagName("ID") != null) {
+                    if (dom.getElementsByTagName("PlayerName") != null) {
+                        rolev.add("ID");
+                        rolev.add("PlayerName");
+                    }
+                }
             }
-            RG = getTextValue(RG, doc, "RG");
-            if (RG != null) {
-                if (!RG.isEmpty())
-                    rolev.add(RG);
-            }
-            RT = getTextValue(RT, doc, "RT");
-            if (RT != null) {
-                if (!RT.isEmpty())
-                    rolev.add(RT);
-            }
-            LG = getTextValue(LG, doc, "LG");
-            if ( LG != null) {
-                if (!LG.isEmpty())
-                    rolev.add(LG);
-            }
-            LT = getTextValue(LT, doc, "LT");
-            if (LT != null) {
-                if (!LT.isEmpty())
-                    rolev.add(LT);
-            }
-            H = getTextValue(H, doc, "H");
-            if (H != null) {
-                if (!H.isEmpty())
-                    rolev.add(H);
-            }
-            Z = getTextValue(Z, doc, "Z");
-            if (Z != null) {
-                if (!Z.isEmpty())
-                    rolev.add(Z);
-            }
-            X = getTextValue(LG, doc, "LG");
-            if ( LG != null) {
-                if (!LG.isEmpty())
-                    rolev.add(LG);
-            }
-            TE = getTextValue(TE, doc, "TE");
-            if (TE != null) {
-                if (!TE.isEmpty())
-                    rolev.add(TE);
-            }
-            QB = getTextValue(QB, doc, "QB");
-            if (QB != null) {
-                if (!QB.isEmpty())
-                    rolev.add(QB);
-            }
-            F = getTextValue(F, doc, "F");
-            if (F != null) {
-                if (!F.isEmpty())
-                    rolev.add(F);
-            }
-            SDE = getTextValue(SDE, doc, "SDE");
-            if ( SDE != null) {
-                if (!SDE.isEmpty())
-                    rolev.add(SDE);
-            }
-            SDT = getTextValue(SDT, doc, "SDT");
-            if (SDT != null) {
-                if (!SDT.isEmpty())
-                    rolev.add(SDT);
-            }
-            WDT = getTextValue(WDT, doc, "WDT");
-            if (WDT != null) {
-                if (!WDT.isEmpty())
-                    rolev.add(WDT);
-            }
-            WDE = getTextValue(WDE, doc, "WDE");
-            if (WDE != null) {
-                if (!WDE.isEmpty())
-                    rolev.add(WDE);
-            }
-            Sam = getTextValue(Sam, doc, "Sam");
-            if ( Sam != null) {
-                if (!Sam.isEmpty())
-                    rolev.add(Sam);
-            }
-            Mike = getTextValue(Mike, doc, "Mike");
-            if (Mike != null) {
-                if (!Mike.isEmpty())
-                    rolev.add(Mike);
-            }
-            Will = getTextValue(Will, doc, "Will");
-            if ( Will != null) {
-                if (!Will.isEmpty())
-                    rolev.add(Will);
-            }
-            SCB = getTextValue(SCB, doc, "SCB");
-            if (SCB != null) {
-                if (!SCB.isEmpty())
-                    rolev.add(SCB);
-            }
-            FS = getTextValue(FS, doc, "FS");
-            if (FS != null) {
-                if (!FS.isEmpty())
-                    rolev.add(FS);
-            }
-            SS = getTextValue(SS, doc, "SS");
-            if (SS != null) {
-                if (!SS.isEmpty())
-                    rolev.add(SS);
-            }
-            WCB = getTextValue(WCB, doc, "WCB");
-            if ( WCB != null) {
-                if (!WCB.isEmpty())
-                    rolev.add(WCB);
-            }
-            return true;
 
         } catch (ParserConfigurationException pce) {
             System.out.println(pce.getMessage());
@@ -646,7 +491,6 @@ public class Player extends GameObject {
             System.err.println(ioe.getMessage());
         }
 
-        return false;
     }
 
     public void saveToXML(String xml) {
@@ -660,31 +504,66 @@ public class Player extends GameObject {
                 Document document = documentBuilder.newDocument();
 
                 // root element
-                Element root = document.createElement("ID");
+                Element root = document.createElement("Players");
                 document.appendChild(root);
 
                 // employee element
-                Element employee = document.createElement("Player");
 
-                root.appendChild(employee);
+                for (int i = 0; i < offense.size(); i++) {
+                    if (xmlPlayerString.size() > 0) {
+                        for (int p = 0; p < xmlPlayerString.size(); p++) {
+                            if (offense.get(i).toString().equals(xmlPlayerString.get(p))) {
+                                System.out.print("something");
 
-                // set an attribute to staff element
-                Attr attr = document.createAttribute("ID");
-                attr.setValue(getID().toString());
-                employee.setAttributeNode(attr);
+                            }
+                        }
+                    } else {
+                        System.out.print("something");
+                    }
+                    String playerId = offense.get(i).toString();
+                    Element player = document.createElement("Players");
+                    root.appendChild(player);
 
-                //you can also use staff.setAttribute("id", "1") for this
+                    // set an attribute to ID element
+                    Element elementId = document.createElement("ID");
+                    elementId.appendChild(document.createTextNode(playerId));
+                    player.appendChild(elementId);
 
-                // firstname element
-                Element firstName = document.createElement("PlayerName");
-                firstName.appendChild(document.createTextNode(getID().toString()));
-                employee.appendChild(firstName);
+                    // elementPlayerName element
+                    Element elementPlayerName = document.createElement("PlayerName");
+                    elementPlayerName.appendChild(document.createTextNode(playerId));
+                    player.appendChild(elementPlayerName);
+                }
+
+                for (int i = 0; i < defense.size(); i++) {
+                    //if (playerString > 0) {
+                    //  for (int p = 0; p < playerString.size(); p++;) {
+                    //  TODO Do stuff
+                    //  }
+                    // } else if {
+                    // }
+                    String playerId = defense.get(i).toString();
+                    Element player = document.createElement("Players");
+                    root.appendChild(player);
+
+                    // set an attribute to ID element
+                    Element elementId = document.createElement("ID");
+                    elementId.appendChild(document.createTextNode(playerId));
+                    player.appendChild(elementId);
+
+                    // elementPlayerName element
+                    Element elementPlayerName = document.createElement("PlayerName");
+                    elementPlayerName.appendChild(document.createTextNode(playerId));
+                    player.appendChild(elementPlayerName);
+                }
 
                 // create the xml file
                 //transform the DOM Object to an XML File
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 DOMSource domSource = new DOMSource(document);
+                transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 StreamResult streamResult = new StreamResult(new File(xml));
 
                 // If you use

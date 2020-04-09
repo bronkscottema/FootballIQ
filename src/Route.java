@@ -243,25 +243,36 @@ public class Route extends MouseAdapter {
                                             clicks++;
                                             line.setId(player.getID());
                                             return;
+                                        } else if (routeList.size() > 0) {
+                                            for (int r = 0; r < routeList.size(); r++) {
+                                                currLine = (Line) (routeList.get(r));
+                                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10 || currLine.getP2().getX() - line.getP1().getX() == 0) {
+                                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                                        clicks++;
+                                                        line.setId(player.getID());
+                                                        return;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else if (routeList.size() > 0) {
+                                        for (int r = 0; r < routeList.size(); r++) {
+                                            currLine = (Line) (routeList.get(r));
+                                            if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10 || currLine.getP2().getX() - line.getP1().getX() == 0) {
+                                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                                    clicks++;
+                                                    line.setId(player.getID());
+                                                    return;
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                            } else if (routeList.size() > 0) {
-                                for (int i = 0; i < routeList.size(); i++) {
-                                    Line currLine;
-                                    currLine = (Line) (routeList.get(i));
-                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
-                                        if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
-                                            clicks++;
-                                            line.setId(player.getID());
-                                            return;
-                                        }
-                                    }
-                                }
+
                             }
                         }
                     }
-                }
+                    }
             } else if (clicks == 1) {
                 line.setP2(new Point(x, y));
                 routeList.add(line);
@@ -374,7 +385,7 @@ public class Route extends MouseAdapter {
                 for (GameObject player : jags) {
                     if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
                         if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
-                            clicks++;
+                            clicks = 1;
                             line.setId(player.getID());
                         }
                     } else if (!mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
@@ -385,7 +396,7 @@ public class Route extends MouseAdapter {
                                 currLine = (Line) (blockList.get(i));
                                 if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
                                     if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
-                                        clicks++;
+                                        clicks = 1;
                                         line.setId(player.getID());
                                         return;
                                     }
@@ -535,7 +546,7 @@ public class Route extends MouseAdapter {
             public void actionPerformed(ActionEvent e) {
                 LinkedList<GameObject> jags = handler.object;
                 for (GameObject player : jags) {
-                    for (int m = 0; m < motionList.size(); m++) {
+                    for (int m = 0; m < motionList.size(); m++)
                         if (mouseOver(((Line) motionList.get(m)).getP1().getX(), ((Line) motionList.get(m)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
                             int p2x = ((Line) motionList.get(m)).getP2().getX() - 12;
                             int p2y = ((Line) motionList.get(m)).getP2().getY() - 12;
@@ -543,14 +554,12 @@ public class Route extends MouseAdapter {
                             player.setY(p2y);
                             ((Timer) e.getSource()).stop();
                         }
-
-                    }
                 }
 
             }
         });
         timer.start();
-        timer.restart();
+        timer.setRepeats(false);
         Timer timer2 = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -639,7 +648,7 @@ public class Route extends MouseAdapter {
             }
         });
         timer2.start();
-        timer2.restart();
+        timer2.setRepeats(false);
     }
 
     public void undo() {
