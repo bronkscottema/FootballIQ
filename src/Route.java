@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -14,6 +15,7 @@ public class Route extends MouseAdapter {
     private ArrayList zoneList = new ArrayList();
     private ArrayList blockList = new ArrayList();
     private ArrayList bubbleList = new ArrayList();
+    private ArrayList freeDrawList = new ArrayList();
     private Line line;
     private int clicks = 0;
     boolean isDragging;
@@ -268,41 +270,28 @@ public class Route extends MouseAdapter {
                                         }
                                     }
                                 }
-
+                            } else if (routeList.size() > 0) {
+                                for (int r = 0; r < routeList.size(); r++) {
+                                    Line currLine;
+                                    currLine = (Line) (routeList.get(r));
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10 || currLine.getP2().getX() - line.getP1().getX() == 0) {
+                                        if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                            clicks++;
+                                            line.setId(player.getID());
+                                            return;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-                    }
+                }
             } else if (clicks == 1) {
                 line.setP2(new Point(x, y));
                 routeList.add(line);
                 clicks = 0;
             }
         }
-        //TODO
-//        if (SwingUtilities.isLeftMouseButton(e) && game.freeDraw.isSelected()) {
-//            int x = e.getX();
-//            int y = e.getY();
-//
-//            if (clicks == 0 && SwingUtilities.isLeftMouseButton(e)) {
-//                isDragging = true;
-//                line = new Line();
-//                line.setP1(new Point(x, y));
-//                LinkedList<GameObject> jags = handler.object;
-//                for (GameObject player : jags) {
-//                    if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
-//                        if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
-//                            clicks++;
-//                            line.setId(player.getID());
-//                            line.setP2(new Point( x,y));
-//                            isDragging = false;
-//                        }
-//                        game.repaint();
-//
-//                    }
-//                }
-//            }
-//        }
         if (SwingUtilities.isLeftMouseButton(e) && game.motion.isSelected()) {
             int x = e.getX();
             int y = e.getY();
@@ -430,6 +419,62 @@ public class Route extends MouseAdapter {
     }
 
     public void mouseDragged(MouseEvent e) {
+//        if (SwingUtilities.isLeftMouseButton(e)) {
+//            clicks = 0;
+//        }
+        if (SwingUtilities.isRightMouseButton(e) && game.freeDraw.isSelected()) {
+            isDragging = true;
+            int x = e.getX();
+            int y = e.getY();
+            LinkedList<GameObject> jags = handler.object;
+            for (GameObject player : jags) {
+                if (mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                    line = new Line();
+                    line.setP1(new Point(x, y));
+                    line.setP2(new Point(x, y));
+                    line.setId(player.getID());
+                    freeDrawList.add(line);
+                    clicks = 0;
+                    isDragging = false;
+                } else if (!mouseOver(e.getX(), e.getY(), player.getX(), player.getY(), 24, 24)) {
+                    if (player.getX() - e.getX() <= 5 || player.getX() - e.getX() <= -5 && player.getY() - e.getY() <= 5 || player.getY() - e.getY() <= -5) {
+                        if (motionList.size() > 0) {
+                            for (int i = 0; i < motionList.size(); i++) {
+                                Line currLine;
+                                currLine = (Line) (motionList.get(i));
+                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                        line = new Line();
+                                        line.setP1(new Point(x, y));
+                                        line.setP2(new Point(x, y));
+                                        line.setId(player.getID());
+                                        freeDrawList.add(line);
+                                        clicks = 0;
+                                        isDragging = false;
+                                    }
+                                }
+                            }
+                        }  else if (routeList.size() > 0) {
+                            for (int r = 0; r < routeList.size(); r++) {
+                                Line currLine;
+                                currLine = (Line) (routeList.get(r));
+                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10 || currLine.getP2().getX() - line.getP1().getX() == 0) {
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                        line = new Line();
+                                        line.setP1(new Point(x, y));
+                                        line.setP2(new Point(x, y));
+                                        line.setId(player.getID());
+                                        freeDrawList.add(line);
+                                        clicks = 0;
+                                        isDragging = false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
 
@@ -525,6 +570,17 @@ public class Route extends MouseAdapter {
             for (int bu = 0; bu < bubbleList.size(); bu++) {
                 Line currLine;
                 currLine = (Line) (bubbleList.get(bu));
+                if (currLine.getId() == player.getID() && playerDone == 0) {
+                    player.setX(currLine.getP1().getX() - 12);
+                    player.setY(currLine.getP1().getY() - 12);
+                    playerDone++;
+                    break;
+                }
+            }
+            playerDone = 0;
+            for (int fd = 0; fd < freeDrawList.size(); fd++) {
+                Line currLine;
+                currLine = (Line) (freeDrawList.get(fd));
                 if (currLine.getId() == player.getID() && playerDone == 0) {
                     player.setX(currLine.getP1().getX() - 12);
                     player.setY(currLine.getP1().getY() - 12);
@@ -643,6 +699,14 @@ public class Route extends MouseAdapter {
                            player.setY(p2y);
                        }
                    }
+                   for (int l = 0; l < freeDrawList.size(); l++) {
+                       if (mouseOver(((Line) freeDrawList.get(l)).getP1().getX(), ((Line) freeDrawList.get(l)).getP1().getY(), player.getX(), player.getY(), 24, 24)) {
+                           int p2x = ((Line) freeDrawList.get(l)).getP2().getX() - 12;
+                           int p2y = ((Line) freeDrawList.get(l)).getP2().getY() - 12;
+                           player.setX(p2x);
+                           player.setY(p2y);
+                       }
+                   }
                 }
 
             }
@@ -673,7 +737,20 @@ public class Route extends MouseAdapter {
             int size = bubbleList.size() - 1;
             bubbleList.remove(size);
         }
-
+        if (!freeDrawList.isEmpty()) {
+            LinkedList<GameObject> jags = handler.object;
+            for (GameObject player : jags) {
+                for (int fd = 0; fd < freeDrawList.size(); fd++) {
+                    Line currLine;
+                    currLine = (Line) freeDrawList.get(fd);
+                    String lastPlayer = ((Line) freeDrawList.get(freeDrawList.size()-1)).getId().toString();
+                    if (lastPlayer == player.getID().toString()) {
+                        int size = freeDrawList.size()-1;
+                        freeDrawList.remove(size);
+                    }
+                }
+            }
+        }
     }
 
     public void render(Graphics g) {
@@ -743,6 +820,8 @@ public class Route extends MouseAdapter {
             g2.setStroke(new BasicStroke(2.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND, 10.0f, null, 0.0f));
             if (currLine.getP3() == null) {
                 g2.drawLine(currLine.getP1().getX(), currLine.getP1().getY(), currLine.getP2().getX(), currLine.getP2().getY());
+                g2.drawPolyline(new int[] {currLine.getP2().getX()-10, currLine.getP2().getX(), currLine.getP2().getX()+10},
+                        new int[] {currLine.getP2().getY(), currLine.getP2().getY(), currLine.getP2().getY()}, 3);
             } else if (currLine.getP4() == null && currLine.getP3() != null) {
             g2.drawPolyline(new int[]{currLine.getP1().getX(), currLine.getP2().getX(), currLine.getP3().getX()},
                     new int[]{currLine.getP1().getY(), currLine.getP2().getY(), currLine.getP3().getY()}, 3);
@@ -763,6 +842,12 @@ public class Route extends MouseAdapter {
             } else if (currLine.getP1().getX() >= game.frame.getWidth()/2 && currLine.getP2().equals(currLine.getP1())) {
                 g2.drawArc(currLine.getP1().x, currLine.getP1().y - 24, 325, 40, 180, 180);
             }
+        }
+
+        for (int i = 0; i < freeDrawList.size(); i++) {
+            currLine = (Line) (freeDrawList.get(i));
+            g2.setStroke(new BasicStroke(2));
+            g2.draw(new Line2D.Float(currLine.getP1().getX(), currLine.getP1().getY(),currLine.getP2().getX(), currLine.getP2().getY()));
         }
 
         //TODO figure out more animation

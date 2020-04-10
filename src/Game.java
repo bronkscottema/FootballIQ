@@ -39,31 +39,31 @@ public class Game extends Canvas implements Runnable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (e.getSource() == freeDraw) {
-//                    freeDraw.setSelected(true);
+                    freeDraw.setSelected(true);
                     motion.setSelected(false);
                     routeline.setSelected(false);
                     zone.setSelected(false);
                     block.setSelected(false);
                 } else if (e.getSource() == motion) {
-//                    freeDraw.setSelected(false);
+                    freeDraw.setSelected(false);
                     motion.setSelected(true);
                     routeline.setSelected(false);
                     zone.setSelected(false);
                     block.setSelected(false);
                 } else if (e.getSource() == routeline) {
-//                    freeDraw.setSelected(false);
+                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(true);
                     zone.setSelected(false);
                     block.setSelected(false);
                 } else if (e.getSource() == zone) {
-//                    freeDraw.setSelected(false);
+                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(false);
                     zone.setSelected(true);
                     block.setSelected(false);
                 } else if (e.getSource() == block) {
-//                    freeDraw.setSelected(false);
+                    freeDraw.setSelected(false);
                     motion.setSelected(false);
                     routeline.setSelected(false);
                     zone.setSelected(false);
@@ -71,11 +71,10 @@ public class Game extends Canvas implements Runnable {
                 }
             }
         };
-//TODO
-//        freeDraw = new JButton("free draw");
-//        freeDraw.addActionListener(actionListener);
-//        freeDraw.setBounds(350, 725, 75, 50);
-//        frame.add(freeDraw);
+        freeDraw = new JButton("free draw");
+        freeDraw.addActionListener(actionListener);
+        freeDraw.setBounds(350, 725, 75, 50);
+        frame.add(freeDraw);
         motion = new JButton("Motion");
         motion.addActionListener(actionListener);
         motion.setBounds(400, 725, 75, 50);
