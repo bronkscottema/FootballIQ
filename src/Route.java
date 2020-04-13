@@ -282,6 +282,18 @@ public class Route extends MouseAdapter {
                                         }
                                     }
                                 }
+                            } else if (freeDrawList.size() > 0) {
+                                for (int r = 0; r < freeDrawList.size(); r++) {
+                                    Line currLine;
+                                    currLine = (Line) (freeDrawList.get(r));
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10 || currLine.getP2().getX() - line.getP1().getX() == 0) {
+                                        if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                            clicks++;
+                                            line.setId(player.getID());
+                                            return;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -312,8 +324,8 @@ public class Route extends MouseAdapter {
                                 for (int i = 0; i < motionList.size(); i++) {
                                     Line currLine;
                                     currLine = (Line) (motionList.get(i));
-                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
-                                        if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - e.getX() <= 10 || currLine.getP2().getX() - e.getX() <= -10) {
+                                        if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - e.getY() <= 10 || currLine.getP2().getY() - e.getY() <= -10) {
                                             clicks++;
                                             line.setId(player.getID());
                                             return;
@@ -391,6 +403,18 @@ public class Route extends MouseAdapter {
                                     }
                                 }
                             }
+                        }  else if (freeDrawList.size() > 0) {
+                            for (int r = 0; r < freeDrawList.size(); r++) {
+                                Line currLine;
+                                currLine = (Line) (freeDrawList.get(r));
+                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10 || currLine.getP2().getX() - line.getP1().getX() == 0) {
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                        clicks++;
+                                        line.setId(player.getID());
+                                        return;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -442,8 +466,8 @@ public class Route extends MouseAdapter {
                             for (int i = 0; i < motionList.size(); i++) {
                                 Line currLine;
                                 currLine = (Line) (motionList.get(i));
-                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10) {
-                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - e.getX() <= 10 || currLine.getP2().getX() - e.getX() <= -10) {
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - e.getY() <= 10 || currLine.getP2().getY() - e.getY() <= -10) {
                                         line = new Line();
                                         line.setP1(new Point(x, y));
                                         line.setP2(new Point(x, y));
@@ -458,8 +482,26 @@ public class Route extends MouseAdapter {
                             for (int r = 0; r < routeList.size(); r++) {
                                 Line currLine;
                                 currLine = (Line) (routeList.get(r));
-                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - line.getP1().getX() <= 10 || currLine.getP2().getX() - line.getP1().getX() <= -10 || currLine.getP2().getX() - line.getP1().getX() == 0) {
-                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - line.getP1().getY() <= 10 || currLine.getP2().getY() - line.getP1().getY() <= -10) {
+                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - e.getX() <= 10 || currLine.getP2().getX() - e.getX() <= -10 || currLine.getP2().getX() - e.getX() == 0) {
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - e.getY() <= 10 || currLine.getP2().getY() - e.getY() <= -10) {
+                                        isDragging = true;
+                                        line = new Line();
+                                        line.setP1(new Point(x, y));
+                                        line.setP2(new Point(x, y));
+                                        line.setId(player.getID());
+                                        freeDrawList.add(line);
+                                        clicks = 0;
+                                        isDragging = false;
+                                    }
+                                }
+                            }
+                        } else if (blockList.size() > 0) {
+                            for (int r = 0; r < blockList.size(); r++) {
+                                Line currLine;
+                                currLine = (Line) (blockList.get(r));
+                                if (player.getID().equals(currLine.getId()) && currLine.getP2().getX() - e.getX() <= 10 || currLine.getP2().getX() - e.getX() <= -10 || currLine.getP2().getX() - e.getX() == 0) {
+                                    if (player.getID().equals(currLine.getId()) && currLine.getP2().getY() - e.getY() <= 10 || currLine.getP2().getY() - e.getY() <= -10) {
+                                        isDragging = true;
                                         line = new Line();
                                         line.setP1(new Point(x, y));
                                         line.setP2(new Point(x, y));

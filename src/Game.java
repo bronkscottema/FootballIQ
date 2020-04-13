@@ -71,25 +71,25 @@ public class Game extends Canvas implements Runnable {
                 }
             }
         };
-        freeDraw = new JButton("free draw");
+        freeDraw = new JButton("Freedraw");
         freeDraw.addActionListener(actionListener);
-        freeDraw.setBounds(350, 725, 75, 50);
+        freeDraw.setBounds(375, 725, 75, 50);
         frame.add(freeDraw);
         motion = new JButton("Motion");
         motion.addActionListener(actionListener);
-        motion.setBounds(400, 725, 75, 50);
+        motion.setBounds(450, 725, 75, 50);
         frame.add(motion);
         routeline = new JButton("Line");
         routeline.addActionListener(actionListener);
-        routeline.setBounds(475, 725, 75, 50);
+        routeline.setBounds(525, 725, 75, 50);
         frame.add(routeline);
         zone = new JButton("Zone");
         zone.addActionListener(actionListener);
-        zone.setBounds(550, 725, 75, 50);
+        zone.setBounds(600, 725, 75, 50);
         frame.add(zone);
         block = new JButton("Block");
         block.addActionListener(actionListener);
-        block.setBounds(625, 725, 75, 50);
+        block.setBounds(675, 725, 75, 50);
         frame.add(block);
 
         JMenuBar jMenuBar = new JMenuBar();
@@ -929,12 +929,13 @@ public class Game extends Canvas implements Runnable {
         f10a.setVisible(true);
         f11a.setVisible(true);
         //resize the other buttons
-        offensivePlay.setBounds(0,910,275, 75 );
-        defensivePlay.setBounds(HEIGHT-275,910,275, 75 );
-        motion.setBounds(275, 910, 68, 75);
-        routeline.setBounds(343, 910, 68, 75);
-        zone.setBounds(411, 910, 67, 75);
-        block.setBounds(478, 910, 67, 75);
+        offensivePlay.setBounds(0,910,200, 75 );
+        defensivePlay.setBounds(HEIGHT-200,910,200, 75 );
+        freeDraw.setBounds(225, 910, 75, 75);
+        motion.setBounds(300, 910, 75, 75);
+        routeline.setBounds(375, 910, 75, 75);
+        zone.setBounds(450, 910, 75, 75);
+        block.setBounds(525, 910, 75, 75);
 
     }
 
