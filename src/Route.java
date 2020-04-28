@@ -555,6 +555,11 @@ public class Route extends MouseAdapter {
                 int size = blockList.size() - 1;
                 blockList.remove(size);
             }
+            if (!freeDrawList.isEmpty()) {
+                while (freeDrawList.size() > 0) {
+                    freeDrawList.remove(0);
+                }
+            }
             if (!bubbleList.isEmpty()) {
                 int size = bubbleList.size() - 1;
                 bubbleList.remove(size);
@@ -779,7 +784,7 @@ public class Route extends MouseAdapter {
             int size = bubbleList.size() - 1;
             bubbleList.remove(size);
         }
-        if (!freeDrawList.isEmpty()) {
+        if (!freeDrawList.isEmpty() && game.freeDraw.isSelected()) {
             LinkedList<GameObject> jags = handler.object;
             for (GameObject player : jags) {
                 for (int fd = 0; fd < freeDrawList.size(); fd++) {

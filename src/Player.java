@@ -13,8 +13,9 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class Player extends GameObject {
@@ -23,7 +24,12 @@ public class Player extends GameObject {
     ArrayList<String> playerChangeString = new ArrayList<String>();
     ArrayList<ID> playerChangeId = new ArrayList<ID>();
     ArrayList<String> xmlPlayerString = new ArrayList<String>();
+    ArrayList<String> xmlPlayerId = new ArrayList<String>();
+    Object object;
+    int playerNum = 0;
     private ArrayList<String> rolev;
+    boolean readXMLSelected = false;
+
 
 
     public Player(int x, int y, ID id) {
@@ -101,6 +107,16 @@ public class Player extends GameObject {
         if (userInput != null) {
             playerChangeString.add(userInput);
             playerChangeId.add(id);
+            try {
+                FileOutputStream fileOut = new FileOutputStream("card.ser");//creates a card serial file in output stream
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);//routs an object into the output stream.
+                out.writeObject(userInput);// we designate our array of cards to be routed
+                out.writeObject(id);// we designate our array of cards to be routed
+                out.close();// closes the data paths
+                fileOut.close();// closes the data paths
+            } catch(IOException i) {
+                i.printStackTrace();
+            }
         }
     }
 
@@ -400,16 +416,16 @@ public class Player extends GameObject {
                                 break;
                             } else if (playerChangeString.get(i).length() == 1) {
                                 g2.setColor(Color.white);
-                                g2.fillRect(x, y, 24, 24);
+                                g2.fillRect(x, y, 23, 23);
                                 g2.setColor(Color.black);
-                                g2.drawRect(x, y, 24, 24);
+                                g2.drawRect(x, y, 23, 23);
                                 g2.setFont(font);
                                 g2.drawString(playerChangeString.get(i), x + 7, y + 17);
                             } else if (playerChangeString.get(i).length() == 2) {
                                 g2.setColor(Color.white);
-                                g2.fillRect(x, y, 24, 24);
+                                g2.fillRect(x, y, 23, 23);
                                 g2.setColor(Color.black);
-                                g2.drawRect(x, y, 24, 24);
+                                g2.drawRect(x, y, 23, 23);
                                 g2.setFont(fontOL);
                                 g2.drawString(playerChangeString.get(i), x + 3, y + 17);
                             }
@@ -456,10 +472,36 @@ public class Player extends GameObject {
                 }
             }
         }
+        if (readXMLSelected) {
+            try {
+                FileInputStream fileIn = new FileInputStream("readXml.ser");// Read serial file.
+                ObjectInputStream in = new ObjectInputStream(fileIn);// input the read file.
+                String object = (String) in.readObject().toString();
+                in.close();//closes the input stream.
+                fileIn.close();//closes the file data stream.
+
+
+                    for (int p = 0; p < xmlPlayerString.size(); p++) {
+                        for (int id = 0; id < xmlPlayerId.size(); id++) {
+//                        if (offense.get(i).toString().equals(xmlPlayerId.get(id))) {
+//
+//                        } else {
+//
+//                        }
+                        }
+                    }
+
+            } catch (IOException io) {
+                System.out.print("handling file exception/maybe the file isn't found");
+            } catch (ClassNotFoundException c) {
+                System.out.println("Error");
+            }
+            readXMLSelected = false;
+        }
     }
-    //TODO xml shit
 
     public void readXML(String xml) {
+        readXMLSelected = true;
         playerChangeString = new ArrayList<String>();
         Document dom;
         // Make an  instance of the DocumentBuilderFactory
@@ -472,15 +514,31 @@ public class Player extends GameObject {
             dom = db.parse(xml);
 
             Element doc = dom.getDocumentElement();
+            NodeList nl;
 
-
-            for (int o = 0; o < offense.size(); o++) {
-                if (dom.getElementsByTagName("ID") != null) {
-                    if (dom.getElementsByTagName("PlayerName") != null) {
-                        rolev.add("ID");
-                        rolev.add("PlayerName");
-                    }
+            nl = doc.getElementsByTagName("PlayerName");
+            if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
+               for (int i = 0; i < nl.getLength(); i++) {
+                   xmlPlayerString.add(nl.item(i).getFirstChild().getNodeValue());
+               }
+            }
+            NodeList nlId;
+            nlId = doc.getElementsByTagName("ID");
+            if (nlId.getLength() > 0 && nlId.item(0).hasChildNodes()) {
+                for (int i = 0; i < nlId.getLength(); i++) {
+                    xmlPlayerId.add(nlId.item(i).getFirstChild().getNodeValue());
                 }
+            }
+
+            try {
+                FileOutputStream fileOut = new FileOutputStream("readXml.ser");//creates a card serial file in output stream
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);//routs an object into the output stream.
+                out.writeObject(xmlPlayerId);// we designate our array of cards to be routed
+                out.writeObject(xmlPlayerString);// we designate our array of cards to be routed
+                out.close();// closes the data paths
+                fileOut.close();// closes the data paths
+            } catch(IOException i) {
+                i.printStackTrace();
             }
 
         } catch (ParserConfigurationException pce) {
@@ -495,31 +553,78 @@ public class Player extends GameObject {
 
     public void saveToXML(String xml) {
 
-            try {
+        try {
 
-                DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 
-                DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
+            DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
 
-                Document document = documentBuilder.newDocument();
+            Document document = documentBuilder.newDocument();
 
-                // root element
-                Element root = document.createElement("Players");
-                document.appendChild(root);
+            // root element
+            Element root = document.createElement("Players");
+            document.appendChild(root);
 
-                // employee element
-
-                for (int i = 0; i < offense.size(); i++) {
+            for (int i = 0; i < offense.size(); i++) {
+                try {
+                    FileInputStream fileIn = new FileInputStream("card.ser");// Read serial file.
+                    ObjectInputStream in = new ObjectInputStream(fileIn);// input the read file.
+                    String object = (String) in.readObject();
+                    ID object2 = (ID) in.readObject();// allocate it to the object file already instanciated.
+                    in.close();//closes the input stream.
+                    fileIn.close();//closes the file data stream.
+                    xmlPlayerString.add(object);
+                    xmlPlayerId.add(object2.toString());
                     if (xmlPlayerString.size() > 0) {
                         for (int p = 0; p < xmlPlayerString.size(); p++) {
-                            if (offense.get(i).toString().equals(xmlPlayerString.get(p))) {
-                                System.out.print("something");
+                            for (int id = 0; id < xmlPlayerId.size(); id++) {
+                                if (offense.get(i).toString().equals(xmlPlayerId.get(id))) {
+                                    if (playerNum == 0) {
+                                        String playerId = xmlPlayerId.get(id);
+                                        String playerName = xmlPlayerString.get(p);
+                                        Element player = document.createElement("Players");
+                                        root.appendChild(player);
 
+                                        // set an attribute to ID element
+                                        Element elementId = document.createElement("ID");
+                                        elementId.appendChild(document.createTextNode(playerId));
+                                        player.appendChild(elementId);
+
+                                        // elementPlayerName element
+                                        Element elementPlayerName = document.createElement("PlayerName");
+                                        elementPlayerName.appendChild(document.createTextNode(playerName));
+                                        player.appendChild(elementPlayerName);
+                                        playerNum++;
+                                        break;
+                                    }
+                                } else {
+                                    String playerId = offense.get(i).toString();
+                                    Element player = document.createElement("Players");
+                                    root.appendChild(player);
+
+                                    // set an attribute to ID element
+                                    Element elementId = document.createElement("ID");
+                                    elementId.appendChild(document.createTextNode(playerId));
+                                    player.appendChild(elementId);
+
+                                    // elementPlayerName element
+                                    Element elementPlayerName = document.createElement("PlayerName");
+                                    elementPlayerName.appendChild(document.createTextNode(playerId));
+                                    player.appendChild(elementPlayerName);
+                                    break;
+                                }
+                                break;
                             }
+                            break;
                         }
                     } else {
-                        System.out.print("something");
+                       return;
                     }
+                } catch(IOException io) {
+                    System.out.print("handling file exception/maybe the file isn't found");
+                } catch(ClassNotFoundException c) {
+                    System.out.println("Error");
+                } finally {
                     String playerId = offense.get(i).toString();
                     Element player = document.createElement("Players");
                     root.appendChild(player);
@@ -534,14 +639,68 @@ public class Player extends GameObject {
                     elementPlayerName.appendChild(document.createTextNode(playerId));
                     player.appendChild(elementPlayerName);
                 }
+            }
 
-                for (int i = 0; i < defense.size(); i++) {
-                    //if (playerString > 0) {
-                    //  for (int p = 0; p < playerString.size(); p++;) {
-                    //  TODO Do stuff
-                    //  }
-                    // } else if {
-                    // }
+            for (int i = 0; i < defense.size(); i++) {
+                try {
+                    FileInputStream fileIn = new FileInputStream("card.ser");// Read serial file.
+                    ObjectInputStream in = new ObjectInputStream(fileIn);// input the read file.
+                    String object = (String) in.readObject();
+                    ID object2 = (ID) in.readObject();// allocate it to the object file already instanciated.
+                    in.close();//closes the input stream.
+                    fileIn.close();//closes the file data stream.
+                    xmlPlayerString.add(object);
+                    xmlPlayerId.add(object2.toString());
+                    if (xmlPlayerString.size() > 0) {
+                        for (int p = 0; p < xmlPlayerString.size(); p++) {
+                            for (int id = 0; id < xmlPlayerId.size(); id++) {
+                                if (defense.get(i).toString().equals(xmlPlayerId.get(id))) {
+                                    if (playerNum == 0) {
+                                        String playerId = xmlPlayerId.get(id);
+                                        String playerName = xmlPlayerString.get(p);
+                                        Element player = document.createElement("Players");
+                                        root.appendChild(player);
+
+                                        // set an attribute to ID element
+                                        Element elementId = document.createElement("ID");
+                                        elementId.appendChild(document.createTextNode(playerId));
+                                        player.appendChild(elementId);
+
+                                        // elementPlayerName element
+                                        Element elementPlayerName = document.createElement("PlayerName");
+                                        elementPlayerName.appendChild(document.createTextNode(playerName));
+                                        player.appendChild(elementPlayerName);
+                                        playerNum++;
+                                        break;
+                                    }
+                                } else {
+                                    String playerId = defense.get(i).toString();
+                                    Element player = document.createElement("Players");
+                                    root.appendChild(player);
+
+                                    // set an attribute to ID element
+                                    Element elementId = document.createElement("ID");
+                                    elementId.appendChild(document.createTextNode(playerId));
+                                    player.appendChild(elementId);
+
+                                    // elementPlayerName element
+                                    Element elementPlayerName = document.createElement("PlayerName");
+                                    elementPlayerName.appendChild(document.createTextNode(playerId));
+                                    player.appendChild(elementPlayerName);
+                                    break;
+                                }
+                                break;
+                            }
+                            break;
+                        }
+                    } else {
+                        return;
+                    }
+                } catch(IOException io) {
+                    System.out.println("File not found");
+                } catch(ClassNotFoundException c) {
+                    System.out.println("Error");
+                }  finally {
                     String playerId = defense.get(i).toString();
                     Element player = document.createElement("Players");
                     root.appendChild(player);
@@ -556,40 +715,36 @@ public class Player extends GameObject {
                     elementPlayerName.appendChild(document.createTextNode(playerId));
                     player.appendChild(elementPlayerName);
                 }
-
-                // create the xml file
-                //transform the DOM Object to an XML File
-                TransformerFactory transformerFactory = TransformerFactory.newInstance();
-                Transformer transformer = transformerFactory.newTransformer();
-                DOMSource domSource = new DOMSource(document);
-                transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-                StreamResult streamResult = new StreamResult(new File(xml));
-
-                // If you use
-                // StreamResult result = new StreamResult(System.out);
-                // the output will be pushed to the standard output ...
-                // You can use that for debugging
-
-                transformer.transform(domSource, streamResult);
-
-                System.out.println("Done creating XML File");
-
-            } catch (ParserConfigurationException pce) {
-                pce.printStackTrace();
-            } catch (TransformerException tfe) {
-                tfe.printStackTrace();
             }
 
+            // create the xml file
+            //transform the DOM Object to an XML File
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource domSource = new DOMSource(document);
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            StreamResult streamResult = new StreamResult(new File(xml));
 
-    }
-    private String getTextValue(String def, Element doc, String tag) {
-        String value = def;
-        NodeList nl;
-        nl = doc.getElementsByTagName(tag);
-        if (nl.getLength() > 0 && nl.item(0).hasChildNodes()) {
-            value = nl.item(0).getFirstChild().getNodeValue();
+            // If you use
+            // StreamResult result = new StreamResult(System.out);
+            // the output will be pushed to the standard output ...
+            // You can use that for debugging
+
+            transformer.transform(domSource, streamResult);
+            //Remove .ser file because its no longer needed
+            System.out.println("Done creating XML File");
+            try {
+                Files.deleteIfExists(Paths.get("card.ser"));
+            }
+            catch(IOException e) {
+                System.out.println("No such file/directory exists");
+            }
+
+        } catch (ParserConfigurationException pce) {
+            pce.printStackTrace();
+        } catch (TransformerException tfe) {
+            tfe.printStackTrace();
         }
-        return value;
     }
 }

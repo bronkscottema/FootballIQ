@@ -1,10 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -101,10 +98,12 @@ public class Game extends Canvas implements Runnable {
         newMenu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
                 playBook.setSelected(false);
                 main(null);
             }
         });
+
         newMenu.setFont(font);
 
         JMenuItem saveMenu = new JMenuItem("Save Picture");
@@ -494,7 +493,11 @@ public class Game extends Canvas implements Runnable {
                         if (userInput != null) {
                             for (GameObject player : jags) {
                                 if (input.equals(player.getID().toString())) {
-                                    player.changePlayer(userInput, player.getID());
+                                    if (userInput.length() >= 3) {
+                                        break;
+                                    } else if (userInput.length() <= 2) {
+                                        player.changePlayer(userInput, player.getID());
+                                    }
                                 }
                             }
                         }
